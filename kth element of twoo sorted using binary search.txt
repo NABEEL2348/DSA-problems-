@@ -1,0 +1,45 @@
+#include<stdio.h>
+#include<limits.h>
+#include<math.h>
+int kthelementoftwo(int arr1[],int n1,int arr2[],int n2,int k)
+{
+    if(n1>n2)
+    {
+        return kthelementoftwo(arr2,n2,arr1,n1,k);
+    }
+    int left=fmax(0,k - n1),right=fmin(k,n2);
+    int totalsize= n1+n2;
+    
+    while(left<=right)
+    {
+        int mid1=(left+right)/2;
+        int mid2=k - n1;
+        int l1=(mid1 ==0) ? INT_MIN : arr1[mid1 - 1];
+        int l2=(mid2 ==0) ? INT_MIN : arr2[mid2 - 1];
+        int r1=(mid1 == n1)? INT_MAX : arr1[mid1];
+        int r2=(mid2 == n2) ? INT_MAX : arr2[mid2];
+        if(l1<=r2 && l2 <=r1)
+        {
+            return fmax(l1,l2);
+        }
+        else if(l1>r2)
+        {
+            right = mid1 - 1;
+        }
+        else
+        {
+            left = mid1 + 1;
+        }
+    }
+    return -1;
+}
+int main()
+{
+    int arr1[]={1,3,8,9,15};
+    int arr2[]={7,11,18,19,21,25};
+    int n1=sizeof(arr1)/sizeof(arr1[0]);
+    int n2=sizeof(arr2)/sizeof(arr2[0]);
+    int k =7 ;
+    int kthelement = kthelementoftwo(arr1,n1,arr2,n2,k);
+    printf("the kth element is %d",kthelement);
+}
