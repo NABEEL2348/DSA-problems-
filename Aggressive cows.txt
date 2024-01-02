@@ -1,0 +1,56 @@
+#include<stdio.h>
+#include<stdlib.h>
+int cmpfun(const void *a,const void *b)
+{
+    return *(int *)a - *(int *)b;
+}
+int check(int arr[],int n,int cows,int mid)
+{
+    int count=1;
+    int lastposition=arr[0];
+    for(int i=0;i<n;i++)
+    {
+        if(arr[i]-lastposition >= mid)
+        {
+            lastposition=arr[i];
+            count++;
+        }
+        if(count==cows)
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
+int cow(int arr[],int n,int cows)
+{
+    int result= -1;
+    int left=0,right = arr[n-1]-arr[0];
+    while(left<=right)
+    {
+        int mid=left + (right - left)/2;
+        if(check(arr,n,cows,mid))
+        {
+            left = mid + 1;
+            result=mid;
+        }
+        else{
+            right = mid - 1;
+        }
+    }
+    return result;
+}
+int main()
+{
+    int n,cows;
+    printf("enter the number of postion and cows");
+    scanf("%d %d",&n,&cows);
+    int arr[n];
+    printf("enter the  positions");
+    for(int i=0;i<n;i++)
+    {
+        scanf("%d",&arr[i]);
+    }
+    qsort(arr,n,sizeof(int),cmpfun);
+    printf("the maxdistanse is %d",cow(arr,n,cows));
+}
