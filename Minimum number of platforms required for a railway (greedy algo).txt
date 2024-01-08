@@ -1,0 +1,45 @@
+#include<stdio.h>
+#include<stdlib.h>
+int compare(const void *a,const void *b)
+{
+    return (*(int *)a)-(*(int *)b);
+}
+int minimumplatform(int arrivals[],int departures[],int n)
+{
+    qsort(arrivals,n,sizeof(int),compare);
+    qsort(departures,n,sizeof(int),compare);
+    printf("after sorting ");
+    for(int i=0;i<n;i++)
+    {
+        printf("%d %d   ",arrivals[i],departures[i]);
+    }
+    printf("\n");
+    int platform=1;
+    int result=0;
+    int i=1,j=0;
+    while(i<n && j<n)
+    {
+        if(arrivals[i]<=departures[j])
+        {
+            platform++;
+            i++;
+            if(platform>result)
+            {
+                result=platform;
+            }
+        }
+        else
+        {
+            platform--;
+            j--;
+        }
+    }
+    printf("the minimum no of platform requires for this is %d",result);
+}
+int main()
+{
+    int arrivals[] = {900,940,950,1100,1500,1800};
+    int departures[] = {910, 1200, 1120, 1130, 1900, 2000};
+    int n=sizeof(arrivals)/sizeof(arrivals[0]);
+    minimumplatform(arrivals,departures,n);
+}
