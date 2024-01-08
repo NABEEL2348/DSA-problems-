@@ -1,0 +1,38 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct meeting
+{
+    int start;
+    int end;
+};
+int compare(const void *a,const void *b)
+{
+    return ((struct meeting *)a)->end - ((struct meeting *)b)->end;
+}
+int onemeeting(struct meeting meetings[],int n)
+{
+    qsort(meetings,n,sizeof(struct meeting),compare);
+    printf("after sorting ");
+    for(int i=0;i<n;i++)
+    {
+        printf("%d%d ",meetings[i].start,meetings[i].end);
+    }
+    printf("\n");
+    int count=1;
+    int current=0;
+    for(int i=1;i<n;i++)
+    {
+        if(meetings[i].start >= meetings[current].end)
+        {
+            count++;
+            current=i;
+        }
+    }
+    printf("the maximum count is %d",count);
+}
+int main()
+{
+    struct meeting meetings[]={{1,2},{2,4},{3,6},{5,7},{8,9},{5,9}};
+    int n=(sizeof(meetings)/sizeof(meetings[0]));
+    onemeeting(meetings,n);
+}
