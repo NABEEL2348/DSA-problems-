@@ -1,0 +1,23 @@
+#include<stdio.h>
+int minimumcoins(int coins[],int n,int amount)
+{
+    int count=0;
+    printf("the coins are ");
+    for(int i=0;i<n;i++)
+    {
+        while(amount>coins[i])
+        {
+            amount-=coins[i];
+            count++;
+            printf("%d ",coins[i]);
+        }
+    }
+    printf("\nthe minimum number of coins required is %d",count);
+}
+int main()
+{
+    int coins[]={25,10,5,2,1};
+    int n=sizeof(coins)/sizeof(coins[0]);
+    int amount=93;
+    minimumcoins(coins,n,amount);
+}
