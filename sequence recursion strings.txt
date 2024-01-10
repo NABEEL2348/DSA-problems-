@@ -1,0 +1,24 @@
+#include<stdio.h>
+void sequencerecursionstr(int str[],int n,char seq[],int index,int start)
+{
+    if(index==n)
+    {
+        for(int i=0;i<start;i++)
+        {
+            printf("%c",seq[i]);
+        }
+        printf("\n");
+        return;
+    }
+    seq[start]=str[index];
+    sequencerecursionstr(str,n,seq,index + 1,start + 1);
+    sequencerecursionstr(str,n,seq,index+1,start);
+    
+}
+int main()
+{
+    int str[]={'a','b','c','d','e'};
+    int n=sizeof(str)/sizeof(str[0]);
+    char seq[n];
+    sequencerecursionstr(str,n,seq,0,0);
+}
