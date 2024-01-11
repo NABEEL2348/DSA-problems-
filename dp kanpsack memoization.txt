@@ -1,0 +1,37 @@
+#include<stdio.h>
+#include<string.h>
+int max(int a,int b)
+{
+    return (a>b)?a:b;
+}
+int knapsack(int val[],int wt[],int w,int n,int dp[][100])
+{
+    if(n==0 || w==0)
+    {
+        return 0;
+    }
+    if(dp[n][w]!=-1)
+    {
+        return dp[n][w];
+    }
+    if(wt[n-1]<=w)
+    {
+        int taken=val[n-1]+knapsack(val,wt,w-wt[n-1],n-1,dp);
+        int nottaken=knapsack(val,wt,w,n-1,dp);
+        return dp[n][w]=max(taken,nottaken);
+    }
+    else
+    {
+        return dp[n][w]=knapsack(val,wt,w,n-1,dp);
+    }
+}
+int main()
+{
+    int val[]={60,100,120};
+    int wt[]={10,20,30};
+    int w=50;
+    int n=sizeof(val)/sizeof(val[0]);
+    int dp[100][100];
+    memset(dp,-1,sizeof(dp));
+    printf("the knapsack of memorizaion is %d",knapsack(val,wt,w,n,dp));
+}
