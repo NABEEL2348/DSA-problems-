@@ -1,0 +1,42 @@
+#include<stdio.h>
+#include<string.h>
+int min(int a,int b,int c)
+{
+    return (a<b)?((a<c)?a:c):((b<c)?b:c);
+}
+int editdistance(char str[],int m,char str1[],int n)
+{
+    int dp[m + 1][n + 1];
+    for(int i=0;i<=m;i++)
+    {
+        for(int j=0;j<=n;j++)
+        {
+            if(i==0)
+            {
+                dp[i][j]=j;
+            }
+            else if(j==0)
+            {
+                dp[i][j]=i;
+            }
+            else if(str[i - 1]==str1[j - 1])
+            {
+                dp[i][j]=dp[i-1][j-1];
+            }
+            else
+            {
+                dp[i][j]=1+min(dp[i][j-1],dp[i-1][j],dp[i-1][j-1]);
+            }
+        }
+    }
+    return dp[m][n];
+    
+}
+int main()
+{
+    char str[]="nabeel";
+    char str1[]="mohamed";
+    int n=strlen(str1);
+    int m=strlen(str);
+    printf("the edit distance for tabulation is %d",editdistance(str,m,str1,n));
+} 
