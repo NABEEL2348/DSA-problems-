@@ -1,0 +1,39 @@
+#include<stdio.h>
+#include<string.h>
+#include<limits.h>
+int min(int a,int b)
+{
+    return (a<b)?a:b;
+}
+int minimumcoins(int arr[],int t,int n,int dp[][10])
+{
+    if(n==0)
+    {
+       return INT_MAX; 
+    }
+    if(t==0)
+    {
+        return 0;
+    }
+    if(dp[n][t]!=-1)
+    {
+        return dp[n][t];
+    }
+    int nottake=minimumcoins(arr,t,n-1,dp);
+    int take=INT_MAX;
+    if(arr[n-1]<=t)
+    {
+        take=1+minimumcoins(arr,t-arr[n-1],n,dp);
+    }
+    dp[n][t]=min(take,nottake);
+    return dp[n][t];
+}
+int main()
+{
+    int arr[]={1,2,3,4,5,6,7};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    int t=13;
+    int dp[10][10];
+    memset(dp,-1,sizeof(dp));
+    printf("%d",minimumcoins(arr,t,n,dp));
+}
