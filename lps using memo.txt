@@ -1,0 +1,51 @@
+#include<stdio.h>
+#include<string.h>
+int max(int a,int b)
+{
+    return (a>b)?a:b;
+}
+char rev(char str[],int start,int end)
+{
+    int temp;
+    while(start<=end)
+    {
+        temp=str[start];
+        str[start]=str[end];
+        str[end]=temp;
+        start++;
+        end--;
+    }
+}
+int lcs(char str[],int m,char str1[],int n,int dp[][100])
+{
+    if(m==0 || n==0)
+    {
+        return 0;
+    }
+    if(dp[m][n]!=-1)
+    {
+        return dp[m][n];
+    }
+    if(str[m-1]==str1[n-1])
+    {
+        return dp[m][n]=1 +lcs(str,m-1,str1,n-1,dp);
+    }
+    else
+    {
+        return dp[m][n]=max(lcs(str,m,str1,n-1,dp),lcs(str,m-1,str1,n,dp));
+    }
+}
+int main()
+{
+    char str[]="ABCBDAB";
+
+    int m=strlen(str);
+    int dp[100][100];
+    memset(dp,-1,sizeof(dp));
+    char str2[100];
+    strcpy(str2,str);
+    rev(str2,0,m-1);
+    printf("the longest palindraome of subsequence using memo is %d",lcs(str,m,str2,m,dp));
+    
+    
+}
