@@ -1,0 +1,31 @@
+#include<stdio.h>
+#include<limits.h>
+int min(int a,int b)
+{
+    return (a<b)?a:b;
+}
+int mcmpartitontabular(int arr[],int n)
+{
+    int dp[n][n];
+    for(int i=n-1;i>=0;i--)
+    {
+        dp[i][i]=0;
+        for(int j=i+1;j<n;j++)
+        {
+            int mini=INT_MAX;
+            for(int k=i;k<j;k++)
+            {
+               int steps=arr[i]*arr[k+1]*arr[j]+dp[i][k]+dp[k+1][j];
+               mini=min(mini,steps);
+            }
+            dp[i][j]=mini;
+        }
+    }
+    return dp[0][n-1];
+}
+int main()
+{
+    int arr[]={10,20,30,40,50};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    printf("the maximum partition of tabular is %d",mcmpartitontabular(arr,n));
+}
