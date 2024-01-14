@@ -1,0 +1,38 @@
+#include<stdio.h>
+#include<string.h>
+#include<limits.h>
+int max(int a,int b)
+{
+    return (a>b)?a:b;
+}
+int rodcuttingmemo(int arr[],int n,int target,int dp[])
+{
+    if(n==0)
+    {
+        return (n)*arr[0];
+    }
+    if(dp[n]!=-1)
+    {
+        return dp[n];
+    }
+    int nottake=rodcuttingmemo(arr,n-1,target,dp);
+    int rodcutting=n + 1;
+    int take=INT_MIN;
+    if(rodcutting<= target)
+    {
+        take=arr[n]+rodcuttingmemo(arr,n,target-rodcutting,dp);
+        
+    }
+    
+    return max(take,nottake);
+}
+int main()
+{
+    int arr[]={2,5,7,8,10};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    int target = 5;
+    int dp[100];
+    memset(dp,-1,sizeof(dp));
+    printf("%d ",rodcuttingmemo(arr,n - 1,target,dp));
+    
+}
