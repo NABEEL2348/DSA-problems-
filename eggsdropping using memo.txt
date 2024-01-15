@@ -1,0 +1,39 @@
+#include<stdio.h>
+#include<string.h>
+#include<limits.h>
+int max(int a,int b)
+{
+    return (a>b?a:b);
+}
+int eggsdropping(int eggs,int floors,int dp[][100])
+{
+    if(eggs==0 || floors ==0 || floors ==1)
+    {
+        return floors;
+    }
+    if(dp[eggs][floors]!=-1)
+    {
+        return dp[eggs][floors];
+    }
+    
+    int minattempts=INT_MAX;
+    for(int i=1;i<=floors;i++)
+    {
+        int breaks=eggsdropping(eggs-1,i-1,dp);
+        int attempts=1+max(eggsdropping(eggs,floors-i,dp),breaks);
+        if(minattempts>attempts)
+        {
+            minattempts=attempts;
+        }
+    }
+    dp[eggs][floors]=minattempts;
+    return dp[eggs][floors];
+}
+int main()
+{
+    int eggs=3;
+    int floors=10;
+    int dp[100][100];
+    memset(dp,-1,sizeof(dp));
+    printf("%d",eggsdropping(eggs,floors,dp));
+}
