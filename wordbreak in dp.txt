@@ -1,0 +1,45 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+int wordbreakdp(char **wordlist,int n,int dp[][100],char *word)
+{
+    if(strlen(word)==0 || n==0)
+    {
+        return 0;
+    }
+    int wordlength=strlen(word);
+    for(int i=0;i<wordlength;i++)
+    {
+        char *prefix=malloc(i+1);
+        strncpy(prefix,word,i);
+        prefix[i]='\0';
+        for(int j=0;j<n;j++)
+        {
+            if(strcmp(wordlist[j],prefix)==0)
+            {
+               free(prefix);
+               return 1;
+            }
+        }
+        free(prefix);
+    }
+    return 0;
+}
+int main()
+{
+    char* wordlist[]={
+        "mobile", "samsung", "sam", "sung", "man",
+        "mango", "icecream", "and", "go", "i", "like",
+        "ice", "cream"
+    };
+    int n=sizeof(wordlist)/sizeof(wordlist[0]);
+    int dp[100][100];
+    if(wordbreakdp(wordlist,n,dp,"ilikeicecream")==1)
+    {
+       printf("the given list is wordbreak keyword");
+    }
+    else
+    {
+        printf("not wordbreak dp");
+    }
+}
