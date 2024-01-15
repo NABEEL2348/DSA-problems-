@@ -1,0 +1,39 @@
+#include<stdio.h>
+#include<string.h>
+#include<limits.h>
+#include<math.h>
+#include<stdlib.h>
+int min(int a,int b)
+{
+    return (a<b)?a:b;
+}
+int frogjump(int arr[],int n,int dp[100])
+{
+    if(n==0)
+    {
+        return 0;
+    }
+    if(dp[n]!=-1)
+    {
+        return dp[n];
+    }
+    int left=frogjump(arr,n-1,dp)+abs(arr[n]-arr[n-1]);
+    int right=INT_MAX;
+    if(n>0) 
+    {
+        right=frogjump(arr,n-2,dp)+abs(arr[n]-arr[n-2]);
+        
+    }
+    return dp[n]=min(left,right);;
+}
+int main()
+{
+    int arr[]={30,10,60,10,60,50};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    int dp[100];
+    for(int i=0;i<100;i++)
+    {
+        dp[i]=-1;
+    }
+    printf("%d",frogjump(arr,n-1,dp;//start funtion is necessary always starts with n-1 either some times n
+}
