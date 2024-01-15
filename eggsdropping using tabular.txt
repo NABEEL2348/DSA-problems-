@@ -1,0 +1,38 @@
+#include<stdio.h>
+#include<limits.h>
+#include<math.h>
+int eggsdroopingusingtabular(int eggs,int floors)
+{
+    int dp[eggs + 1][floors + 1];
+    for(int i=0;i<eggs;i++)
+    {
+        dp[i][0]=floors;
+    }
+    for(int j=0;j<floors;j++)
+    {
+        dp[0][j]=floors;
+    }
+    for(int i=0;i<=eggs;i++)
+    {
+        for(int j=0;j<=floors;j++)
+        {
+            dp[i][j]=INT_MIN;
+            for(int k=1;k<=floors;k++)
+            {
+                int breaks=dp[i-1][j-1];
+                int attempts=1+fmax(dp[i][floors-k],breaks);
+                if(attempts>dp[i][j])
+                {
+                    dp[i][j]=attempts;
+                }
+            }
+        }
+    }
+    return dp[eggs + 1][floors + 1];
+}
+int main()
+{
+    int eggs=3;
+    int floors=10;
+    printf("%d",eggsdroopingusingtabular(eggs,floors));
+}
