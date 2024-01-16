@@ -1,0 +1,55 @@
+#include<stdio.h>
+int swap(int *a,int *b)
+{
+    int temp=*a;
+    *a=*b;
+    *b=temp;
+}
+int insertionsort(int arr[],int n)
+{
+    for(int i=0;i<n;i++)
+    {
+        for(int j=i+1;j<n;j++)
+        {
+            if(arr[i]>arr[j])
+            {
+                swap(&arr[i],&arr[j]);
+            }
+        }
+    }
+} 
+int sum(int arr[],int n,int targetsum)
+{
+    for(int i=0;i<n-3;i++)
+    {
+        for(int j=i+1;j<n-2;j++)
+        {
+            for(int k=j+1;k<n-1;k++)
+            {
+                for(int l=k+1;l<n;l++)
+                {
+                    if(arr[i]+arr[j]+arr[k]+arr[l]==targetsum)
+                    {
+                        printf("%d %d %d %d    ",arr[i],arr[j],arr[k],arr[l]);
+                        printf("\n");
+                    }
+                }
+            }
+        }
+        
+    }
+}
+int main()
+{
+    int arr[]={4,5,6,7,8,1,2,3,9,0};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    insertionsort(arr,n);
+    for(int i=0;i<n;i++)
+    {
+    printf("%d ",arr[i]);
+    }
+    printf("\n");
+    int targetsum=30;
+    sum(arr,n,targetsum);
+    
+}
