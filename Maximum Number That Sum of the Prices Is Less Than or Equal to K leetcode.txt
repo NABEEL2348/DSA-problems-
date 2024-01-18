@@ -1,0 +1,36 @@
+#include<stdio.h>
+int main()
+{
+    int i=1;
+    int n=100;
+    int result=0;
+    int target;
+    scanf("%d",&target);
+    int k;
+    scanf("%d",&k);
+    while(i<=n)
+    {
+        int sum=0;
+        for(int j=1;j<i;j++)
+        {
+        if(j%2==0)
+        {
+            sum=sum+0;
+        }
+        else if(j%2==1)
+        {
+            sum=sum+1;
+        }
+        
+        }
+        result+=sum;
+        if(result==target)
+        {
+            printf("%d",i);
+        }
+        i=i+k;
+    }
+    
+} 
+
+target is 9 and k ==1
