@@ -1,0 +1,87 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct queue{
+    struct queuenode *front,*rear;
+};
+struct queuenode{
+    int data;
+    struct queuenode *next;
+};
+int intialize(struct queue *queue)
+{
+    queue->front=NULL;
+    queue->rear=NULL;
+}
+int isempty(struct queue *queue)
+{
+    return (queue->front==NULL);
+}
+
+int enqueue(struct queue *queue,int num)
+{
+    struct queuenode* newnode=(struct queuenode *)malloc(sizeof(struct queuenode));
+    newnode->data=num;
+    newnode->next=NULL;
+    if(isempty(queue))
+    {
+        queue->front=newnode;
+        queue->rear=newnode;
+    }
+    else
+    {
+        queue->rear->next=newnode;
+        queue->rear=newnode;
+    }
+}
+int dequeue(struct queue *queue)
+{
+    if(isempty(queue))
+    {
+        return -1;
+    }
+    int data=queue->front->data;
+    struct queuenode *temp=queue->front;
+    if(queue->front==queue->rear)
+    {
+        queue->front=NULL;
+        queue->rear=NULL;
+    }
+    else
+    {
+        queue->front=queue->front->next;
+    }
+    
+    free(temp);
+    return data;
+}
+int push(struct queue *queue,int data)
+{
+    enqueue(queue,data);
+    for(int i=0;i<=queue->rear->data-1;i++)
+    {
+        int frontelement=dequeue(queue);
+        enqueue(queue,frontelement);
+    }
+}
+int pop(struct queue *queue)
+{
+    if(isempty(queue))
+    {
+        printf("no element is found");
+    }
+    dequeue(queue);
+}
+int main()
+{
+    struct queue queue;
+    intialize(&queue);
+    push(&queue,40);
+    push(&queue,50);
+    push(&queue,60);
+    printf("the pop element is %d ",pop(&queue));
+    printf("the pop element is %d ",pop(&queue)); 
+    printf("the pop element is %d ",pop(&queue));
+    push(&queue,60);
+    push(&queue,60);
+    printf("the pop element is %d ",pop(&queue));
+}
