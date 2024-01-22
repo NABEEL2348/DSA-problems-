@@ -1,0 +1,49 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdbool.h>
+bool ispalidrome(char str[],int n)
+{
+    int start=0;
+    int end=n-2;
+    while(start<=end)
+    {
+        if(str[start]!=str[end])
+        {
+            return false;
+        }
+        start++;
+        end--;
+    }
+    return true;
+}
+void nabeel(char str1[],int count)
+{
+    str1[count]='\0';
+    int k=strlen(str1);
+    if(ispalidrome(str1,k)==true)
+    {
+        printf("%s",str1);
+    }
+}
+int main()
+{
+    char str[50];
+    fgets(str,sizeof(str),stdin);
+    int n=strlen(str);
+    char str1[50];
+    int count=0;
+    for(int i=0;i<=n;i++)
+    {
+        if(str[i]!=' '&& str[i]!='\0')
+        {
+            str1[count++]=str[i];
+            
+        }
+        else
+        {
+            nabeel(str1,count);
+            count=0;
+        }
+    }
+    
+}
