@@ -1,0 +1,101 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct queuenode{
+    int data;
+    struct queuenode* next;
+    struct queuenode* prev;
+};
+struct queue{
+    struct queuenode* front;
+    struct queuenode* rear;
+};
+int intialize(struct queue *queue)
+{
+    queue->front=NULL;
+    queue->rear=NULL;
+}
+struct queuenode* createnode(int data)
+{
+    struct queuenode *newnode=(struct queuenode*)malloc(sizeof(struct queuenode));
+    newnode->data=data;
+    newnode->next=NULL;
+    newnode->prev=NULL;
+    return newnode;
+}
+struct queue* createqueue()
+{
+    struct queue* newqueue=(struct queue*)malloc(sizeof(struct queue));
+    newqueue->front=NULL;
+    newqueue->rear=NULL;
+    return newqueue;
+}
+void insertrear(struct queue* queue1, int data) {
+    struct queuenode* newnode = createnode(data);
+    if (queue1->rear == NULL) {
+        queue1->front = queue1->rear = newnode;
+        return;
+    }
+    newnode->prev = queue1->rear;
+    queue1->rear->next = newnode;
+    queue1->rear = newnode;
+}
+void removerear(struct queue* queue1)
+{
+    if(queue1->front==queue1->rear)
+    {
+        queue1->front=NULL;
+        queue1->rear=NULL;
+    }
+    else
+    {
+    struct queuenode* temp=queue1->front;
+    queue1->front=queue1->front->next;
+    free(temp);
+    }
+    
+}
+int getfront(struct queue* queue1)
+{
+    return (queue1->front!=NULL)?queue1->front->data:-1;
+}
+int slidingwindow(int arr[],int n,int k)
+{
+    struct queue *queue1=createqueue();
+    for(int i=0;i<k;i++)
+    {
+        while(getfront(queue1)!=-1 &&arr[i]>=arr[getfront(queue1)])
+        {
+            removerear(queue1);
+        }
+        insertrear(queue1,i);
+    }
+    for(int i=k;i<n;i++)
+    {
+        printf("%d ",arr[getfront(queue1)]);
+        while(getfront(queue1)!=-1 && getfront(queue1)<=i-k)
+        {
+            removerear(queue1);
+        }
+        while(getfront(queue1)!=-1 &&arr[i]>=arr[getfront(queue1)])
+        {
+            removerear(queue1);
+        }
+        insertrear(queue1,i);
+    }
+    printf("%d ",arr[getfront(queue1)]);
+    while(getfront(queue1)!=-1)
+    {
+        printf("%d ",arr[getfront(queue1)]);
+        removerear(queue1);
+    }
+    free(queue1);
+}
+
+int main()
+{
+    int arr[] = {1, 3, -1, -3, 5, 3, 6, 7};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int k = 3;
+    slidingwindow(arr,n,k);
+    
+}
