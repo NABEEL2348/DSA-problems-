@@ -1,0 +1,61 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+struct stacknode{
+    int index;
+    int data;
+};
+struct stack{
+    int capacity;
+    int top;
+    struct stacknode *arr;
+};
+struct stack* createnode(int b)
+{
+    struct stack* newnode=(struct stack*)malloc(sizeof(struct stack));
+    newnode->capacity=b;
+    newnode->top=-1;
+    newnode->arr=(struct stacknode*)malloc(b*sizeof(struct stacknode));
+    return newnode;
+}
+int push(struct stack* stack,int arr,int n)
+{
+    stack->arr[++stack->top].data=arr;
+    stack->arr[stack->top].index=n;
+}
+int isempty(struct stack* stack)
+{
+    return (stack->top==-1);
+}
+int pop(struct stack* stack)
+{
+    return stack->top--;
+}
+int nextgreaterelement(int arr[],int n)
+{
+    struct stack* stack=createnode(n);
+    for(int i=n-1;i>=0;i--)
+    {
+        while(!isempty(stack)&&stack->arr[stack->top].data<=arr[i])
+        {
+            pop(stack);
+        }
+        if(isempty(stack))
+        {
+            printf("there is no greater element for %d\n",arr[i]);
+        }
+        else
+        {
+            printf("the next greater element for %d is %d at the index %d\n",arr[i],stack->arr[stack->top].data,stack->arr[stack->top].index);
+        }
+        push(stack,arr[i],i);
+        
+    }
+    
+}
+int main()
+{
+    int arr[]={1,2,3,5,6,4,3,5,3,33,20,33};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    nextgreaterelement(arr,n);
+}
