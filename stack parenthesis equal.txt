@@ -1,0 +1,62 @@
+#include<string.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
+struct stacknode{
+    int *arr;
+    int top;
+    unsigned capacity;
+};
+struct stacknode* createnode(unsigned capacity)
+{
+    struct stacknode* newnode=(struct stacknode*)malloc(sizeof(struct stacknode*));
+    newnode->top=-1;
+    newnode->capacity=capacity;
+    newnode->arr=(int*)malloc(capacity*sizeof(int));
+}
+int push(struct stacknode* stack,char exp)
+{
+    return (stack->arr[++stack->top]);
+}
+char pop(struct stacknode* stack,char exp)
+{
+    return (stack->arr[++stack->top]);
+}
+int isempty(struct stacknode *stack)
+{
+    return (stack->top==-1);
+}
+bool isparenthesis(char exp[])
+{
+    struct stacknode* stack=createnode(strlen(exp));
+    for(int i=0;i<exp[i];i++)
+    {
+        if(exp[i]=='{'||exp[i]=='('||exp[i]=='['||exp[i]=='<')
+        {
+            push(stack,exp[i]);
+        }
+        else if(exp[i]=='}'||exp[i]==')'||exp[i]==']'||exp[i]=='>')
+        {
+            if(isempty(stack))
+            {
+            return false;
+            }
+            return true;
+        }
+        char popped=pop(stack,exp[i]);
+    }
+    return isempty(stack);
+}
+int main()
+{
+    char exp[100];
+    scanf("%s",exp);
+    if((isparenthesis(exp)))
+    {
+        printf("balanced");
+    }
+    else{
+        printf("not balanced");
+    }
+    
+}
