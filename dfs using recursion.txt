@@ -1,0 +1,78 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#define list 100
+
+struct graph
+{
+    int numvertices;
+    struct node* adjacency[list]; 
+};
+struct node
+{
+    struct node* next;
+    int data;
+};
+struct graph* creategraph(int vertices)
+{
+    struct graph* newgraph=(struct graph*)malloc(sizeof(struct graph));
+    newgraph->numvertices=vertices;
+    for(int i=0;i<vertices;i++)
+    {
+        newgraph->adjacency[i]=NULL;
+    }
+    return newgraph;
+}
+struct node* createnode(int data)
+{
+    struct node* newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->next=NULL;
+    newnode->data=data;
+    return newnode;
+}
+int addlist(struct graph* graph1,int src,int dest)
+{
+    //for the intial node
+    struct node* newnode=createnode(dest);
+    newnode->next=graph1->adjacency[src];
+    graph1->adjacency[src]=newnode;
+    //undirected graph
+     newnode=createnode(src);
+    newnode->next=graph1->adjacency[dest];
+    graph1->adjacency[dest]=newnode;
+    
+    
+    //printf("%d",newnode->data);
+}
+int d(struct graph* graph1,int start,int vistited[])
+{
+    
+    vistited[start]=1;
+    printf("%d ",start);
+    struct node* temp=graph1->adjacency[start];
+    while(temp)
+    {
+        int neighbour=temp->data;
+        if(!vistited[neighbour])
+        {
+            vistited[neighbour]=1;
+            d(graph1,neighbour,vistited);
+        }
+        temp=temp->next;
+        
+    }
+}
+int main()
+{
+    int vertices=6;
+    struct graph* graph1=creategraph(vertices);
+    addlist(graph1,0,1);
+    addlist(graph1,0,2);
+    addlist(graph1,1,3);
+    addlist(graph1,2,4);
+    addlist(graph1,3,5);
+    int vistited[list];
+    memset(vistited,0,sizeof(vistited));
+    d(graph1,0,vistited);
+    
+}
