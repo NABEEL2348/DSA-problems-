@@ -1,0 +1,63 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define MAX_SIZE 50
+struct stacknode{
+    int data;
+    int top;
+    int dummy;
+    int *arr;
+    int *minstack;
+};
+
+struct stacknode* createnode(int data)
+{
+    struct stacknode* newnode=(struct stacknode*)malloc(sizeof(struct stacknode));
+    newnode->top=-1;
+    newnode->arr=(int *)malloc(MAX_SIZE*sizeof(int));
+    newnode->minstack=(int *)malloc(MAX_SIZE*sizeof(int));
+    newnode->top++;
+    newnode->dummy=1;
+    newnode->arr[newnode->top]=data;
+    return newnode;
+};
+
+int display(struct stacknode* stack)
+{
+    for(int i=0;i<=stack->top;i++)
+    {
+        printf("%d ",stack->arr[i]);
+    }
+    printf("\n");
+}
+int push(struct stacknode* stack,int data)
+{
+    if(stack->top==MAX_SIZE-1)
+    {
+        return -1; 
+    }
+    if(data<stack->minstack[stack->dummy])
+    {
+        stack->top++;
+        stack->arr[stack->top]=data;
+        stack->minstack[stack->dummy]=data;
+    }
+    
+}
+int pop(struct stacknode* stack)
+{
+    return (stack->top--);
+
+}
+int main()
+{
+    struct stacknode* stack=createnode(3);
+    
+    push(stack,-3);
+    display(stack);
+    pop(stack);
+    display(stack);
+    push(stack,-4);
+    push(stack,-5);
+    printf("minimum stack %d\n",stack->minstack[stack->dummy]);
+    
+}
