@@ -1,0 +1,86 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define MAX_SIZE 100
+struct stacknode
+{
+    int value;
+    int key;
+};
+struct stack{
+    struct stacknode *arr;
+    int capacity;
+    int top;
+};
+struct stack* createstack(int n)
+{
+    struct stack* newnode=(struct stack*)malloc(sizeof(struct stack));
+    newnode->top=-1;
+    newnode->capacity=n;
+    newnode->arr=(struct stacknode*)malloc(n*sizeof(struct stacknode));
+    return newnode;
+}
+int ismaximum(struct stack* cache)
+{
+    return (cache->top==MAX_SIZE-1);
+}
+int isempty(struct stack* cache)
+{
+    return (cache->top==-1);
+}
+int push(struct stack* cache,int key,int value)
+{
+    if(ismaximum(cache))
+    {
+        for(int i=cache->top;i>0;i--)
+        {
+            cache->arr[i]=cache->arr[i-1];
+        }
+        cache->top--;
+    }
+    cache->top++;
+    cache->arr[cache->top].key=key;
+    cache->arr[cache->top].value=value;
+}
+int displaycache(struct stack* cache)
+{
+    for(int i=0;i<=cache->top;i++)
+    {
+        printf("{%d,%d} ",cache->arr[i].value,cache->arr[i].key);
+    }
+    printf("\n");
+}
+int shiftleft(struct stack* cache,int index)
+{
+    for(int i=index;i>0;i--)
+    {
+        cache->arr[i]=cache->arr[i-1];
+    }
+}
+int findcache(struct stack* cache,int data)
+{
+   for(int i=0;i<=cache->top;i++)
+   {
+        if(cache->arr[i].value==data)
+        {
+            struct stacknode temp=(cache->arr[i]);
+            shiftleft(cache,i);
+            cache->arr[0]=temp;
+            return temp.value;
+        }
+   }
+   return -1;
+}
+int main()
+{
+    int n=MAX_SIZE-1;
+    struct stack* cache=createstack(n);
+    push(cache,1,34);
+    push(cache,2,30);
+    push(cache,3,36);
+    push(cache,4,46);
+    displaycache(cache);
+    printf("the find cache is %d\n",findcache(cache,46));
+    displaycache(cache);
+    
+    
+}
