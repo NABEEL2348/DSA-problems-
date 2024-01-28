@@ -1,0 +1,39 @@
+#include<stdio.h>
+#include<string.h>
+int max(int a,int b)
+{
+    return (a>b)?a:b;
+}
+int lengthoflongestsubstring(char str[])
+{
+    int n=strlen(str);
+    int charindex[256];
+    int maxlength=0;
+    for(int i=0;i<256;i++)
+    {
+        charindex[i]=-1;
+    }
+    int left=0;
+    int right=0;
+    while(right<n)
+    {
+        if(charindex[str[right]]==-1 ||  charindex[str[right]]<left)
+        {
+            charindex[str[right]]=right;
+            maxlength = (maxlength > right - left + 1) ? maxlength : right - left + 1;
+            right++;
+        }
+        else
+        {
+            left = charindex[str[left]] + 1 ;
+        }
+        
+    }
+    return maxlength;
+}
+int main()
+{
+    char str[]="abcabcbb";
+    int result=lengthoflongestsubstring(str);
+    printf("%d",result);
+}
