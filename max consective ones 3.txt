@@ -1,0 +1,39 @@
+#include<stdio.h>
+int max(int a,int b)
+{
+    return (a>b)?a:b;
+}
+int maxconsecutiveones(int arr[],int n,int k)
+{
+    int left=0;
+    int right=0;
+    int maxones=0;
+    int zerocount=0;
+    while(right<n)
+    {
+        if(arr[right]==0)
+        {
+            zerocount++;
+        }
+        while(zerocount>k)
+        {
+            if(arr[left]==0)
+            {
+                zerocount--;
+            }
+            printf("%d ",zerocount);
+            left++;
+        }
+        maxones=max(maxones,right - left + 1);
+        right++;
+    }
+    return maxones;
+}
+int main()
+{
+    int arr[]={1,1,0,0,1,1,1,0,1,0,1,1,1};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    int k=2;
+    int result=maxconsecutiveones(arr,n,k);
+    printf("%d",result);
+}
