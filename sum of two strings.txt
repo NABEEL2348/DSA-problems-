@@ -1,0 +1,36 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+char *add(char* str1,char* str2)
+{
+    int len1=strlen(str1);
+    int len2=strlen(str2);
+    int len=len1 >len2 ? len1 : len2;
+    char *result=(char*)malloc((len+2)*sizeof(char));
+    
+    int carry=0;
+    int i=len1-1;
+    int j=len2-1;
+    int k=len;
+    result[k+1]='\0';
+    while( i>=0 || j>=0 || carry >0)
+    {
+        int x=(i>=0) ? str1[i]-'0': 0;
+        int y=(j>=0) ? str2[j]-'0': 0;
+        int sum=x+y+carry;
+        carry =sum/10;
+        result[k]=(sum%10)+'0';
+        i--;
+        j--;
+        k--;
+    }
+    return result;
+}
+int main()
+{
+    char str1[]="12345678901234567890";
+    char str2[]="98765432109876543210";
+    char *result=add(str1,str2);
+    printf("the result of add strings is %s",result);
+    free(result);
+}
