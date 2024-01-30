@@ -1,0 +1,36 @@
+#include<stdio.h>
+int comparebit(int num,int index)
+{
+    return (num>>index)&1;
+    
+}
+int compare(int a,int b,int index,int count)
+{
+    return (a!=b)?1:-1;
+    
+}
+int flipbit(int a,int b,int n)
+{
+    int count=0;
+    for(int i=0;i<n;i++)
+    {
+        int bita=comparebit(a,i);
+        int bitb=comparebit(b,i);
+        if(i<5)
+        {
+            if(compare(bita,bitb,i,count)==1)
+            {
+                count++;
+            }
+        }
+    }
+    return count;
+    
+}
+int main()
+{
+    int a,b,n;
+    scanf("%d%d",&a,&b);
+    n=sizeof(a)*8;
+    printf("%d",flipbit(a,b,n));
+}
