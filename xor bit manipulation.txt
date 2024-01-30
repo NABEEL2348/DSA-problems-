@@ -1,0 +1,28 @@
+#include<stdio.h>
+int computerxor(int n)
+{
+    if(n%4==0)
+    {
+        return n;
+    }
+    if(n%4==1)
+    {
+        return 1;
+    }
+    if(n%4==2)
+    {
+        return n + 1;
+    }
+     return 0;
+}
+int xorbit(int l,int r)
+{
+    return computerxor(r)^computerxor(l-1);
+}
+int main()
+{
+    int l,r;
+    scanf("%d%d",&l,&r);
+    printf("%d",xorbit(l,r));
+    
+}
