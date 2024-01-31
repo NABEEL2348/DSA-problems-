@@ -1,0 +1,20 @@
+#include<stdio.h>
+int Setbit(int num,int i)
+{
+    return (num & (1<<i))!=0;
+}
+int main()
+{
+    int num=14;
+    for(int i=0;i<4;i++)
+    {
+        if(Setbit(num,i)!=0)
+        {
+            printf("the set bit in position in %d is set\n",i);
+        }
+        else
+        {
+            printf("the position bit of %d is unset\n",i);
+        }
+    }
+}
