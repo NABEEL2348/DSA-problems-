@@ -1,0 +1,64 @@
+//greater
+#include<stdio.h>
+int nextgreater(int arr[],int n)
+{
+    for(int i=0;i<n;i++)
+    {
+        int nextindex=-1;
+        for(int j=i+1;j<n;j++)
+        {
+            if(arr[i]<arr[j])
+            {
+                nextindex=arr[j];
+                break;
+            }
+        }
+        if(nextindex!=-1)
+        {
+            printf("the next greater element of an element %d is %d\n",arr[i],nextindex);
+        }
+        else
+        {
+            printf("the %d has no greater element\n",arr[i]);
+        }
+    }
+}
+int main()
+{
+    int arr[]={4,5,2,10,8};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    nextgreater(arr,n);
+}
+
+smaller:
+#include<stdio.h>
+int nextgreater(int arr[],int n)
+{
+    for(int i=0;i<n;i++)
+    {
+        int nextindex=-1;
+        for(int j=i+1;j<n;j++)
+        {
+            if(arr[i]>arr[j])
+            {
+                nextindex=arr[j];
+                break;
+            }
+        }
+        if(nextindex!=-1)
+        {
+            printf("the next smaller element of an element %d is %d\n",arr[i],nextindex);
+        }
+        else
+        {
+            printf("the %d has no greater element\n",arr[i]);
+        }
+    }
+}
+int main()
+{
+    int arr[]={4,5,2,10,8};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    nextgreater(arr,n);
+}
+
