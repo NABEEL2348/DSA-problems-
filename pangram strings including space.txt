@@ -1,0 +1,29 @@
+#include<stdio.h>
+#include<string.h>
+
+int panagram(char *str, int n) {
+    int count = 0;
+    int hash[256] = {0};
+
+    for (int i = 0; i < n; i++) {
+        if (hash[str[i]] == 0) {
+            hash[str[i]]++;
+            count++;
+        }
+    }
+
+    return count;
+}
+
+int main() {
+    char str[] = "pack my box with five dozen liquor jugs";
+    int n = strlen(str);
+
+    if (panagram(str, n) == 27) {
+        printf("It is a pangram.\n");
+    } else {
+        printf("It is not a pangram.\n");
+    }
+
+    return 0;
+}
