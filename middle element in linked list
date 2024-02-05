@@ -1,0 +1,57 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int num;
+    struct node *next,*prev;
+};
+int create(struct node **head,int data)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->next=NULL;
+    newnode->num=data;
+    if(*head==NULL)
+    {
+        *head=newnode;
+    }
+    else
+    {
+        struct node *tptr=*head;
+        while(tptr->next!=NULL)
+        {
+            tptr=tptr->next;
+        }
+        tptr->next=newnode;
+    }
+}
+int display(struct node *head)
+{
+    struct node *tptr=head;
+    while(tptr!=NULL)
+    {
+        printf("%d ",tptr->num);
+        tptr=tptr->next;
+    }
+}
+int middleelement(struct node *head)
+{
+    struct node *tortouise=head;
+    struct node *tail=head;
+    while(tail !=NULL && tortouise!=NULL && tortouise->next!=NULL) // to avoid segementation fault incase of tortouise->nnext element 
+    {
+        tail=tail->next;
+        tortouise=tortouise->next->next;
+    }
+    printf("%d",tail->num);
+}
+int main()
+{
+    struct node *head=NULL;
+    create(&head,50);
+    create(&head,60);
+    create(&head,70);
+    create(&head,80);
+    display(head);
+    middleelement(head);
+    
+}
