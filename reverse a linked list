@@ -1,0 +1,61 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+    int num;
+    struct node* next;
+    
+};
+int create(struct node **head,int num)
+{
+    struct node* newnode=(struct node *)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->next=NULL;
+    if(*head==NULL)
+    {
+        *head=newnode;
+    }
+    else
+    {
+        struct node *tptr=*head;
+        while(tptr->next!=NULL)
+        {
+            tptr=tptr->next;
+        }
+        tptr->next=newnode;
+    }
+    
+}
+int reverse(struct node **head)
+{
+    struct node* temp=*head;
+    struct node* prev=NULL;
+    struct node* front=NULL;
+    while(temp!=NULL)
+    {
+        front = temp->next;
+        temp->next=prev;
+        prev=temp;
+        temp=front;
+    }
+    *head=prev;
+}
+int display(struct node *head)
+{
+    struct node *tptr=head;
+    while(tptr!=NULL)
+    {
+        printf("%d ",tptr->num);
+        tptr=tptr->next;
+    }
+}
+int main()
+{
+    struct node* head=NULL;
+    create(&head,23);
+    create(&head,34);
+    create(&head,45);
+    display(head);
+    reverse(&head);
+    printf("\nafter reverse:");
+    display(head);
+}
