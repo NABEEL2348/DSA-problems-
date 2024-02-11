@@ -1,90 +1,59 @@
 #include<stdio.h>
 #include<stdlib.h>
-
-struct node {
+struct node{
     int num;
-    struct node *prev, *next;
+    struct node *next;
 };
-
-// Function to create a new node and add it to the end of the linked list
-void create(struct node **head, int x) {
-    struct node *newnode = (struct node *)malloc(sizeof(struct node));
-    newnode->num = x;
-    newnode->next = NULL;
-    if (*head == NULL) {
-        *head = newnode;
-    } else {
-        struct node *tptr = *head;
-        while (tptr->next != NULL) {
-            tptr = tptr->next;
+int create(struct node **head,int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->next=NULL;
+    if(*head==NULL)
+    {
+        *head=newnode;
+    }
+    else
+    {
+        struct node *tptr=*head;
+        while(tptr->next!=NULL)
+        {
+            tptr=tptr->next;
         }
-        tptr->next = newnode;
+        tptr->next=newnode;
     }
 }
-
-// Function to display the linked list elements
-void display(struct node *head) {
-    struct node *tptr = head;
-    while (tptr != NULL) {
-        printf("%d ", tptr->num);
-        tptr = tptr->next;
+int display(struct node *head)
+{
+    struct node *tptr=head;
+    while(tptr!=NULL)
+    {
+        printf("%d ",tptr->num);
+        tptr=tptr->next;
     }
 }
-
-// Function to reverse the linked list in groups of size k
-struct node *isreverse(struct node *head, int k) {
-    int count = 0;
-    struct node *tptr = head;
-    struct node *prev = NULL;
-    struct node *next = NULL;
-
-    // Count the number of nodes in the linked list
-    while (tptr != NULL) {
-        tptr = tptr->next;
-        count++;
+struct node *reverserecursion(struct node *head)
+{
+    struct node *front=NULL;
+    if(head==NULL || head->next == NULL)
+    {
+        return head;
     }
-
-    struct node *curr = head;
-    // Reverse the first group of k nodes
-    for (int i = 0; i < k && curr != NULL; i++) {
-        next = curr->next;
-        curr->next = prev;
-        prev = curr;
-        curr = next;
-    }
-
-    // Link the reversed group to the next reversed group
-    if (next != NULL) {
-        head->next = isreverse(curr, k);
-    }
-
-    return prev; // Return the new head of the reversed group
+    struct node *newnode=(reverserecursion(head->next));
+    
+    front=head->next;
+    front->next=head;
+    head->next=NULL;
+    return newnode;
 }
-
-int main() {
-    struct node *head = NULL;
-    int k = 3;
-    create(&head, 20);
-    create(&head, 30);
-    create(&head, 40);
-
-    printf("Original Linked List: ");
+int main()
+{
+    struct node* head=NULL;
+    create(&head,23);
+    create(&head,43);
+    create(&head,33);
+    create(&head,53);
     display(head);
-    printf("\n");
-
-    head = isreverse(head, k);
-
-    printf("Reversed Linked List in groups of %d: ", k);
+    head=reverserecursion(head);
     display(head);
-    printf("\n");
-
-    // Free the memory allocated for the linked list
-    struct node *temp;
-    while (head != NULL) {
-        temp = head;
-        head = head->next;
-        free(temp);
-    }
-
-    return 0;
 }
