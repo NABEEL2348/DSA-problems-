@@ -35,10 +35,6 @@ int display(struct node *head)
 }
 bool iscyclic(struct node *head)
 {
-    if(head==NULL || head->next==NULL)
-    {
-        return false;
-    }
     struct node *slow=head->next;
     struct node *fast=head->next->next;
     while(slow!=NULL && fast->next!=NULL && fast!=NULL)
@@ -59,7 +55,7 @@ int main()
     create(&head,80);
     create(&head,90);
     display(head);
-    head->next->next=head;//70 80 90 70 80 90 is head 70 80 90 is head
+    //70 80 90 70 80 90 is head 70 80 90 is head
     if(iscyclic(head))
     {
         printf("it is cyclic linked list");
