@@ -361,3 +361,87 @@ int main()
     }
     printf("%d",sum);
 }
+
+//structures
+#include<stdio.h>
+struct node{
+    int p;
+    int q;
+    char a;
+};
+int main()
+{
+    struct node s1 = {1,2,'r'};
+    printf("%d %d %c",s1.p,s1.q,s1.a);
+}
+
+
+
+#include<stdio.h>
+struct node{
+    int p;
+    int q;
+    char a;
+};
+int main()
+{
+    struct node s1[2];
+    for(int i=0;i<2;i++)
+    {
+        scanf("%d %d %c",&s1[i].p,&s1[i].q,&s1[i].a);
+    }
+    for(int i=0;i<2;i++)
+    {
+        printf("%d %d %c \n",s1[i].p,s1[i].q,s1[i].a);
+    }
+}
+
+
+#include<stdio.h>
+typedef struct node{    //typedef is used to create a structure at one or is used to create a datatype as the user preference for example #define int INTEGER--HERE INT DATA TYPE IS CREATED AS INTEGER
+    int p;
+    int q;
+    char a;
+}node;
+int main()
+{
+    node s1[2];
+    for(int i=0;i<2;i++)
+    {
+        scanf("%d %d %c",&s1[i].p,&s1[i].q,&s1[i].a);
+    }
+    for(int i=0;i<2;i++)
+    {
+        printf("%d %d %c \n",s1[i].p,s1[i].q,s1[i].a);
+    }
+}
+
+#include<stdio.h>
+
+union node {
+    int p;
+    int q;
+    char a;
+};
+
+int main() {
+    union node s1[2];
+    for(int i = 0; i < 2; i++) {
+        scanf("%d %d %c", &s1[i].p, &s1[i].q, &s1[i].a);
+    }
+    for(int i = 0; i < 2; i++) {
+        printf("%d %d %c \n", s1[i].p, s1[i].q, s1[i].a);
+    }
+    return 0;
+}
+//union is created in the same memory location for all the data type inside one structures
+
+#include<stdio.h>
+enum bool{false,true}; //enumerator can be used for integral constraint numbers
+int main()             //unassigned values will takes previous value+1;
+{                      //reassigning to same variable cannot be used
+    enum bool var;
+    var=true;
+    printf("%d",var);
+    return 0;
+}
