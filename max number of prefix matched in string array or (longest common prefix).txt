@@ -1,0 +1,54 @@
+#include<stdio.h>
+#include<string.h>
+int compare(char *temp,char str[])
+{
+    int n;
+    int count=0;
+    int n1=strlen(temp);
+    int n2=strlen(str);
+    if(n1>n2)
+    {
+        n=n1;
+    }
+    else
+    {
+        n=n2;
+    }
+    for(int i=0;i<n;i++)
+    {
+        if(temp[i]!=str[i])
+        {
+            break;
+        }
+        else
+        {
+            count++;
+        }
+    }
+    return count;
+}
+int l(char *str[],int n)
+{
+    int maxlength=0;
+    int result=0;
+    for(int i=0;i<1;i++)
+    {
+        char *temp=str[0];
+        for(int j=1;j<n;j++)
+        {
+            int result=compare(temp,str[j]);
+            if(result>maxlength)
+            {
+                maxlength=result;
+            }
+        }
+    }
+    return maxlength;
+}
+int main()
+{
+    char *str[]={"flower","flaws","flow"};
+    int n=sizeof(str)/sizeof(str[0]);
+    printf("max number of prefix matched is %d",l(str,n));
+    
+}
