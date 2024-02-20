@@ -1,0 +1,33 @@
+#include<stdio.h>
+#include<string.h>
+int main()
+{
+    char str[]="nabeel";
+    char str1[]="sano";
+    int n;
+    int count=0;
+    int o;
+    if(strlen(str)>strlen(str1))
+    {
+        n=strlen(str1);
+        o=strlen(str)-strlen(str1);
+    }
+    else
+    {
+        n=strlen(str);
+        o=strlen(str1)-strlen(str);
+    }
+    for(int i=0;i<n;i++)
+    {
+        if(str[i]==str1[i])
+        {
+            continue;
+        }
+        else
+        {
+            count++;
+        }
+    }
+    printf("%d",count*2+o);
+    return 0;
+}
