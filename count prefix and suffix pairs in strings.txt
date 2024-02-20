@@ -1,0 +1,36 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdbool.h>
+int countcommon1(char *temp,char str[])
+{
+    int n=strlen(temp);
+    for(int i=0;i<n;i++)
+    {
+        if(temp[i]!=str[i])
+        {
+            return 0;
+        }
+    }
+    return 1;
+}
+int countcommon(char *str[],int n)
+{
+    int count1=0;
+    for(int i=0;i<n;i++)
+    {
+        char *temp=str[i];
+       for(int j=i+1;j<n;j++)
+       {
+           if(countcommon1(temp,str[j])==1){
+               count1++;
+           }
+       }
+    }
+    return count1++;
+}
+int main()
+{
+    char *str[]={"pa","papa","ma","mama"};
+    int n=sizeof(str)/sizeof(str[0]);
+    printf("%d ",countcommon(str,n));
+}
