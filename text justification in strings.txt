@@ -1,0 +1,57 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+char check(int start,int n,char str1[],char *str[],int l)
+{
+    if(l-1==n)
+    {
+        for(int i=start;i<n;i++)
+        {
+            printf("%s ",str[i]);
+        }
+    }
+    else
+    {
+        for(int i=start;i<n;i++)
+        {
+            printf("%s ",str[i]);
+        }
+    }
+    printf("\n");
+}
+char textjustification(char *str[],int n,int width,char str1[])
+{
+    char *str3=(char *)malloc(sizeof(char)*100);
+    int sumlength=0;
+    int start=0;
+    for(int i=0;i<n;i++)
+    {
+        if(sumlength+strlen(str[i])<=width)
+        {
+            sumlength=sumlength+strlen(str[i])+1;
+            if(i==n-1)
+            {
+                check(start,i,str1,str,n);
+            }
+        }
+        else 
+        {
+            check(start,i,str1,str,n);
+            start=i;
+            sumlength=0;
+            sumlength=sumlength+strlen(str[i])+1;
+            if(i==n-1)
+            {
+                printf("%s ",str[i]);
+            }
+        }
+    }
+}
+int main()
+{
+    char *str[]={"Science","is","what","we","understand","well","enough","to","explain","to","a","computer.","Art","is","everything","else","we","do"};
+    int n=sizeof(str)/sizeof(str[0]);
+    int width=20;
+    char str1[100];
+    textjustification(str,n,width,str1);
+}
