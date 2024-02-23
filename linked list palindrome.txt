@@ -1,0 +1,91 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
+struct node{
+    int num;
+    struct node *next;
+};
+int create(struct node **head,int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->next=NULL;
+    if(*head==NULL)
+    {
+        *head=newnode;
+    }
+    else 
+    {
+        struct node *tptr=*head;
+        while(tptr->next!=NULL)
+        {
+            tptr=tptr->next;
+        }
+        tptr->next=newnode;
+    }
+}
+int display(struct node *head)
+{
+    struct node *tptr=head;
+    while(tptr!=NULL)
+    {
+        printf("%d ",tptr->num);
+        tptr=tptr->next;
+    }
+}
+struct node *isreverse(struct node *head)
+{
+    struct node *front=NULL;
+    if(head==NULL || head->next==NULL)
+    {
+        return head;
+    }
+    struct node *newnode=(isreverse(head->next));
+    front=head->next;
+    front->next=head;
+    head->next=NULL;
+    return newnode;
+    
+}
+bool ispalindrome(struct node *head)
+{
+    struct node *slow=head;
+    struct node *fast=head;
+    struct node *first=head;
+    while(fast->next!=NULL ||fast->next!=NULL)
+    {
+        slow=slow->next;
+        fast=fast->next->next;
+    }
+    struct node *newnode=isreverse(slow->next);
+    while(newnode!=NULL)
+    {
+        if(first->num != newnode->num)
+        {
+            isreverse(newnode);
+            
+            return false;
+        }
+        first=first->next;
+        newnode=newnode->next;
+    }
+    isreverse(newnode);
+    return true;
+}
+int main()
+{
+    struct node *head=NULL;
+    create(&head,10);
+    create(&head,20);
+    create(&head,30);
+    create(&head,20);
+    create(&head,10);
+    if(ispalindrome(head)==1)
+    {
+        printf("it is palindrome");
+    }
+    else
+    {
+        printf("this is not a palindrome");
+    }
+}
