@@ -1,0 +1,64 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct treenode{
+    int num;
+    struct treenode *left;
+    struct treenode *right;
+};
+struct treenode *create(int num)
+{
+    struct treenode *newnode=(struct treenode*)malloc(sizeof(struct treenode));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+    
+}
+struct treenode *insert(struct treenode *root,int num)
+{
+    if(root==NULL)
+    {
+        return create(num);
+    }
+    if(root->left==NULL)
+    {
+        root->left=insert(root->left,num);
+    }
+    else if(root->right==NULL)
+    {
+        root->right=insert(root->right,num);
+    }
+    else
+    {
+        if(rand()%2==0)
+        {
+            root->left=insert(root->left,num);
+        }
+        else
+        {
+            root->right=insert(root->right,num);
+        }
+    }
+    return root;
+    
+}
+void inorder(struct treenode *root)
+{
+    if(root!=NULL)
+    {
+       inorder(root->left);
+       printf("%d ",root->num);
+       inorder(root->right);
+    }
+}
+int main()
+{
+    struct treenode *root=NULL;
+    root=insert(root,10);
+    root=insert(root,20);
+    root=insert(root,30);
+    root=insert(root,40);
+    root=insert(root,50);
+    root=insert(root,60);
+    inorder(root);
+}
