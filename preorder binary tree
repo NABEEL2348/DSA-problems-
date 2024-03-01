@@ -1,0 +1,61 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+    int num;
+    struct node *left,*right;
+};
+struct node *create(int num)
+{
+    struct node *newnode=(struct node *)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+struct node *insert(struct node *root,int num)
+{
+    if(root==NULL)
+    {
+        return create(num);
+    }
+    if(root->left==NULL)
+    {
+        root->left=insert(root->left,num);
+    }
+    else if(root->right==NULL)
+    {
+        root->right=insert(root->right,num);
+    }
+    else
+    {
+        if(rand()%2==0)
+        {
+            root->left=insert(root->left,num);
+        }
+        else
+        {
+            root->right=insert(root->right,num);
+        }
+    }
+    return root;
+}
+void preorder(struct node *root)
+{
+    if(root!=NULL)
+    {
+        preorder(root->left);
+        printf("%d ",root->num);
+        preorder(root->right);
+    }
+}
+int main()
+{
+    struct node *root=NULL;
+    root=insert(root,10);
+    root=insert(root,20);
+    root=insert(root,30);
+    root=insert(root,40);
+    root=insert(root,50);
+    root=insert(root,60);
+    preorder(root);
+}
