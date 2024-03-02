@@ -1,0 +1,53 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
+struct node{
+    int num;
+    struct node *left,*right;
+};
+struct node *createnode(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+bool isidentical(struct node *root,struct node *root1)
+{
+    if(root==NULL && root1==NULL)
+    {
+        return 1;           //this is the base condition so without this the recursion not works
+    }
+    if(root==NULL || root1==NULL)
+    {
+        return 0;
+    }
+    return (root->num == root1->num && isidentical(root->left,root1->left) && isidentical(root->right,root1->right));
+}
+int main()
+{
+    struct node *root=createnode(1);
+    root->left=createnode(2);
+    root->right=createnode(3);
+    root->left->left=createnode(4);
+    root->left->right=createnode(5);
+    root->right->left=createnode(6);
+    root->right->right=createnode(7);
+    
+    struct node *root1=createnode(1);
+    root1->left=createnode(2);
+    root1->right=createnode(3);
+    root1->left->left=createnode(4);
+    root1->left->right=createnode(5);
+    root1->right->left=createnode(6);
+    root1->right->right=createnode(7);
+    if(isidentical(root,root1)==1)
+    {
+        printf("the both tree is identical");
+    }
+    else
+    {
+        printf("the both tree not identical");
+    }
+}
