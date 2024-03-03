@@ -1,0 +1,79 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
+struct node{
+    int num;
+    struct node *left,*right;
+};
+int max(int a,int b)
+{
+    return (a>b)?a:b;
+}
+struct node *createnode(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+int height(struct node *root)
+{
+    if(root==NULL)
+    {
+        return 0;
+    }
+    int leftheight=height(root->left);
+    int rightheight=height(root->right);
+    return 1+max(leftheight,rightheight);
+}
+bool isbalanced(struct node *root)
+{
+    if(root==NULL)
+    {
+        return true;
+    }
+    int leftheight=height(root->left);
+    int rightheight=height(root->right);
+    
+    if((abs(leftheight-rightheight)<=1) && isbalanced(root->left) && isbalanced(root->right))
+    {
+        return true;
+    }
+    return false;
+}
+int main()
+{
+    struct node *root=createnode(1);
+    root->left=createnode(2);
+    root->right=createnode(3);
+    root->left->left=createnode(4);
+    root->left->right=createnode(5);
+    root->right->left=createnode(6);
+    root->right->right=createnode(7);
+    if(isbalanced(root))
+    {
+        printf("it is balanced tree");
+    }
+    else
+    {
+        printf("not a balanced tree");
+    }
+    printf("\n");
+    struct node *root1 = createnode(1);
+    root1->left = createnode(2);
+    root1->right = createnode(3);
+    root1->left->left = createnode(4);
+    root1->left->left->left = createnode(5); // This line makes it unbalance
+    
+    if(isbalanced(root1))
+    {
+        printf("it is balanced tree");
+    }
+    else
+    {
+        printf("not a balanced tree");
+    }
+
+    
+}
