@@ -1,0 +1,75 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+    int num;
+    struct node *prev,*next;
+};
+int create(struct node **head,int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->next=NULL;
+    newnode->prev=NULL;
+    newnode->num=num;
+    if(*head==NULL)
+    {
+        *head=newnode;
+    }
+    else
+    {
+        struct node *tptr=*head;
+        while(tptr->next!=NULL)
+        {
+            tptr=tptr->next;
+        }
+        newnode->prev=tptr;
+        tptr->next=newnode;
+    }
+}
+struct node *deletealloccurances(struct node *head,int num)
+{
+    struct node *tptr=head;
+    while(tptr!=NULL)
+    {
+        if(tptr->num==num)
+        {
+            if(tptr==head)
+            {
+                head=head->next;
+            }
+            struct node *prevnode=tptr->prev;
+            struct node *nextnode=tptr->next;
+            if(prevnode) prevnode->next=nextnode;
+            if(nextnode) nextnode->prev=prevnode;
+            tptr=nextnode;
+        }
+        else
+        {
+            tptr=tptr->next;
+        }
+    }
+    return head;
+}
+int display(struct node *head)
+{
+    struct node *tptr=head;
+    while(tptr->next!=NULL)
+    {
+        printf("%d ",tptr->num);
+        tptr=tptr->next;
+    }
+}
+
+int main()
+{
+    struct node *head=NULL;
+    create(&head,10);
+    create(&head,4);
+    create(&head,10);
+    create(&head,3);
+    create(&head,5);
+    create(&head,20);
+    create(&head,20);
+    head=deletealloccurances(head,10);
+    display(head);
+    
+}
