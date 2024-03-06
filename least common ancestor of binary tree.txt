@@ -1,0 +1,47 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+    int num;
+    struct node *left,*right;
+};
+struct node *create(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+struct node *leastcommonancestor(struct node *root,int x,int y)
+{
+    if(root==NULL|| root->num == x || root->num==y)
+    {
+        return root;
+    }
+    struct node *lcaleft=leastcommonancestor(root->left,x,y);
+    struct node *rightlca=leastcommonancestor(root->right,x,y);
+    if(lcaleft&&rightlca )
+    {
+        return root;
+    }
+    return (lcaleft!=NULL)?lcaleft:rightlca;
+}
+int main()
+{
+    struct node *root=create(1);
+    root->left=create(2);
+    root->right=create(3);
+    root->left->left=create(4);
+    root->left->right=create(5);
+    root->right->left=create(6);
+    root->right->right=create(7);
+    root->right->right->right=create(8);
+    int x=6;
+    int y=8;
+    struct node *lca=leastcommonancestor(root,x,y);
+    if(lca)
+    {
+        printf("%d",lca->num);
+    }
+    
+}
