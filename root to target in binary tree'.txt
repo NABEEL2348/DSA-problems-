@@ -1,0 +1,43 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+    int num;
+    struct node *left,*right;
+};
+struct node *create(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+int printrootview(struct node *root,int target)
+{
+    if(root==NULL)
+    {
+        return 0;
+    }
+    
+    if(root->num == target || printrootview(root->left,target) || printrootview(root->right,target))//inorder traversal
+    {
+        printf("%d ",root->num);
+        return 1;
+    }
+    return 0;
+}
+int main()
+{
+    struct node *root=create(1);
+    root->left=create(2);
+    root->right=create(3);
+    root->left->left=create(4);
+    root->left->right=create(5);
+    root->right->left=create(6);
+    root->right->right=create(8);
+    root->right->right->left=create(7);
+    int target=7;
+    printf("the nodes from root to target is:");
+    printrootview(root,target);
+    
+}
