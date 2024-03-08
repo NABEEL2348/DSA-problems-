@@ -1,0 +1,52 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<limits.h>
+#include<math.h>
+struct node {
+    int num;
+    struct node *left,*right;
+};
+int max(int a,int b)
+{
+    return (a>b)?a:b;
+}
+struct node *newNode(int num)
+{
+    struct node *newNode=(struct node *)malloc(sizeof(struct node));
+    newNode->num=num;
+    newNode->left=NULL;
+    newNode->right=NULL;
+    return newNode;
+}
+int sumpathutil(struct node *root,int *maxsumpath)
+{
+    if(root==NULL)
+    {
+        return 0;
+    }
+    int leftmax=max(0,sumpathutil(root->left,maxsumpath));
+    int rightmax=max(0,sumpathutil(root->right,maxsumpath));
+    *maxsumpath=max(*maxsumpath,leftmax+rightmax+root->num);
+    return max(leftmax,rightmax)+root->num;
+}
+int maxsumpath(struct node *root)
+{
+    if(root==NULL)
+    {
+        return 0;
+    }
+    
+    int maxsum=INT_MIN;
+    sumpathutil(root,&maxsum);
+    return maxsum;
+}
+int main()
+{
+    struct node *root=newNode(-10);
+    root->left = newNode(9);
+    root->right = newNode(20);
+    root->right->left = newNode(15);
+    root->right->right = newNode(7);
+    printf("the maximum sum path is %d",maxsumpath(root));
+
+}
