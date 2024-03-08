@@ -1,0 +1,71 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
+struct node{
+    int num;
+    struct node *left,*right;
+};
+struct node *create(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->left=NULL;
+    newnode->right=NULL;
+    newnode->num=num;
+    return newnode;
+}
+bool ismirror(struct node *root1,struct node *root2)
+{
+    if(root1==NULL && root2==NULL)
+    {
+        return true;
+    }
+    if(root1==NULL || root2==NULL)
+    {
+        return false;
+    }
+    return (root1->num==root2->num) && ismirror(root1->left,root2->right) && ismirror(root1->right,root2->left);
+    
+}
+bool issymmentric(struct node *root)
+{
+    if(root==NULL)
+    {
+        return true;
+    }
+    return ismirror(root->left,root->right);
+}
+int main()
+{
+    struct node *root=create(1);
+    root->left=create(2);
+    root->right=create(2);
+    root->left->left=create(4);
+    root->right->right=create(4);
+    root->left->right=create(5);
+    root->right->left=create(5);
+    if(issymmentric(root))
+    {
+        printf("the given tree is symmentric");
+    }
+    else
+    {
+        printf("the given tree is not symmentric");
+    }
+    printf("\n");
+    struct node *root1=create(1);
+    root1->left=create(2);
+    root1->right=create(3);
+    root1->left->left=create(4);
+    root1->right->right=create(4);
+    root1->left->right=create(5);
+    root1->right->left=create(5);
+    if(issymmentric(root1))
+    {
+        printf("the given tree is symmentric");
+    }
+    else
+    {
+        printf("the given tree is not symmentric");
+    }
+    
+}
