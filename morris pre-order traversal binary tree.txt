@@ -1,0 +1,63 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+    int num;
+    struct node *left,*right;
+};
+struct node *create(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+void morrispreorder(struct node *root)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    struct node *prev,*curr;
+    curr=root;
+    while(curr!=NULL)
+    {
+        if(curr->left==NULL)
+        {
+            printf("%d ",curr->num);
+            curr=curr->right;
+        }
+        else
+        {
+            prev=curr->left;
+            while(prev->right!=NULL && prev->right!=curr)
+            {
+                prev=prev->right;
+            }
+                if(prev->right==NULL)
+                {
+                    printf("%d ",curr->num);
+                    prev->right=curr;
+                    curr=curr->left;
+                }
+                else
+                {
+                    prev->right=NULL;
+                    curr=curr->right;
+                }
+            
+        }
+        
+    }
+}
+int main()
+{
+    struct node *root=create(1);
+    root->left=create(2);
+    root->left->left=create(4);
+    root->left->right=create(5);
+    root->left->right->right=create(6);
+    root->right=create(3);
+    printf("morris pre-order traversal:");
+    morrispreorder(root);
+}
