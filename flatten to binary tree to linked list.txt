@@ -1,0 +1,58 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+    int num;
+    struct node *left,*right;
+};
+struct node *create(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+void flatten(struct node *root)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    
+    if(root->left)
+    {
+       struct node *rightnnode=root->right;
+       root->right=root->left;
+       root->left=NULL;
+       
+       struct node *rightmost=root->right;
+       while(rightmost->right!=NULL)
+       {
+           rightmost=rightmost->right;
+       }
+       rightmost->right=rightnnode;
+    }
+    flatten(root->right);
+    
+}
+void printlist(struct node *root)
+{
+    struct node *tptr=root;
+    while(tptr!=NULL)
+    {
+        printf("%d ",tptr->num);
+        tptr=tptr->right;
+    }
+}
+int main()
+{
+    struct node *root=create(1);
+    root->left=create(2);
+    root->left->left=create(3);
+    root->left->right=create(4);
+    root->right=create(5);
+    root->right->right=create(6);
+    flatten(root);
+    printf("flatten the binary to linked list:");
+    printlist(root);
+}
