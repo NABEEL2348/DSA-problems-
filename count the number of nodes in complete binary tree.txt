@@ -1,0 +1,62 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+    int num;
+    struct node *left,*right;
+};
+struct node *create(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+int leftheight(struct node *root)
+{
+    int count=1;
+    while(root)
+    {
+        count++;
+        root=root->left;
+    }
+    return count;
+}
+int rightheight(struct node *root)
+{
+    int count=1;
+    while(root)
+    {
+        count++;
+        root=root->right;
+    }
+    return count;
+}
+int countnumberofnodesincompletebinarytree(struct node *root)
+{
+    if(root==NULL)
+    {
+        return 0;
+    }
+    int lh=leftheight(root->left);
+    int rh=rightheight(root->right);
+    
+    if(lh==rh)
+    {
+        return (1<<lh)-1;
+    }
+    return 1+countnumberofnodesincompletebinarytree(root->left)+countnumberofnodesincompletebinarytree(root->right);
+}
+int main()
+{
+    struct node *root=create(1);
+    root->left=create(2);
+    root->right=create(3);
+    root->left->left=create(4);
+    root->left->right=create(5);
+    root->right->left=create(6);
+    root->right->right=create(7);
+    root->right->right->right=create(8);
+    root->right->right->left=create(9);
+    printf("the number of nodes in complete binary tree is :%d",countnumberofnodesincompletebinarytree(root));
+}
