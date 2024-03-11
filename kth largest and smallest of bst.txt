@@ -1,0 +1,97 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+    int num;
+    struct node *left,*right;
+};
+struct node *create(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+struct node *insert(struct node *root,int num)
+{
+    if(root==NULL)
+    {
+        root=create(num);
+    }
+    if(num<root->num)
+    {
+        root->left=insert(root->left,num);
+    }
+    else if(num>root->num)
+    {
+        root->right=insert(root->right,num);
+    }
+    return root;
+}
+void inorder(struct node *root)
+{
+    int count=0;
+    if(root!=NULL)
+    {
+        inorder(root->left);
+        printf("%d ",root->num);
+        inorder(root->right);
+    }
+    
+}
+struct node *kthlargest(struct node *root,int *k)
+{
+    if(root==NULL)
+    {
+        return NULL;
+    }
+    struct node *right=kthlargest(root->right,k);
+    if(right!=NULL)
+    {
+        return right;
+    }
+    (*k)--;
+    if(*k==0)
+    {
+        return root;
+    }
+    return kthlargest(root->left,k);
+}
+struct node *kthsmallest(struct node *root,int *k)
+{
+    if(root==NULL)
+    {
+        return NULL;
+    }
+    struct node *smallest=kthsmallest(root->left,k);
+    if(smallest!=NULL)
+    {
+        return smallest;
+    }
+    (*k)--;
+    if(*k==0)
+    {
+        return root;
+    }
+    return kthsmallest(root->right,k);
+}
+int main()
+{
+    struct node *root=NULL;
+    root = insert(root, 7);
+    insert(root, 10);
+    insert(root, 5);
+    insert(root, 3);
+    insert(root, 6);
+    insert(root, 8);
+    insert(root, 12);
+    inorder(root);
+    int k=3;
+    int p=k;
+    struct node *largest=kthlargest(root,&k);
+    printf("\nthe kth largest is %d ",largest->num);
+    k=p;
+    struct node *smallest=kthsmallest(root,&k);
+    printf("\nthe kth smallest is %d",smallest->num);
+    
+}

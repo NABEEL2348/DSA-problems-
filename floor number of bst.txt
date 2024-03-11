@@ -1,0 +1,77 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+#include<limits.h>
+struct node{
+    int num;
+    struct node *left,*right;
+    
+};
+struct node *create(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+struct node *insert(struct node *root,int num)
+{
+    if(root==NULL)
+    {
+        root=create(num);
+    }
+    if(num<root->num)
+    {
+        root->left=insert(root->left,num);
+    }
+    else if(num>root->num)
+    {
+        root->right=insert(root->right,num);
+    }
+    return root;
+}
+void inorder(struct node *root)
+{
+    if(root!=NULL)
+    {
+        inorder(root->left);
+        printf("%d ",root->num);
+        inorder(root->right);
+    }
+}
+int floornumber(struct node *root,int num)
+{
+    if(root==NULL)
+    {
+        return INT_MAX;
+    }
+    if(root->num==num)
+    {
+        return root->num;
+    }
+    if(num<root->num)
+    {
+        return floornumber(root->left,num);
+    }
+    int floornumber1=floornumber(root->right,num);
+    int ans=(floornumber1<=num)?floornumber1:root->num;
+    return ans;
+    
+}
+int main()
+{
+    struct node* root = NULL;
+    root = insert(root, 7);
+    insert(root, 10);
+    insert(root, 5);
+    insert(root, 3);
+    insert(root, 6);
+    insert(root, 8);
+    insert(root, 12);
+
+    int key=9;
+    printf("\n");
+    printf("the floor number of number %d is %d",key , floornumber(root,key));
+
+}

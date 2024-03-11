@@ -1,0 +1,79 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+    int num;
+    struct node *left,*right;
+};
+struct node *create(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+struct node *insert(struct node *root,int num)
+{
+    if(root==NULL)
+    {
+        root=create(num);
+    }
+    if(num<root->num)
+    {
+        root->left=insert(root->left,num);
+    }
+    else if(num>root->num)
+    {
+        root->right=insert(root->right,num);
+    }
+    return root;
+}
+int inorder(struct node *root)
+{
+    if(root!=NULL)
+    {
+        inorder(root->left);
+        printf("%d ",root->num);
+        inorder(root->right);
+    }
+}
+struct node *lca(struct node *root,int n1,int n2)
+{
+    while(root!=NULL)
+    {
+        if(root->num >n1 && root->num>n2)
+        {
+            root=root->left;
+        }
+        else if(root->num<n1 && root->num <n2)
+        {
+            root=root->right;
+        }
+        else
+        {
+            break;
+        }
+    }
+    return root;
+}
+int main()
+{
+    struct node *root = NULL;
+    root = insert(root, 20);
+    insert(root, 30);
+    insert(root, 25);
+    insert(root, 40);
+    insert(root, 10);
+    insert(root, 45);
+    insert(root, 50);
+    insert(root, 60);
+    inorder(root);
+    int n1,n2;
+    scanf("%d %d",&n1,&n2);
+    printf("\n");
+    struct node *lcaancestor=lca(root,n1,n2);
+    if(lcaancestor)
+    {
+        printf("the lowest common ancestor of %d and %d is %d",n1,n2,lcaancestor->num);
+    }
+}

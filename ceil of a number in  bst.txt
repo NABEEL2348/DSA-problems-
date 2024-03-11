@@ -1,0 +1,75 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+    int num;
+    struct node *left,*right;
+};
+struct node *create(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+struct node *insert(struct node *root,int num)
+{
+    if(root==NULL)
+    {
+        root=create(num);
+    }
+    if(num<root->num)
+    {
+        root->left=insert(root->left,num);
+    }
+    else if(num>root->num)
+    {
+        root->right=insert(root->right,num);
+    }
+    return root;
+}
+void inorder(struct node *root)
+{
+    if(root!=NULL)
+    {
+        inorder(root->left);
+        printf("%d ",root->num);
+        inorder(root->right);
+    }
+}
+int ceilnumber(struct node *root,int key)
+{
+    if(root==NULL)
+    {
+        return -1;
+    }
+    if(root->num==key)
+    {
+        return root->num;
+    }
+    if(key>root->num)
+    {
+        return ceilnumber(root->right,key);
+    }
+    int ceilnumber1=ceilnumber(root->left,key);
+    return (ceilnumber1>=key)?ceilnumber1:root->num;
+}
+int main()
+{
+    struct node *root=insert(root,10);
+    insert(root,5);
+    insert(root,13);
+    insert(root,3);
+    insert(root,6);
+    insert(root,11);
+    insert(root,14);
+    insert(root,2);
+    insert(root,4);
+    insert(root,9);
+    
+    int key=8;
+    printf("the ceil of given number is :%d ",ceilnumber(root,key));
+    printf("\n");
+    
+    
+}
