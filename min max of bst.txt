@@ -1,0 +1,74 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+    int num;
+    struct node *left,*right;
+};
+struct node *create(int num)
+{
+    struct node *newnode=(struct node *)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+struct node *insert(struct node *root,int num)
+{
+    if(root==NULL)
+    {
+        root=create(num);
+    }
+    if(num<root->num)
+    {
+        root->left=insert(root->left,num);
+    }
+    else if(num>root->num)
+    {
+        root->right=insert(root->right,num);
+    }
+    return root;
+}
+void inorder(struct node *root)
+{
+    if(root!=NULL)
+    {
+        inorder(root->left);
+        printf("%d ",root->num);
+        inorder(root->right);
+    }
+}
+int min(struct node *root)
+{
+    struct node *tptr=root;
+    
+    while(tptr->left!=NULL)
+    {
+        tptr=tptr->left;
+    }
+    printf("min element is :%d ",tptr->num);
+}
+int max(struct node *root)
+{
+    struct node *tptr=root;
+    
+    while(tptr->right!=NULL)
+    {
+        tptr=tptr->right;
+    }
+    printf("min element is :%d ",tptr->num);
+}
+int main()
+{
+    struct node *root=insert(root,10);
+    insert(root,20);
+    insert(root,12);
+    insert(root,30);
+    insert(root,50);
+    insert(root,40);
+    printf("the element in bst:");
+    inorder(root);
+    printf("\n");
+    min(root);
+    printf("\n");
+    max(root);
+}
