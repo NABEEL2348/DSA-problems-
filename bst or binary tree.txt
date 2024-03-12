@@ -1,0 +1,78 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
+#include<limits.h>
+struct node{
+    int num;
+    struct node *left,*right;
+};
+struct node *create(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+struct node *insert(struct node *root,int num)
+{
+    if(root==NULL)
+    {
+        root=create(num);
+    }
+    if(num<root->num)
+    {
+        root->left=insert(root->left,num);
+    }
+    else if(num>root->num)
+    {
+        root->right=insert(root->right,num);
+    }
+    return root;
+}
+int inorder(struct node *root)
+{
+    if(root!=NULL)
+    {
+        inorder(root->left);
+        printf("%d ",root->num);
+        inorder(root->right);
+    }
+}
+bool isbstutil(struct node *root,int min,int max)
+{
+    if(root==NULL)
+    {
+        return true;
+    }
+    if(root->num<min || root->num>max)
+    {
+        return false;
+    }
+    
+    return isbstutil(root->left,min,root->num-1)&&isbstutil(root->right,root->num+1,max);
+}
+bool isbst(struct node *root)
+{
+    return isbstutil(root,INT_MIN,INT_MAX);
+}
+int main()
+{
+    struct node *root=insert(root,4);
+    insert(root,2);
+    insert(root,6);
+    insert(root,1);
+    insert(root,3);
+    insert(root,5);
+    insert(root,7);
+    inorder(root);
+    printf("\n");
+    if(isbst(root))
+    {
+        printf("it is a binary search tree");
+    }
+    else
+    {
+        printf("it is binary tree");
+    }
+}
