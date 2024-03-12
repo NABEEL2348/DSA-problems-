@@ -1,0 +1,68 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+    int num;
+    struct node *left,*right;
+};
+struct node *create(int num)
+{
+    struct node *newnode=(struct node *)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+struct node *insert(struct node *root,int num)
+{
+    if(root==NULL)
+    {
+        root=create(num);
+    }
+    if(num<root->num)
+    {
+        root->left=insert(root->left,num);
+    }
+    else if(num>root->num)
+    {
+        root->right=insert(root->right,num);
+    }
+    return root;
+}
+struct node *merge(struct node *root1,struct node *root2)
+{
+    if(root1==NULL)
+    {
+        return root2;
+    }
+    if(root2==NULL)
+    {
+        return root1;
+    }
+    root1=insert(root1,root2->num);
+    root1->left=insert(root1->left,root2->left->num);
+    root1->right=insert(root1->right,root2->right->num);
+    return root1;
+}
+int inorder(struct node *root)
+{
+    if(root!=NULL)
+    {
+        inorder(root->left);
+        printf("%d ",root->num);
+        inorder(root->right);
+    }
+}
+int main()
+{
+    struct node *root1=NULL;
+    root1 = insert(root1, 5);
+    insert(root1, 3);
+    insert(root1, 8);
+
+    struct node* root2 = NULL;
+    root2 = insert(root2, 10);
+    insert(root2, 6);
+    insert(root2, 15);
+    struct node *mergenode=merge(root1,root2);
+    inorder(mergenode);
+}
