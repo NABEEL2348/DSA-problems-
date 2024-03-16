@@ -1,0 +1,97 @@
+#include<stdio.h>
+#include<stdlib.h>
+# define size 100
+struct node{
+    int dest;
+    struct node *next;
+};
+struct list{
+    struct node *adj;
+};
+struct graphnode{
+    
+    int v;
+    struct list *arr;
+};
+struct graphnode *creategraph(int cap)
+{
+    struct graphnode *graph=(struct graphnode*)malloc(sizeof(struct graphnode));
+    graph->v=cap;
+    graph->arr=(struct list*)malloc(cap*sizeof(struct list));
+    for(int i=0;i<cap;i++)
+    {
+        graph->arr[i].adj=NULL;
+    }
+    return graph;
+    
+}
+struct node *addedge(struct graphnode *graph,int src,int dest)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->dest=dest;
+    newnode->next=graph->arr[src].adj;
+    graph->arr[src].adj=newnode;
+    
+    newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->dest=src;
+    newnode->next=graph->arr[dest].adj;
+    graph->arr[dest].adj=newnode;
+    
+    return newnode;
+}
+void dfs(struct graphnode *graph,int i,int *visited)
+{
+    visited[i]=1;
+    struct node *temp=graph->arr[i].adj;
+    while(temp!=NULL)
+    {
+        if(!visited[temp->dest])
+        {
+            dfs(graph , temp->dest,visited);
+        }
+        temp=temp->next;
+    }
+}
+int provinces(int grid[][size],int n)
+{
+    int num_vertices=n;
+    struct graphnode *graph=creategraph(num_vertices);
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<n;j++)
+        {
+            if(grid[i][j]==1 && i!=j)
+            {
+                addedge(graph,i,j);
+            }
+        }
+    }
+    int *visited=(int*)malloc(num_vertices *sizeof(int));
+    for(int i=0;i<num_vertices;i++)
+    {
+        visited[i]=0;
+    }
+    int count=0;
+    for(int i=0;i<num_vertices;i++)
+    {
+        if(!visited[i])
+        {
+            dfs(graph,i,visited);
+            count++;
+        }
+    }
+    return count;
+    
+}
+int main()
+{
+    int grid[][size]={
+        
+        {1, 0, 1},
+        {0, 1, 0},
+        {1, 0, 1}
+    };
+    int n=3;
+    int result=provinces(grid,n);
+    printf("%d",result);
+}
