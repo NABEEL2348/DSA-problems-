@@ -1,0 +1,128 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define ROW 5
+#define COL 5
+struct node{
+    struct node *next;
+    int dest;//adjanceny numner
+};
+struct list{
+    struct node *adj;//adjanceny list
+};
+struct graphnode{
+    int size;
+    struct list *arr;
+};
+struct graphnode *creategraph(int size)
+{
+    struct graphnode *graph=(struct graphnode*)malloc(sizeof(struct graphnode));
+    graph->size=size;
+    graph->arr=(struct list*)malloc(size*sizeof(struct list));
+    for(int i=0;i<size;i++)
+    {
+        graph->arr[i].adj=NULL;
+    }
+    return graph;
+}
+struct node *addedge(struct graphnode *graph,int src,int dest)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->dest=dest;
+    newnode->next=graph->arr[src].adj;
+    graph->arr[src].adj=newnode;
+    newnode=(struct node *)malloc(sizeof(struct node));
+    newnode->dest=src;
+    newnode->next=graph->arr[dest].adj;
+    graph->arr[dest].adj=newnode;
+    
+    return newnode;
+}
+void dfs(struct graphnode *graph,int i,int *visited)
+{
+    visited[i]=1;
+    struct node *temp=graph->arr[i].adj;
+    while(temp!=NULL)
+    {
+        if(!visited[temp->dest])
+        {
+            dfs(graph,temp->dest,visited);
+        }
+        temp=temp->next;
+    }
+    
+}
+int countisland(int grid[][5],int row,int col)
+{
+    struct graphnode *graph=creategraph(row*col);
+    for(int i=0;i<ROW;i++)
+    {
+        for(int j=0;j<COL;j++)
+        {
+            if(grid[i][j])
+            {
+                if(i>0 && grid[i-1][j])
+                {
+                    addedge(graph,i * COL+j,(i-1)*COL+j);
+                }
+                if(i<ROW-1 && grid[i+1][j])
+                {
+                    addedge(graph , i * COL + j,(i+1) * COL + j);
+                }
+                if(j>0 && grid[i][j-1])
+                {
+                    addedge(graph , i*COL+j , i*COL+ (j-1));
+                }
+                if(j<COL-1 && grid[i][j+1])
+                {
+                    addedge(graph, i*COL+j ,i * COL + (j+1));
+                }
+                if(i>0 &&j>0 && grid[i-1][j-1])
+                {
+                    addedge(graph,i*COL+j,(i-1)*COL + (j-1));
+                }
+                if(i>0 && j<COL-1 && grid[i-1][j+1])
+                {
+                    addedge(graph,i*COL+j , (i-1)*COL+(j+1));
+                }
+                if(i<ROW-1&&j>0 && grid[i+1][j-1])
+                {
+                    addedge(graph,i*COL+j , (i+1)*COL+(j-1));
+                }
+                if(i<ROW-1 && j<COL-1 && grid[i+1][j+1])
+                {
+                    addedge(graph,i+COL+j,(i+1)*COL+(j+1));
+                }
+            }
+        }
+    }
+    
+    int *visited=(int*)malloc(ROW*COL*sizeof(int));
+    for(int i=0;i<ROW*COL;i++)
+    {
+        visited[i]=0;
+    }
+    int count=0;
+    for(int i=0;i<ROW*COL;i++)
+    {
+        if(!visited[i] && grid[i/COL][i%COL])
+        {
+            dfs(graph,i,visited);
+            ++count;
+        }
+    }
+    return count;
+}
+int main()
+{
+    int grid[ROW][COL] = {
+        {1, 0, 0, 0, 0},
+        {0, 0, 0, 0, 1},
+        {1, 0, 0, 1, 1},
+        {0, 0, 0, 0, 0},
+        {1, 0, 1, 0, 1}
+    };
+    int island=countisland(grid,ROW,COL);
+    printf("%d",island);
+    
+}
+
