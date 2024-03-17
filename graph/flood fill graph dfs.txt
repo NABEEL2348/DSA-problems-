@@ -1,0 +1,51 @@
+#include<stdio.h>
+void floodfilldfs(int src,int sc,int image[][3],int rows,int cols,int delrow[],int delcol[],int newcolour,int inicolor)
+{
+    image[src][sc]=newcolour;
+    int i;
+    for(i=0;i<4;i++)
+    {
+        int adjrow=src+delrow[i];
+        int adjcol=sc+delcol[i];
+        if(adjrow>=0 && adjrow<rows && adjcol>=0 && adjcol<cols && image[adjrow][adjcol]==inicolor && image[adjrow][adjcol]!=newcolour)
+        {
+            floodfilldfs(adjrow,adjcol,image,rows,cols,delrow,delcol,newcolour,inicolor);
+        }
+    }
+}
+int main()
+{
+    int rows,cols;
+    printf("enter the rows and cols of image:");
+    scanf("%d%d",&rows,&cols);
+    int image[rows][3];
+    printf("enter the image matrix:");
+    for(int i=0;i<rows;i++)
+    {
+        for(int j=0;j<cols;j++)
+        {
+            scanf("%d",&image[i][j]);
+        }
+    }
+    int src,sc;
+    printf("enter the starting row and cols:");
+    scanf("%d%d",&src,&sc);
+    printf("enter the new colour:");
+    int newcolour;
+    scanf("%d",&newcolour);
+    int inicolor=image[src][sc];
+    printf("%d",inicolor);
+    int delrow[]={-1,0,+1,0};
+    int delcol[]={0,+1,0,-1};
+    floodfilldfs(src,sc,image,rows,cols,delrow,delcol,newcolour,inicolor);
+    printf("\n");
+    for(int i=0;i<rows;i++)
+    {
+        for(int j=0;j<cols;j++)
+        {
+            printf("%d ",image[i][j]);
+        }
+        printf("\n");
+    }
+    
+}
