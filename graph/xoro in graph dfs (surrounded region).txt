@@ -1,0 +1,90 @@
+#include<stdio.h>
+#define size 100
+void dfs(int row,int col,char mat[][size],int rows,int cols,int vis[][cols])
+{
+    vis[row][col]=1;
+    int delrow[]={-1,0,+1,0};
+    int delcol[]={0,+1,0,-1};
+    for(int i=0;i<4;i++)
+    {
+        int nrow=row+delrow[i];
+        int ncol=col+delcol[i];
+        if(nrow>=0 && nrow<rows && ncol>=0 && ncol<cols && !vis[nrow][ncol] && mat[nrow][ncol]=='O')
+        {
+            dfs(nrow,ncol,mat,rows,cols,vis);
+        }
+    }
+}
+void fillxwitho(char mat[][size],int row,int col)
+{
+    int vis[row][col];
+    for(int i=0;i<row;i++)
+    {
+        for(int j=0;j<col;j++)
+        {
+            vis[i][j]=0;
+        }
+    }
+    
+    for(int j=0;j<col;j++)
+    {
+        if(!vis[0][j] && mat[0][j]=='O')
+        {
+            dfs(0,j,mat,row,col,vis);
+        }
+    }
+    for(int j=0;j<col;j++)
+    {
+        if(!vis[row-1][j] && mat[row-1][j]=='O')
+        {
+             dfs(row-1,j,mat,row,col,vis);
+        }
+    }
+    for(int i=0;i<row;i++)
+    {
+        if(!vis[i][0] && mat[i][0]=='O')
+        {
+             dfs(i,0,mat,row,col,vis);
+        }
+    }
+    for(int i=0;i<row;i++)
+    {
+        if(!vis[i][col-1] && mat[i][col-1]=='O')
+        {
+             dfs(i,col-1,mat,row,col,vis);
+        }
+    }
+    
+    for(int i=0;i<row;i++)
+    {
+        for(int j=0;j<col;j++)
+        {
+            if(!vis[i][j] && mat[i][j]=='O')
+            {
+                mat[i][j]='X';
+            }
+        }
+    }
+}
+int main()
+{
+    char mat[][size]={
+        {'X', 'X', 'X', 'X'},
+        {'X', 'O', 'X', 'X'},
+        {'X', 'O', 'O', 'X'},
+        {'X', 'O', 'X', 'X'},
+        {'X', 'X', 'O', 'O'}
+    };
+    int row=sizeof(mat)/sizeof(mat[0]);
+    int col=sizeof(mat[0])/sizeof(mat[0][0]);
+    fillxwitho(mat,row,col);
+    
+    for(int i=0;i<row;i++)
+    {
+        for(int j=0;j<col;j++)
+        {
+            printf("%c ",mat[i][j]);
+        }
+        printf("\n");
+    }
+}
