@@ -1,0 +1,101 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
+#define size 100
+
+
+
+struct node{
+    int data;
+    struct node *next;
+};
+struct graphnode{
+    int v;
+    struct node *head[size];
+};
+struct graphnode *creategraph(int v)
+{
+    struct graphnode *newnode=(struct graphnode*)malloc(sizeof(struct graphnode));
+    newnode->v=v;
+    for(int i=0;i<v;i++)
+    {
+        newnode->head[i]=NULL;
+    }
+    return newnode;
+}
+struct node *Node(int num){
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->data=num;
+    newnode->next=NULL;
+    return newnode;
+}
+
+void addEdge(struct graphnode *graph,int src,int dest)
+{
+    struct node *newnode=Node(dest);
+    newnode->next=graph->head[src];
+    graph->head[src]=newnode;
+    
+    newnode=Node(src);
+    newnode->next=graph->head[dest];
+    graph->head[dest]=newnode;
+}
+bool iscyclicdetect(struct graphnode *graph,int visited[],int parent,int i)
+{
+    visited[i]=true;
+    struct node *temp=graph->head[i];
+    while(temp)
+    {
+        if(!visited[temp->data] && temp->data!=parent)
+        {
+            if(iscyclicdetect(graph,visited,i,temp->data))
+            {
+                return true;
+            }
+        }
+        else if(visited[temp->data] && temp->data!=parent)
+        {
+            return true;
+        }
+        temp=temp->next;
+    }
+    return false;
+}
+bool iscyclic(struct graphnode *graph,int v)
+{
+    int visited[v];
+    for(int i=0;i<v;i++)
+    {
+        visited[i]=false;
+    }
+    for(int i=0;i<v;i++)
+    {
+        if(!visited[i])
+        {
+            if(iscyclicdetect(graph,visited,-1,i))
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+int main()
+{
+    int v=5;
+    struct graphnode *graph=creategraph(v);
+    addEdge(graph, 0, 1);
+    //addEdge(graph, 1, 2);
+    //addEdge(graph, 2, 3);    remove comment for cyclic dfs 
+    addEdge(graph, 3, 4);
+    addEdge(graph, 4, 0);
+    if(iscyclic(graph,v))
+    {
+        printf("it is a cyclic graph");
+    }
+    else
+    {
+        printf("it is not a cyclic graph");
+    }
+}
+    
