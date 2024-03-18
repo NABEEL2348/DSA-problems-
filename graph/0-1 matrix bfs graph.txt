@@ -49,11 +49,13 @@ int main()
         int cols=queue[front].col;
         int steps=queue[front].step;
         front++;
-        int directions[4][2] = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+        
+        int delrow[]={-1,0,1,0};
+        int delcol[]={0,1,0,-1};
         for(int i=0;i<4;i++)
         {
-             int nrow = rows + directions[i][0];
-             int ncol = cols + directions[i][1];
+             int nrow = rows + delrow[i];
+             int ncol = cols + delcol[i];
             
             if(nrow>=0 &&nrow<row && ncol>=0 && ncol<col && dist[nrow][ncol]==max_size)
             {
