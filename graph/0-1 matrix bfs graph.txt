@@ -1,0 +1,73 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
+#define max_size 100
+
+struct queueitem{
+    int row;
+    int col;
+    int step;
+};
+int main()
+{
+    int row,col;
+    printf("enter the row and cols");
+    scanf("%d%d",&row,&col);
+    int grid[max_size][max_size];
+    int dist[max_size][max_size];
+    printf("enter the row and cols 0 and 1");
+    for(int i=0;i<row;i++)
+    {
+        for(int j=0;j<col;j++)
+        {
+            scanf("%d",&grid[i][j]);
+        }
+    }
+    for(int i=0;i<row;i++)
+    {
+        for(int j=0;j<col;j++)
+        {
+            dist[i][j]=max_size;
+        }
+    }
+    struct queueitem queue[max_size];
+    int front=0,rear=-1;
+    for(int i=0;i<row;i++)
+    {
+        for(int j=0;j<col;j++)
+        {
+            if(grid[i][j]==1)
+            {
+                dist[i][j]=0;;
+                queue[++rear]=(struct queueitem) {i,j,0};
+            }
+        }
+    }
+    while(front<=rear)
+    {
+        int rows=queue[front].row;
+        int cols=queue[front].col;
+        int steps=queue[front].step;
+        front++;
+        int directions[4][2] = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+        for(int i=0;i<4;i++)
+        {
+             int nrow = rows + directions[i][0];
+             int ncol = cols + directions[i][1];
+            
+            if(nrow>=0 &&nrow<row && ncol>=0 && ncol<col && dist[nrow][ncol]==max_size)
+            {
+                dist[nrow][ncol]=steps+1;
+                queue[++rear]=(struct queueitem) {nrow,ncol,steps+1};
+            }
+        }
+    }
+    for(int i=0;i<row;i++)
+    {
+        for(int j=0;j<col;j++)
+        {
+            printf("%d ",dist[i][j]);
+        }
+        printf("\n");
+    }
+}
