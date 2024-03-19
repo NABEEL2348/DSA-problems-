@@ -1,0 +1,99 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
+
+#define size 100
+struct graphnode{
+    int V;
+    struct node **adj;
+};
+struct node{
+    int dest;
+    struct node *next;
+};
+struct graphnode *creategraph(int V)
+{
+    struct graphnode *graph=(struct graphnode*)malloc(sizeof(struct graphnode));
+    graph->V=V;
+    graph->adj=(struct node**)malloc(V*sizeof(struct node*));
+    for(int i=0;i<graph->V;i++)
+    {
+        graph->adj[i]=NULL;
+    }
+    return graph;
+}
+int addEdge(struct graphnode *graph,int src,int dest)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->dest=dest;
+    newnode->next=graph->adj[src];
+    graph->adj[src]=newnode;
+    
+    
+    newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->dest=src;
+    newnode->next=graph->adj[dest];
+    graph->adj[dest]=newnode;
+    
+    return 0;
+}
+bool dfsutil(struct graphnode *graph,int v,int colour[],int parent)
+{
+    colour[v]=(colour[parent]==1)?0:1;
+    struct node *temp=graph->adj[v];
+    while(temp!=NULL)
+    {
+        int w=temp->dest;
+        if(colour[temp->dest]==-1)
+        {
+           if(dfsutil(graph,w,colour,v)==false)
+           {
+              return false;
+           }
+        }
+        else if(colour[w]==colour[v])
+        {
+            return false;
+        }
+        temp=temp->next;
+    }
+    return true;
+}
+bool isbipatile(struct graphnode *graph)
+{
+    int colour[size];
+    for(int i=0;i<graph->V;i++)
+    {
+        colour[i]=-1;
+    }
+    for(int i=0;i<graph->V;i++)
+    {
+        if(colour[i]==-1)
+        {
+            if(dfsutil(graph,i,colour,i)==false)
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+int main()
+{
+    int v=4;
+    struct graphnode *graph=creategraph(v);
+    addEdge(graph, 0, 1);
+    addEdge(graph, 1, 2);
+    addEdge(graph, 2, 3);
+    addEdge(graph, 3, 0);
+    
+    printf("the given graph is %s graph",isbipatile(graph)?"bipartile":"notbipatile");
+    printf("\n");
+    int V4 = 6, E4 = 4;
+  struct graphnode *graph4 = creategraph(V4);
+  addEdge(graph4, 0, 1);
+  addEdge(graph4, 1, 2);
+  addEdge(graph4, 2, 0);
+  addEdge(graph4, 3, 4);
+  printf("the given graph is %s graph",isbipatile(graph4)?"bipartile":"notbipatile");
+}
