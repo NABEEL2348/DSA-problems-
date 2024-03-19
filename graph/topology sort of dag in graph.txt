@@ -1,0 +1,84 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define size 100
+struct graphnode{
+    int V;
+    struct node **adj;
+};
+struct node{
+    int dest;
+    struct node *next;
+};
+void push(int stack[],int *top,int node)
+{
+    (*top)++;
+    stack[*top]=node;
+}
+struct graphnode *creategraph(int v)
+{
+    struct graphnode *graph=(struct graphnode*)malloc(sizeof(struct graphnode));
+    graph->V=v;
+    graph->adj=(struct node**)malloc(v*sizeof(struct node*));
+    for(int i=0;i<v;i++)
+    {
+        graph->adj[i]=NULL;
+    }
+    return graph;
+}
+int addedge(struct graphnode *graph,int src,int dest)
+{
+        struct node *newnode=(struct node*)malloc(sizeof(struct node));
+        newnode->dest=dest;
+        newnode->next=graph->adj[src];  //for only directed graph
+        graph->adj[src]=newnode;
+        
+}
+int dfs(struct graphnode *graph,int node,int v,int visited[],int stack[],int *top)
+{
+    visited[node]=1;
+    struct node *temp=graph->adj[node];
+    while(temp!=NULL)
+    {
+        if(!visited[temp->dest])
+        {
+            dfs(graph,temp->dest,v,visited,stack,top);
+        }
+        temp=temp->next;
+    }
+    push(stack,top,node);
+}
+int topoloysort(struct graphnode *graph,int v)
+{
+    int stack[size];
+    int top=-1;
+    int visited[size]={0};
+    for(int i=0;i<graph->V;i++)
+    {
+        if(!visited[i])
+        {
+            dfs(graph,i,v,visited,stack,&top);
+        }
+    }
+    
+    while(top>=0)
+    {
+        printf("%d ",stack[top--]);
+    }
+    
+}
+int main()
+{
+    int v=6;
+    struct graphnode *graph=creategraph(v);
+    addedge(graph, 2, 3);
+    addedge(graph, 3, 1);
+    addedge(graph, 4, 0);
+    addedge(graph, 4, 1);
+    addedge(graph, 5, 0);
+    addedge(graph, 5, 2);
+    
+  
+    topoloysort(graph,v);
+    
+    
+}
