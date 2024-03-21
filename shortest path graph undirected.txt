@@ -1,0 +1,70 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<limits.h>
+# define max_size 100
+
+int graph[max_size][max_size];
+
+int intialize(int vertices)
+{
+    for(int i=0;i<vertices;i++)
+    {
+        for(int j=0;j<vertices;j++)
+        {
+            graph[i][j]=0;
+        }
+    }
+}
+int shortestpath(int vertices,int source)
+{
+    int distance[vertices];
+    int visited[vertices];
+    for(int i=0;i<vertices;i++)
+    {
+        distance[i]=INT_MAX;
+    }
+    visited[source]=1;
+    distance[source]=0;
+    
+    int queue[max_size],front=0,rear=0;
+    queue[rear]=source;
+    while(front<=rear)
+    {
+        int current = queue[front++];
+        for(int i=0;i<vertices;i++)
+        {
+            if(graph[current][i] && !visited[i])
+            {
+                visited[i]=1;
+                distance[i]=distance[current]+1;
+                queue[++rear]=i;
+            }
+        }
+    }
+    for(int i=0;i<vertices;i++)
+    {
+        printf("%d ",distance[i]);
+    }
+}
+int main()
+{
+    int vertices;
+    printf("number of vertices and edges");
+    scanf("%d",&vertices);
+    intialize(vertices);
+    int edges;
+    scanf("%d",&edges);
+    printf("enter the source and destination");
+    int u;
+    int v;
+    for(int i=0;i<edges;i++)
+    {
+        scanf("%d%d",&u,&v);
+        graph[u][v]=1;
+        graph[v][u]=1;
+    }
+    int source;
+    printf("enter the source");
+    scanf("%d",&source);
+    shortestpath(vertices,source);
+}
