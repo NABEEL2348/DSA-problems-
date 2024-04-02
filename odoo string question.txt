@@ -1,0 +1,40 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+int main()
+{
+    char str[100];
+    fgets(str,sizeof(str),stdin);
+    int count=0;
+    char str1[100];
+    for(int i=0;str[i]!='\0';i++)
+    {
+        char prev=str[i-1];
+        if(str[i]=='M')
+        {
+            if(prev!='\0' && prev!='M')
+            {
+                str1[count++]=prev;
+            }
+            else if(prev!='\0' && prev=='M')
+            {
+                str1[count++]=str[i-2];
+            }
+            else
+            {
+                continue;
+            }
+        }
+        else if(str[i]=='N')
+        {
+           i++; 
+        }
+        else
+        {
+            str1[count++]=str[i];
+        }
+    }
+    printf("%d ",count);
+    str1[count]='\0';
+    printf("%s",str1);
+}
