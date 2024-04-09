@@ -1,0 +1,37 @@
+#include<stdio.h>
+int stronglyincreaseordecrease(int n,int arr[])
+{
+    int maxcount=0;
+    int maxcount1=0;
+    int result=0;
+    int result1=0;
+    for(int i=1;i<n;i++)
+    {
+        if(arr[i]>arr[i-1])
+        {
+            maxcount++;
+        }
+        result=(maxcount>result)?maxcount:result;
+    }
+    for(int i=1;i<n;i++)
+    {
+        if(arr[i]<arr[i-1])
+        {
+            maxcount1++;
+        }
+        result1=(maxcount>result1)?maxcount:result1;
+    }
+    int ans=(result1>result)?result1:result;
+    return ans;
+}
+int main()
+{
+    int n;
+    scanf("%d",&n);
+    int arr[n];
+    for(int i=0;i<n;i++)
+    {
+        scanf("%d",&arr[i]);
+    }
+    printf("%d",stronglyincreaseordecrease(n,arr));
+}
