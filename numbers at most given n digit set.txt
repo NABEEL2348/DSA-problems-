@@ -1,0 +1,49 @@
+#include<stdio.h>
+#include<string.h>
+int countdigits1(int i)
+{
+    int count2=0;
+    
+    while(i>0)
+    {
+        i=i/10;
+        count2++;
+    }
+    return count2;
+}
+int main()
+{
+    char str[]={'1','4','9'};
+    int size=sizeof(str)/sizeof(str[0]);
+    printf("%d",size);
+    int n;
+    scanf("%d",&n);
+    int count1=0;
+    for(int i=0;i<n;i++)
+    {
+        int count=0;
+        int countdigits=countdigits1(i);
+        int temp=i;
+        while(temp>0)
+        {
+            int num=temp%10;
+            for(int j=0;j<size;j++)
+            {
+                if(num==str[j]-'0')
+                {
+                    count++;
+                    printf("%d ",i);
+                }
+                
+            }
+            if(count==countdigits)
+            {
+                count1++;
+                break;
+            }
+            temp=temp/10;
+        }
+    
+    }
+    printf("%d",count1);
+}
