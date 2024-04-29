@@ -1,0 +1,35 @@
+#include<stdio.h>
+int max(int a,int b)
+{
+    return (a>b)?a:b;
+}
+int histogramtrectangle(int arr[],int n)
+{
+    int result=0;
+    for(int i=0;i<n;i++)
+    {
+        int minheight=arr[i];
+        int left=i;
+        while(left>0 && arr[left-1]>=minheight)
+        {
+            left--;
+        }
+        
+        int right=i;
+        while(right<n-1 && arr[right+1]>=minheight)
+        {
+            right++;
+        }
+        int width=right-left+1;
+        int maxarea=minheight*width;
+        result=max(result,maxarea);
+    }
+    return result;
+}
+int main()
+{
+    int arr[]={2,1,5,6,2,3};
+    int n=sizeof(arr)/sizeof(*arr);
+    int maxarea=histogramtrectangle(arr,n);
+    printf("%d",maxarea);
+}
