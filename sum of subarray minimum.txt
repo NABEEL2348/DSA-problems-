@@ -1,0 +1,28 @@
+#include<stdio.h>
+int minsum(int arr[],int n)
+{
+    int sum=0;
+    for(int i=0;i<n;i++)
+    {
+        for(int j=i;j<n;j++)
+        {
+            int min=arr[i];
+            for(int k=i;k<=j;k++)
+            {
+                printf("%d%d%d ",i,j,k);
+                if(min>arr[k])
+                {
+                    min=arr[k];
+                }
+            }
+            sum+=min;
+        }
+    }
+    return sum;
+}
+int main()
+{
+    int arr[]={3,1,2,4};
+    int n=sizeof(arr)/sizeof(*arr);
+    printf("%d ",minsum(arr,n));
+}
