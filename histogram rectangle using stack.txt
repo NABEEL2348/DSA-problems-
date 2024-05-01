@@ -1,0 +1,69 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct stacknode{
+    int *leftsmall;
+    int *rightsmall;
+};
+struct stacknode *createstack(int n)
+{
+    struct stacknode *newnode=(struct stacknode*)malloc(sizeof(struct stacknode));
+    newnode->leftsmall=(int *)malloc(n*sizeof(int));
+    newnode->rightsmall=(int *)malloc(n*sizeof(int));
+    return newnode;
+}
+int histogramrectangle(int arr[],int n)
+{
+    struct stacknode *sol=createstack(n);
+    int *leftsmall=sol->leftsmall;
+    int *rightsmall=sol->rightsmall;
+    int stack[n];
+    int top=-1;
+    int maxarea=0;
+    for(int i=0;i<n;i++)
+    {
+        while(top!=-1 && arr[stack[top]]>=arr[i])
+        {
+            top--;
+        }
+        if(top==-1)
+        {
+            leftsmall[i]=0;
+        }
+        else
+        {
+            leftsmall[i]=stack[top] + 1;
+        }
+        stack[++top]=i;
+    }
+    for(int i=n-1;i>=0;i--)
+    {
+        while(top!=-1 && arr[stack[top]]>=arr[i])
+        {
+            top--;
+        }
+        if(top==-1)
+        {
+            rightsmall[i]=n-1;
+        }
+        else
+        {
+            rightsmall[i]=stack[top] - 1;
+        }
+        stack[++top]=i;
+    }
+    for(int i=0;i<n;i++)
+    {
+        int width=arr[i]*(rightsmall[i]-leftsmall[i] + 1);
+        if(width>maxarea)
+        {
+            maxarea=width;
+        }
+    }
+    return maxarea;
+}
+int main()
+{
+    int arr[]={2, 1, 5, 6, 2, 3, 1};
+    int n=sizeof(arr)/sizeof(*arr);
+    printf("%d",histogramrectangle(arr,n));
+}
