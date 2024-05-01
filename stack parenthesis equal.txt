@@ -60,3 +60,58 @@ int main()
     }
     
 }
+
+
+
+//annother method
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<stdbool.h>
+bool parenthesis(char *exp1)
+{
+    int n=strlen(exp1);
+    int stack[n];
+    int top=-1;
+    for(int i=0;exp1[i]!='\0';i++)
+    {
+        if(exp1[i]=='{' || exp1[i]=='[' || exp1[i]=='(' ||exp1[i]=='<' )
+        {
+            stack[++top]=exp1[i];
+        }
+        else if(exp1[i]=='}' || exp1[i]==']' || exp1[i]==')' ||exp1[i]=='>')
+        {
+            if(top==-1)
+            {
+                return false;
+            }
+            char popped = stack[top--];
+            if((popped=='{' && exp1[i]=='}') || (popped=='[' && exp1[i]==']') ||(popped=='<' && exp1[i]=='>') ||(popped=='(' && exp1[i]==')'))
+            {
+                continue;
+            }
+            else
+            {
+                return false;
+            }
+            
+        }
+
+        
+    }
+    return top == -1;
+}
+int main()
+{
+    char exp1[100];
+    scanf("%s",exp1);
+    if(parenthesis(exp1))
+    {
+        printf("balanced");
+    }
+    else
+    {
+        printf("not balanced %d",parenthesis(exp1));
+    }
+}
