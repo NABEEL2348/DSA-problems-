@@ -1,0 +1,53 @@
+#include<stdio.h>
+int sumsubarrayminimum(int *arr,int n)
+{
+    int stack[n];
+    int top=-1;
+    int left[n],right[n];
+    long long sum=0;
+    for(int i=0;i<n;i++)
+    {
+        while(top>=0 && arr[stack[top]] >= arr[i])
+        {
+            top--;
+        }
+        if(top==-1)
+        {
+            left[i]=i + 1;
+        }
+        else
+        {
+            left[i] = i - stack[top];
+        }
+        stack[++top]=i;
+    }
+    
+    top=-1;
+    for(int i=n-1;i>=0;i--)
+    {
+        while(top!=-1 && arr[stack[top]] >= arr[i])
+        {
+            top--;
+        }
+        if(top==-1)
+        {
+            right[i]=n-i;
+        }
+        else
+        {
+            right[i]=stack[top]-i;
+        }
+        stack[++top]=i;
+    }
+    for(int i=0;i<n;i++)
+    {
+        sum+= (long long) arr[i] *left[i] * right[i];
+    }
+    return sum;
+}
+int main()
+{
+    int arr1[] = {3, 1, 2, 4};
+    int n=sizeof(arr1)/sizeof(arr1[0]);
+    printf("%d",sumsubarrayminimum(arr1,n));
+}
