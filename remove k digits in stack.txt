@@ -1,0 +1,42 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+char *removekdigits(char *str,int k)
+{
+    int n=strlen(str);
+    int top=-1;
+    int stack[n];
+    for(int i=0;i<n;i++)
+    {
+        while(top>=0 && str[i] < stack[top] && k > 0)
+        {
+            top--;
+            k--;
+        }
+        stack[++top]=str[i];
+    }
+    stack[++top]='\0';
+    int start=0;
+    while(start<=top && stack[start]=='0')
+    {
+        start++;
+    }
+   while(start<=top)
+   {
+       printf("%c",stack[start++]);
+   }
+    //special case for no numbser in stack if it is not exist no problem
+    if(top==-1)
+    {
+        char *result=malloc((top - start + 2));
+        result[0]='0';
+        result[1]='\0';
+        return result;
+    }
+}
+int main()
+{
+    char *str="1432219";
+    int k=3;
+    char result=removekdigits(str,k);
+}
