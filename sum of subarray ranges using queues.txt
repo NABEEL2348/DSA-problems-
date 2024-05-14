@@ -1,0 +1,84 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct queuenode
+{
+    int front;
+    int rear;
+    int capacity;
+    int *arr;
+};
+struct queuenode *createqueue(int n)
+{
+    struct queuenode *newnode=(struct queuenode*)malloc(sizeof(struct queuenode));
+    newnode->front=0;
+    newnode->rear=-1;
+    newnode->arr=(int *)malloc(sizeof(int));
+    return newnode;
+}
+int isfull(struct queuenode *queue)
+{
+    return queue->rear==queue->capacity - 1;
+}
+int isempty(struct queuenode *queue)
+{
+    return queue->rear==-1;
+}
+struct queuenode *enqueue(struct queuenode *queue,int num)
+{
+    
+    queue->arr[++queue->rear]=num;
+    return queue;
+}
+int dequeue(struct queuenode *queue)
+{
+    if(isempty(queue))
+    {
+        printf("queue is isempty");
+    }
+    int item=queue->arr[++queue->front];
+    if(queue->front>queue->rear)
+    {
+        queue->front=0;
+        queue->rear=-1;
+    }
+    return item;
+}
+int sumofrangesusingqueue(int *arr,int n)
+{
+    struct queuenode *queue=createqueue(n);
+    int sum=0;
+    for(int i=0;i<n;i++)
+    {
+        while(!isempty(queue))
+        {
+            dequeue(queue);
+        }
+        for(int j=i;j<n;j++)
+        {
+            enqueue(queue,arr[j]);
+            int max=queue->arr[queue->front];
+            int min=queue->arr[queue->front];
+            for(int k=queue->front;k<=queue->rear;k++)
+            {
+                int num=queue->arr[k];
+                if(num>max)
+                {
+                    max=num;
+                }
+                if(num<min)
+                {
+                    min=num;
+                }
+            }
+            sum+=(max-min);
+        }
+        
+    }
+    return sum;
+}
+int main()
+{
+    int arr[]={1,2,3};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    printf("%d",sumofrangesusingqueue(arr,n));
+}
