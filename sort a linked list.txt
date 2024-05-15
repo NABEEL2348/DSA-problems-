@@ -1,0 +1,91 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+    int num;
+    struct node *next;
+};
+struct node *create(struct node **head,int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->next=NULL;
+    newnode->num=num;
+    if(*head==NULL)
+    {
+        *head=newnode;
+    }
+    else
+    {
+        struct node *tptr=*head;
+        while(tptr->next!=NULL)
+        {
+            tptr=tptr->next;
+        }
+        tptr->next=newnode;
+    }
+}
+int display(struct node *head)
+{
+    struct node *tptr=head;
+    while(tptr!=NULL)
+    {
+        printf("%d ",tptr->num);
+        tptr=tptr->next;
+    }
+}
+struct node *middlenode(struct node *head)
+{
+    struct node *fast=head;
+    struct node *slow=head;
+    while(fast->next!=NULL && fast->next->next!=NULL)
+    {
+        slow=slow->next;
+        fast=fast->next->next;
+    }
+    printf("%d ",slow->num);
+    return slow;
+}
+struct node *mergetwolist(struct node *left,struct node *right)
+{
+    if(!left) return right;
+    if(!right) return left;
+    
+    struct node *temp=NULL;
+    if(left->num <= right->num)
+    {
+        temp=left;
+        temp->next=mergetwolist(left->next,right);;
+    }
+    else
+    {
+        temp=right;
+        temp->next=mergetwolist(left,right->next);
+    }
+    return temp;
+}
+struct node *sort(struct node *head)
+{
+    if(head==NULL || head->next==NULL) return head;
+    
+    struct node *middle=middlenode(head);
+    struct node *left=head;
+    struct node *right=middle->next;
+    middle->next=NULL;
+    
+    left=sort(left);
+    right=sort(right);
+    return mergetwolist(left,right);
+}
+int main()
+{
+    struct node *head=NULL;
+    create(&head,15);
+    create(&head,10);
+    create(&head,5);
+    create(&head,20);
+    create(&head,3);
+    create(&head,2);
+    //display(head);
+    head=sort(head);
+    display(head);
+}
+/**/
