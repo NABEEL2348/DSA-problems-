@@ -1,0 +1,26 @@
+#include<stdio.h>
+#define max 100
+#include<string.h>
+#include<math.h>
+int climbingstairs(int dp[],int n,int start)
+{
+    if(start==n)
+    {
+        return 1;
+    }
+    if(dp[start]!=-1)
+    {
+        return dp[start];
+    }
+    int left=climbingstairs(dp,n,start+1);
+    int right=climbingstairs(dp,n,start+2);
+    dp[start]=left+right;;
+    return dp[start];
+}
+int main()
+{
+    int n=3;
+    int dp[100];
+    memset(dp,-1,max*sizeof(int));
+    printf("%d",climbingstairs(dp,n,0));
+}
