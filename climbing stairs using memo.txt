@@ -24,3 +24,36 @@ int main()
     memset(dp,-1,max*sizeof(int));
     printf("%d",climbingstairs(dp,n,0));
 }
+
+
+other approach:
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int climbingstairs(int n,int dp[])
+{
+    if(n==0)
+    {
+        return 1;
+    }
+    if(dp[n]!=-1)
+    {
+        return dp[n];
+    }
+    if(n==1)
+    {
+        return 1;
+    }
+    int left=climbingstairs(n-1,dp);
+    int right=climbingstairs(n-2,dp);
+    printf("%d ",right);
+    return dp[n]=left+right;
+}
+int main()
+{
+    int n=6;
+    int dp[100];
+    memset(dp,-1,100*sizeof(int));
+    printf("%d",climbingstairs(n,dp));
+}
