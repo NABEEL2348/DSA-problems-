@@ -1,0 +1,97 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define max 100
+struct node{
+    int number;
+    int age;
+    char name[100];
+    char mailid[100];
+    char phonenumber[10];
+};
+struct node *createnode(int n)
+{
+    struct node *newnode=(struct node*)malloc(n*sizeof(struct node));
+    return newnode;
+}
+struct node *create(struct node *passengers,int n)
+{
+    for(int i=0;i<n;i++)
+    {
+        printf("enter the passenger name");
+        scanf("%s",passengers[i].name);
+        printf("enter the passenger age");
+        scanf("%d",&passengers[i].age);
+        printf("enter the passenger mailid");
+        scanf("%s",passengers[i].mailid);
+        printf("enter the passenger phone number");
+        scanf("%s",passengers[i].phonenumber);
+        printf("enter the passenger index");
+        scanf("%d",&passengers[i].number);
+    }
+}
+struct node *insert(struct node *passengers,int *n)
+{
+        int index=*(n);
+        printf("%d",index);
+        printf("enter the passenger name");
+        scanf("%s",passengers[index].name);
+        printf("enter the passenger age");
+        scanf("%d",&passengers[index].age);
+        printf("enter the passenger mailid");
+        scanf("%s",passengers[index].mailid);
+        printf("enter the passenger phone number");
+        scanf("%s",passengers[index].phonenumber);
+        printf("enter the passenger index");
+        scanf("%d",&passengers[index].number);
+        (*n)++;
+}
+struct node *display(struct node *passengers,int n)
+{
+    for(int i=0;i<n;i++)
+    {
+        printf("enter the passenger name is %s\n",passengers[i].name);
+        printf("enter the passenger age is %d\n",passengers[i].age);
+        printf("enter the passenger mailid is %s\n",passengers[i].mailid);
+        printf("enter the passenger phone number is %s\n",passengers[i].phonenumber);
+        printf("enter the passenger index is %d\n",passengers[i].number);
+    }
+}
+struct node *delete(struct node *passengers,int *n)
+{
+    (*n)--;
+    printf("the passengers is deleted");
+}
+int main()
+{
+    struct node *passengers=createnode(max);
+    printf("enter the no of passengers:");
+    int n;
+    scanf("%d",&n);
+    while(1)
+    {
+        printf("1)creation of passangers\n");
+        printf("2)display of passengers\n");
+        printf("3)insert of passengers\n");
+        printf("4)delete of passengers\n");
+        printf("5)exit the passengers\n");
+        int choice;
+        scanf("%d",&choice);
+        switch(choice)
+        {
+            case 1:
+                create(passengers,n);
+                break;
+            case 2:
+                display(passengers,n);
+                break;
+            case 3:
+                insert(passengers,&n);
+                break;
+            case 4:
+                delete(passengers,&n);
+                break;
+            case 5:
+                exit(0);
+        }
+    }
+}
