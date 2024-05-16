@@ -1,0 +1,38 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<limits.h>
+#include<math.h>
+int kthfrogjump(int arr[],int n,int dp[],int k)
+{
+    int left;
+    if(n==0)
+    {
+        return 1;
+    }
+    if(dp[n]!=-1)
+    {
+        return dp[n];
+    }
+    int mmresults=INT_MAX;
+    for(int j=1;j<=k;j++)
+    {
+        if(n-j>=0)
+        {
+            int result=kthfrogjump(arr,n-k,dp,k)+abs(arr[n]-arr[n-j]);
+            mmresults=fmin(result,mmresults);
+        }
+        
+    }
+    dp[n]=mmresults;
+    return dp[n];
+}
+int main()
+{
+    int arr[]={30,10,60,10,60,50};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    int dp[100];
+    int k=4;
+    memset(dp,-1,100*sizeof(int));
+    printf("%d ",kthfrogjump(arr,n,dp,k));
+}
