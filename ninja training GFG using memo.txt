@@ -1,0 +1,37 @@
+#include<stdio.h>
+#include<string.h>
+#include<math.h>
+int ninjatraining(int arr[][3],int n,int day,int dp[10][10])
+{
+    int maxi=0;
+    if(day==0)
+    {
+        for(int i=0;i<=n;i++)
+        {
+            if(i!=n)
+            {
+                maxi=fmax(maxi,arr[0][i]);;
+            }
+        }
+        return maxi;
+    }
+    if(dp[day][n]!=-1)
+    {
+        return dp[day][3];
+    }
+    maxi=0;
+    for(int i=0;i<n;i++)
+    {
+        int points=arr[day][i]+ninjatraining(arr,n,day-1,dp);
+        maxi=fmax(points,maxi);
+    }
+    return dp[day][n]=maxi;
+}
+int main()
+{
+    int arr[][3]={{1,2,5},{3,1,1},{3,3,3}};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    int dp[10][10];
+    memset(dp,-1,sizeof(dp));
+    printf("%d",ninjatraining(arr,n,n,dp));
+}
