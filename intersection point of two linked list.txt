@@ -1,0 +1,96 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+    int num;
+    struct node *next;
+};
+struct node *create(struct node **head,int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->next=NULL;
+    if(*head==NULL)
+    {
+        *head=newnode;
+    }
+    else
+    {
+        struct node *tptr=*head;
+        while(tptr->next!=NULL)
+        {
+            tptr=tptr->next;
+        }
+        tptr->next=newnode;
+    }
+}
+int display(struct node *head)
+{
+    struct node *tptr=head;
+    while(tptr!=NULL)
+    {
+        printf("%d ",tptr->num);
+        tptr=tptr->next;
+    }
+}
+int intersecttwoLL(struct node *head,struct node *head1)
+{
+    int count=0;
+    int count1=0;
+    struct node *temp=head;
+    struct node *temp1=head1;
+    struct node *tptr;
+    struct node *tptr1;
+    while(temp!=NULL)
+    {
+        count++;
+        temp=temp->next;
+    }
+    while(temp1!=NULL)
+    {
+        count1++;
+        temp1=temp1->next;
+    }
+    int diff=abs(count-count1);
+    if(count>count1)
+    {
+        tptr=head;
+        tptr1=head1;
+    }
+    else
+    {
+        tptr=head1;
+        tptr1=head;
+    }
+    for(int i=0;i<diff;i++)
+    {
+        tptr=tptr->next;
+    }
+    
+    while(tptr!=NULL && tptr!=NULL)
+    {
+        if(tptr->num==tptr1->num)
+        {
+            printf("%d",tptr1->num);
+            break;
+        }
+        tptr=tptr->next;
+        tptr1=tptr1->next;
+    }
+}
+int main()
+{
+    struct node *head=NULL;
+    create(&head,10);
+    create(&head,20);
+    create(&head,30);
+    create(&head,40);
+    create(&head,50);
+    //display(head);
+    struct node *head1=NULL;
+    create(&head1,15);
+    create(&head1,20);
+    head1->next->next=head->next->next->next;
+    //display(head1);
+    intersecttwoLL(head,head1);
+    
+}
