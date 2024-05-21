@@ -1,0 +1,52 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdbool.h>
+#include<math.h>
+int subsetpartitionabsolutediff(int *arr,int n,int target,bool dp[n+1][target+1])
+{
+    for(int i=0;i<=n;i++)
+    {
+        dp[i][0]=1;
+    }
+    for(int i=1;i<=n;i++)
+    {
+        for(int j=0;j<=target;j++)
+        {
+            bool nottake=dp[i-1][j];
+            bool take=false;
+            
+            if(arr[i-1]<=target)
+            {
+                  take=dp[i-1][j-arr[i-1]];
+            }
+            printf("%d%d ",j,take);
+            dp[i][j]=take || nottake;
+            //printf("%d%d ",j,dp[i][j]);
+        }
+        printf("\n");
+    }
+    
+    int mini=1e9;
+    for(int i=0;i<=target/2;i++)
+    {
+        if(dp[n-1][i]==1)
+        {
+            mini=fmin(mini,(target-i)-i);
+        }
+    }
+    return mini;
+}
+int main()
+{
+    int arr[]={3,2,7};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    int target=0;
+    for(int i=0;i<n;i++)
+    {
+        target=target+arr[i];
+    }
+    bool dp[n+1][target+1];
+    memset(dp,false,sizeof(dp));
+    printf("\n%d ",subsetpartitionabsolutediff(arr,n,target,dp));
+    
+}
