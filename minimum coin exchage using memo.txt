@@ -1,0 +1,35 @@
+#include<stdio.h>
+#include<math.h>
+#include<string.h>
+int coinexchange(int *coins,int n,int target,int dp[n+1][target+1])
+{
+    if(n==0 || target==0)
+    {
+        return 1;
+    }
+    if(dp[n][target]!=-1)
+    {
+        return dp[n][target];
+    }
+    int taken=0;
+    int maxi=0;
+    int nottaken=0;
+    nottaken=coinexchange(coins,n-1,target,dp);
+    if(coins[n-1]<target)
+    {
+        taken=1+coinexchange(coins,n,target-coins[n-1],dp);
+        
+        dp[n][target]=fmax(taken,nottaken);
+    }
+    
+    return dp[n][target];
+}
+int main()
+{
+    int coins[]={5,3,1};
+    int n=sizeof(coins)/sizeof(coins[0]);
+    int target=11;
+    int dp[n+1][target+1];
+    memset(dp,-1,sizeof(dp));
+    printf("%d",coinexchange(coins,n-1,target,dp));
+}
