@@ -1,0 +1,72 @@
+//patially correct  
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+int  lcsupersequence(char *str,int m,char *str1,int n,int dp[m+1][n+1])
+{
+    for(int i=1;i<=m;i++)
+    {
+        for(int j=1;j<=n;j++)
+        {
+            if(str[i-1]==str1[j-1])
+            {
+                dp[i][j]=1+dp[i-1][j-1];
+            }
+            else
+            {
+                dp[i][j]=fmax(dp[i-1][j],dp[i][j-1]);
+            }
+        }
+    }
+    int index=m+n-dp[m][n];
+    char str23[index];
+    str23[index]='\0';
+    while(m>0 && n>0)
+    {
+        if(str[m-1]==str1[n-1])
+        {
+            str23[--index]=str[m-1];
+            printf("%c",str23[index]);
+            m--;
+            n--;
+        }
+        else if(dp[m-1][n]>dp[m][n-1])
+        {
+             
+            str23[--index]=str[m-1];
+            printf("%c",str23[index]);
+            m--;
+        }
+        else
+        {
+            str23[--index]=str1[n-1];
+            printf("%c",str23[index]);
+            n--;
+        }
+    }
+    while(m>0)
+    {
+        str23[--index]=str[m-1];
+        printf("%c",str23[index]);
+        m--;
+    }
+    while(n>0)
+    {
+        str23[--index]=str1[n-1];
+        printf("%c",str23[index]);
+        n--;
+    }
+    printf(" %s",str23);
+    return m;
+}
+int main() {
+    char str[] = "abac";
+    char str1[] = "cab";
+    int n = strlen(str1);
+    int m = strlen(str);
+    int dp[m+1][n+1];
+    int  result=lcsupersequence(str, m, str1, n, dp);
+    printf("%d ",result);
+    
+    return 0;
+}
