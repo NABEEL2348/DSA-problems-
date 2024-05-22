@@ -1,0 +1,32 @@
+#include<stdio.h>
+#include<string.h>
+#include<math.h>
+int buyandsellmemo(int arr[],int n,int dp[n+1][2],int ind,int buy)
+{
+    
+    int maxprofit=0;
+    for(int i=n-1;i>=0;i--)
+    {
+        for(int j=0;j<=buy;j++)
+        {
+            if(j==1)
+            {
+                dp[i][j]=fmax((-arr[i]+dp[i+1][0]),0+dp[i+1][1]);//-arr[i] represent the buy and 0+ is not buy so if buy means next not buy so 0 and next not buy means next buy so buy = 1 this is the specifies ccondition
+
+            }
+            else
+            {
+                 dp[i][j]=fmax((arr[i]+dp[i+1][1]),0+dp[i+1][0]);
+            }
+        }
+    }
+    return dp[0][buy];
+}
+int main()
+{
+    int arr[]={7,1,5,3,6,4};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    int dp[n+1][2];
+    memset(dp,0,sizeof(dp));
+    printf("%d ",buyandsellmemo(arr,n,dp,0,1));
+}
