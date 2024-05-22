@@ -1,0 +1,23 @@
+#include<stdio.h>
+#include<string.h>
+#include<math.h>
+int buyandsellmemo(int arr[],int n,int dp[n+1])
+{
+    int mini=arr[0];
+    int maxprofit=0;
+    int result=0;
+    for(int i=1;i<n;i++)
+    {
+        maxprofit=arr[i]-mini;
+        result=fmax(maxprofit,result);
+        mini=fmin(mini,arr[i]);
+    }
+    return result;
+}
+int main()
+{
+    int arr[]={7,1,5,3,6,4};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    int dp[n+1];
+    printf("%d ",buyandsellmemo(arr,n,dp));
+}
