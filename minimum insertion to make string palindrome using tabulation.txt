@@ -1,0 +1,41 @@
+#include<stdio.h>
+#include<string.h>
+#include<math.h>
+int lps(char *str,int m,char *str1,int n,int dp[n+1][m+1])
+{
+    int maxi=0;
+    for(int i=1;i<=n;i++)
+    {
+        for(int j=1;j<=m;j++)
+        {
+            if(str[i-1]==str1[j-1])
+            {
+                dp[i][j]=1+dp[i-1][j-1];
+            }
+            else
+            {
+                dp[i][j] =fmax(dp[i-1][j],dp[i][j-1]);
+            }
+        }
+    }
+    return dp[m][n];
+}
+int main()
+{
+    char str[]="mbadm";
+    int n=strlen(str);
+    char str1[n];
+    int m=0;
+    for(int i=n-1;i>=0;i--)
+    {
+        str1[m]=str[i];
+        m++;
+    }
+    str1[m]='\0';
+    int dp[m+1][n+1];
+    int result=lps(str,m,str1,n,dp);
+    printf("%d ",result);
+    int result2=0;;
+    result2=m-result;
+    printf("%d",result2);
+}
