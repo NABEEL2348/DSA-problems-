@@ -1,0 +1,33 @@
+//cool down not buy immediate after sell
+#include<stdio.h>
+#include<string.h>
+#include<math.h>
+int buyandsellcooldown(int *arr,int n,int buy,int ind,int dp[][2])
+{
+    if(ind>=n)
+    {
+        return 0;
+    }
+    if(dp[ind][buy]!=-1)
+    {
+        return dp[ind][buy];
+    }
+    int maxi=0;
+    if(buy)
+    {
+        maxi=fmax(-arr[ind]+buyandsellcooldown(arr,n,0,ind+1,dp),0+buyandsellcooldown(arr,n,1,ind+1,dp));
+    }
+    else
+    {
+        maxi=fmax(arr[ind]+buyandsellcooldown(arr,n,1,ind+2,dp),0+buyandsellcooldown(arr,n,0,ind+1,dp));
+    }
+    return dp[ind][buy]=maxi;
+}
+int main()
+{
+    int arr[]={1,2,3,0,2};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    int dp[n][2];
+    memset(dp,-1,sizeof(dp));
+    printf("%d",buyandsellcooldown(arr,n,1,0,dp));
+}
