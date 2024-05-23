@@ -1,0 +1,24 @@
+#include<stdio.h>
+#include<string.h>
+#include<math.h>
+int lis(int *arr,int n,int dp[n+1],int ind,int prev)
+{
+    if(ind==n)
+    {
+        return 0;
+    }
+    int maxi;
+    maxi=lis(arr,n,dp,ind+1,prev);
+    if(prev==-1 || arr[ind]>arr[prev])
+    {
+        maxi=fmax(maxi,1+lis(arr,n,dp,ind+1,ind));
+    }
+    return maxi;
+}
+int main()
+{
+    int arr[]={10,9,2,5,3,7,101,18};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    int dp[n+1];
+    printf("%d ",lis(arr,n,dp,0,-1));
+}
