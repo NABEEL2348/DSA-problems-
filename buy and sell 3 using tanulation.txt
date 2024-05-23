@@ -1,0 +1,34 @@
+#include<stdio.h>
+#include<string.h>
+#include<math.h>
+int buyandsell3memo(int *arr,int n,int dp[n+1][4][3],int cap)
+{
+    
+    for(int i=n-1;i>=0;i--)
+    {
+        for(int j=0;j<=1;j++)
+        {
+            for(int k=1;k<=cap;k++)
+            {
+                if(j==1)
+                {
+                    dp[i][j][k]=fmax(-arr[i] + dp[i+1][0][k] , 0+dp[i+1][1][k]);
+                }
+                else
+                {
+                    dp[i][j][k]=fmax(arr[i] + dp[i+1][1][k-1] , 0+dp[i+1][0][k]);
+                }
+            }
+        }
+    }
+    return dp[0][1][cap];
+}
+int main()
+{
+    int arr[]={1,2,3,4,5};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    int dp[n+1][4][3];
+    memset(dp,0,sizeof(dp));
+    int cap=2;
+    printf("%d ",buyandsell3memo(arr,n,dp,cap));
+}
