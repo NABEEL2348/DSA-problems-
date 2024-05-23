@@ -1,0 +1,38 @@
+#include<stdio.h>
+#include<string.h>
+#include<math.h>
+int buyandsell3memo(int *arr,int n,int dp[][4][2],int cap,int ind,int buy)
+{
+    if(cap<0)
+    {
+        return 0;
+    }
+    if(ind>=n)
+    {
+        return 0;
+    }
+    if(dp[ind][buy][cap]!=-1)
+    {
+        return dp[ind][buy][cap];
+    }
+    int maxi=0;
+    if(buy)
+    {
+        maxi=fmax(-arr[ind]+buyandsell3memo(arr,n,dp,cap,ind+1,0),0+buyandsell3memo(arr,n,dp,cap,ind+1,1));
+    }
+    else
+    {
+        maxi=fmax(arr[ind]+buyandsell3memo(arr,n,dp,cap-1,ind+1,1),0+buyandsell3memo(arr,n,dp,cap,ind+1,0));
+    }
+    dp[n][buy][cap]=maxi;
+    return dp[n][buy][cap];
+}
+int main()
+{
+    int arr[]={1,2,3,4,5};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    int dp[n][4][2];
+    memset(dp,-1,sizeof(dp));
+    int cap=2;
+    printf("%d ",buyandsell3memo(arr,n,dp,cap-1,0,1));
+}
