@@ -1,0 +1,28 @@
+#include<stdio.h>
+int binarysearchusingrecursion(int *arr,int right,int left,int target)
+{
+    if(left>right)
+    {
+        return 0;
+    }
+    int mid=(left+right)/2;
+    if(arr[mid]==target)
+    {
+        return mid;
+    }
+    else if(arr[mid]>=target)
+    {
+        binarysearchusingrecursion(arr,mid,left,target);
+    }
+    else
+    {
+        binarysearchusingrecursion(arr,right,mid+1,target);
+    }
+}
+int main()
+{
+    int arr[]={-1,0,3,5,9,12};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    int target=9;
+    printf("%d",binarysearchusingrecursion(arr,n,0,target));
+}
