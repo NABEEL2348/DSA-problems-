@@ -1,0 +1,27 @@
+#include<stdio.h>
+int binarysearchlowerbound(int *arr,int right,int left,int target)
+{
+    int ans=right+1;
+    while(left<=right)
+    {
+        int mid=(left+right)/2;
+        if(arr[mid]>target)
+        {
+            ans=mid;
+            right=mid-1;
+        }
+        else
+        {
+            left=mid+1;
+        }
+    }
+    return ans;
+}
+
+int main()
+{
+    int arr[]={1,2,8,10,11,12,19};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    int target=5; 
+    printf("%d",binarysearchlowerbound(arr,n-1,0,target));
+}
