@@ -1,0 +1,30 @@
+#include<stdio.h>
+#include<limits.h>
+#include<math.h>
+int minimuminrotatedarray(int *arr,int right,int left)
+{
+    int ans=INT_MAX;
+    while(left<=right)
+    {
+        int mid=(left+right)/2;
+        if(arr[left]<=arr[mid])
+        {
+            ans=fmin(ans,arr[left]);
+            left=mid+1;
+            
+        }
+        else
+        {
+            ans=fmin(ans,arr[mid]);
+            right=mid-1;
+            
+        }
+    }
+    return ans;
+}
+int main()
+{
+    int arr[]={4,5,6,7,1,2,3};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    printf("%d",minimuminrotatedarray(arr,n-1,0));
+}
