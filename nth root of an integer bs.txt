@@ -1,0 +1,27 @@
+#include<stdio.h>
+#include<math.h>
+int nthroot(int right,int left,int a,int n)
+{
+    int ans=0;
+    while(left<=right)
+    {
+        int mid=(left+right)/2;
+        if(pow(mid,a)<=n)
+        {
+            ans=mid;
+            left=mid+1;
+            
+        }
+        else
+        {
+            right=mid-1;
+        }
+    }
+    return ans;
+}
+int main()
+{
+    int n=16;
+    int a=2;
+    printf("%d ",nthroot(n,1,a,n));
+}
