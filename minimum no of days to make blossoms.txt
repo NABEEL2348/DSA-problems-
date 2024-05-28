@@ -1,0 +1,54 @@
+#include<stdio.h>
+#include<math.h>
+int possible(int *arr,int n,int days,int k,int m)
+{
+    int count=0;
+    int bls=0;
+    for(int i=0;i<n;i++)
+    {
+        if(arr[i]<=k)
+        {
+            count++;
+        }
+        else
+        {
+            bls+=(count/k);
+        }
+    }
+    return (bls>=m);
+}
+int minimumnoofdaystomakeblossoms(int *arr,int n,int m,int k)
+{
+    
+    int ans=0;
+    int left=0;
+    int right=0;
+    for(int i=0;i<n;i++)
+    {
+        left=fmax(arr[i],left);
+        right=fmin(arr[i],right);
+    }
+    while(left<=right)
+    {
+        int mid=(left+right)/2;
+        if(possible(arr,n,mid,k,m)==1)
+        {
+            
+            right=mid-1;
+        }
+        else
+        {
+            ans=mid+1;
+            left=mid+1;
+        }
+    }
+    return left;
+}
+int main()
+{
+    int arr[]={7,7,7,7,12,7,7};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    int m=2;
+    int k=3;
+    printf("%d ",minimumnoofdaystomakeblossoms(arr,n,m,k));
+}
