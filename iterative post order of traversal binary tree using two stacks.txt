@@ -1,0 +1,48 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node {
+    int num;
+    struct node *left,*right;
+};
+struct node *create(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+void iterativepostorder(struct node *root)
+{
+    struct node *stack[100];
+    int top=-1;
+    struct node *stack1[100];
+    int top1=-1;
+    stack[++top]=root;
+    while(top>=0)
+    {
+        struct node *current=stack[top--];
+        stack1[++top1]=current;
+        if(current->left!=NULL)
+        {
+            stack[++top]=current->left;
+        }
+        if(current->right!=NULL)
+        {
+            stack[++top]=current->right;
+        }
+    }
+    while(top1>=0)
+    {
+        printf("%d ",stack1[top1--]->num);
+    }
+}
+int main()
+{
+    struct node *root=create(10);
+    root->left=create(20);
+    root->right=create(30);
+    root->left->left=create(40);
+    root->left->right=create(50);
+    iterativepostorder(root);
+}
