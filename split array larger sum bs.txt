@@ -1,0 +1,62 @@
+#include<stdio.h>
+#include<math.h>
+int painter(int *arr,int n,int mid,int k)
+{
+    int pagesallocated=0;
+    int res=1;
+    for(int i=0;i<n;i++)
+    {
+        if(arr[i]>mid)
+        {
+            return 0;
+        }
+        if(arr[i]+pagesallocated<=mid)
+        {
+            pagesallocated+=arr[i];
+        }
+        else
+        {
+            pagesallocated=arr[i];
+            res++;
+            if(res>k)
+            {
+                return 0;
+            }
+            
+        }
+    }
+    return 1;
+}
+int paintersum(int *arr,int n,int k)
+{
+    int ans=0;
+    int left=0;
+    int right=0;
+    for(int i=0;i<n;i++)
+    {
+        left=fmax(left,arr[i]);
+        right+=arr[i];
+    }
+    while(left<=right)
+    {
+        int mid=(left+right)/2;
+        if(painter(arr,n,mid,k))
+        {
+            ans=mid;
+            right=mid-1;
+        }
+        else
+        {
+            left=mid+1;
+        }
+    }
+    return ans;
+}
+int main()
+{
+    int arr[]={7,2,5,10,8};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    int k=2;
+    printf("%d",paintersum(arr,n,k));
+    
+}
