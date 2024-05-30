@@ -1,0 +1,67 @@
+#include<stdio.h>
+#include<math.h>
+#include<stdlib.h>
+struct node{
+    int num;
+    struct node *left,*right;
+};
+struct node *create(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+void findline(struct node *root,int *min,int *max,int hd)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    
+        *min=fmin(*min,hd);
+        *max=fmax(*max,hd);
+
+    findline(root->left,min,max,hd-1);
+    findline(root->right,min,max,hd+1);
+}
+void printverticaline(struct node *root,int line_no,int hd)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    if(line_no==hd)
+    {
+        printf("%d ",root->num);
+    }
+    printverticaline(root->left,line_no,hd-1);
+    printverticaline(root->right,line_no,hd+1);
+    
+}
+int verticalorder(struct node *root)
+{
+    if(root==NULL)
+    {
+        return 0;
+    }
+    int min=0,max=0;
+    findline(root,&min,&max,0);
+    for(int i=min;i<=max;i++)
+    {
+        printverticaline(root,i,0);
+        printf("\n");
+    }
+}
+int main()
+{
+    struct node *root=create(10);
+    root->left=create(20);
+    root->right=create(30);
+    root->left->left=create(40);
+    root->left->right=create(50);
+    root->right->left=create(60);
+    root->right->right=create(70);
+    verticalorder(root);
+}
