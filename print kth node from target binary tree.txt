@@ -1,0 +1,102 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+struct node{
+    int num;
+    struct node *left,*right,*parent;
+};
+struct node *create(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    newnode->parent=NULL;
+    return newnode;
+}
+struct node *findtarget(struct node *root,int target)
+{
+    if(root==NULL)
+    {
+        return NULL;
+    }
+   
+    if(root->num==target)
+    {
+        return root;
+    }
+    struct node *left=findtarget(root->left,target);
+    if(left)
+    {
+        return left;
+    }
+    struct node *right=findtarget(root->right,target);
+    if(right)
+    {
+        return right;
+    }
+}
+int printknodesfromtarget(struct node *root1,struct node *root,int k)
+{
+    struct node *queue[100];
+    int front=-1,rear=-1;
+    int visited[100];
+    memset(visited,0,sizeof(visited));
+    
+    queue[++front]=queue[++rear]=root1;
+    while(front<=rear)
+    {
+        struct node *current=queue[front++];
+        int current_num=visited[current->num];
+        if(current_num==k&& current->num!=root1->num)
+        {
+            printf("%d ",current->num);
+        }
+        if(current_num>k)
+        {
+            break;
+        }
+        if(current->left!=NULL && visited[current->left->num]==0)
+        {
+            queue[++rear]=current->left;
+            visited[current->left->num]=current_num+1;
+        }
+        if(current->right!=NULL && visited[current->right->num]==0)
+        {
+            queue[++rear]=current->right;
+            visited[current->right->num]=current_num+1;
+        }
+        if(current->parent!=NULL && visited[current->parent->num]==0)
+        {
+            queue[++rear]=current->parent;
+            visited[current->parent->num]=current_num+1;
+        }
+        
+    }
+    
+}
+int main()
+{
+    struct node *root=create(10);
+    root->left=create(20);
+    root->right=create(30);
+    root->left->left=create(40);
+    root->left->right=create(50);
+    root->right->left=create(60);
+    root->right->right=create(70);
+    root->left->left->left=create(80);
+    
+    root->left->parent = root;
+    root->right->parent = root;
+    root->left->left->parent = root->left;
+    root->left->right->parent = root->left;
+    root->right->left->parent = root->right;
+    root->right->right->parent = root->right;
+    root->left->left->left->parent = root->left->left;
+    
+    int target=20;
+    int k=2;
+    struct node *root1=findtarget(root,target);
+    printknodesfromtarget(root1,root,k);
+    
+}
