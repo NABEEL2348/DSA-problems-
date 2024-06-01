@@ -1,0 +1,61 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+    int num;
+    struct node *left,*right;
+};
+struct node *insert(struct node *root,int num)
+{
+    
+    if(root==NULL)
+    {
+        struct node *newnode=(struct node*)malloc(sizeof(struct node));
+        newnode->num=num;
+        newnode->left=NULL;
+        newnode->right=NULL;
+        root=newnode;
+    }
+    else
+    {
+
+        if(root->num>num)
+        {
+            root->left=insert(root->left,num);
+        }
+        else
+        {
+            root->right=insert(root->right,num);
+        }
+    }
+    return root;
+}
+int minmax(struct node *root,int min)
+{
+    if(root==NULL)
+    {
+        return 0;
+    }
+    if(root->left==NULL)
+    {
+        min=root->num;
+        return min;
+    }
+    
+    if(root->left!=NULL)
+    {
+        min=minmax(root->left,min);
+    }
+    return min;
+}
+int main()
+{
+    struct node *root=NULL;
+    root=insert(root,20);
+    root=insert(root,10);
+    root=insert(root,15);
+    root=insert(root,30);
+    int min=0,max=0;
+    min=minmax(root,min);
+    printf("%d ",min);
+}
+//for max use right instead of left
