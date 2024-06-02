@@ -1,0 +1,66 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+    int num;
+    struct node *left,*right;
+};
+struct node *insert(struct node *root,int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    if(root==NULL)
+    {
+        root=newnode;
+    }
+    else
+    {
+        if(root->num>num)
+        {
+            root->left=insert(root->left,num);
+        }
+        else
+        {
+            root->right=insert(root->right,num);
+        }
+    }
+    return root;
+}
+
+int preorderbst(struct node *root)
+{
+   if(root==NULL)
+   {
+       return 0;
+   }
+   
+   struct node  *stack[100];
+   int top=-1;
+   stack[++top]=root;
+   while(top!=-1)
+   {
+       struct node *current=stack[top--];
+       printf("%d ",current->num);
+       if(current->right!=NULL)
+       {
+           stack[++top]=current->right;
+       }
+       if(current->left!=NULL)
+       {
+           stack[++top]=current->left;
+       }
+       
+   }
+}
+int main()
+{
+    struct node *root=NULL;
+    root=insert(root,8);
+    root=insert(root,5);
+    root=insert(root,1);
+    root=insert(root,7);
+    root=insert(root,10);
+    root=insert(root,12);
+    preorderbst(root);
+}
