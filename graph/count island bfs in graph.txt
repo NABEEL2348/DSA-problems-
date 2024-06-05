@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define R 5 
+#define C 5
+
+struct queuenode {
+    int row;
+    int col;
+};
+
+void bfs(int grid[R][C], int startRow, int startCol, int vis[R][C]) {
+    struct queuenode *queue[100];
+    int front = 0, rear = -1;
+
+    // Enqueue the starting node
+    rear++;
+    queue[rear] = (struct queuenode *)malloc(sizeof(struct queuenode));
+    queue[rear]->row = startRow;
+    queue[rear]->col = startCol;
+    vis[startRow][startCol] = 1;
+
+    while (front <= rear) {
+        struct queuenode *current = queue[front];
+        front++;
+
+        // Check all 8 possible directions
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                if (i == 0 && j == 0) continue; // Skip the current cell itself
+                int newRow = current->row + i;
+                int newCol = current->col + j;
+                if (newRow >= 0 && newRow < R && newCol >= 0 && newCol < C &&
+                    !vis[newRow][newCol] && grid[newRow][newCol] == 1) {
+                    rear++;
+                    queue[rear] = (struct queuenode *)malloc(sizeof(struct queuenode));
+                    queue[rear]->row = newRow;
+                    queue[rear]->col = newCol;
+                    vis[newRow][newCol] = 1;
+                }
+            }
+        }
+        free(current); // Free the memory of the dequeued node
+    }
+}
+
+int countisland(int grid[R][C]) {
+    int vis[R][C] = {0}; // Initialize visited array with 0s
+
+    int count = 0;
+    for (int i = 0; i < R; i++) {
+        for (int j = 0; j < C; j++) {
+            if (grid[i][j] == 1 && !vis[i][j]) {
+                bfs(grid, i, j, vis);
+                count++;
+            }
+        }
+    }
+    
+    return count;
+}
+
+int main() {
+    int grid[R][C] = {
+        {1, 0, 0, 0, 0},
+        {0, 0, 0, 0, 1},
+        {1, 0, 0, 1, 1},
+        {0, 0, 0, 0, 0},
+        {1, 0, 1, 0, 1}
+    };
+    printf("Number of islands: %d\n", countisland(grid, R, C));
+    return 0;
+}
