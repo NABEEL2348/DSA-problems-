@@ -1,0 +1,22 @@
+#include<stdio.h>
+#include<math.h>
+int kadane(int *arr,int n)
+{
+    int incl=arr[0];
+    int excl=0;
+    int result=0;
+    for(int i=0;i<n;i++)
+    {
+       
+        excl=fmax(arr[i],excl+arr[i]);
+        printf("%d ",excl);
+        result=fmax(result,excl);
+    }
+    return result;
+}
+int main()
+{
+    int arr[]={-2,1,-3,4,-1,2,1,-5,4};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    printf("%d",kadane(arr,n));
+}
