@@ -1,0 +1,43 @@
+#include<stdio.h>
+#include<string.h>
+int computesubtringinastring(char *str,char *str1)
+{
+    int n=strlen(str);
+    int m=strlen(str1);
+    int i,j,index;
+    while(i<=n)
+    {
+        if(str[i]==str1[0])
+        {
+            j=i;
+            
+        }
+        if(str[i]==str1[index])
+        {
+            index++;
+            i++;
+            continue;
+        }
+        if(index==m)
+        {
+            
+            return j;
+        }
+        else if(i<=n-1 && str[i]!=str1[index] )
+        {
+
+            j=0;
+            index=0;
+        }
+        i++;
+        
+    }
+    return j;
+}
+int main()
+{
+    char str[]="hello world this is world";
+    char *Str1="world";
+    printf("%d ",computesubtringinastring(str,Str1));
+    
+}
