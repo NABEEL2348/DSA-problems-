@@ -1,0 +1,73 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+int merge(int *arr,int low,int high,int mid)
+{
+    
+    int count=mid-low+1;
+    int count1=high-mid;
+    int *l1=(int *)malloc(count*sizeof(int));
+    int *l2=(int *)malloc(count1*sizeof(int));
+    
+    for(int i=0;i<count;i++)
+    {
+        l1[i]=arr[low+i];
+    }
+    for(int j=0;j<count;j++)
+    {
+        l2[j]=arr[mid+1+j];
+    }
+  
+  int o=0;
+  int o1=0;
+  int rescount=low;
+  while(o<count && o1<count1)
+  {
+      if(l1[o]<=l2[o1])
+      {
+          
+          arr[rescount]=l1[o++];
+      }
+      else
+      {
+         
+          arr[rescount]=l2[o1++];
+      }
+      rescount++;
+  }
+  while(o<count)
+  {
+      arr[rescount]=l1[o++];
+      rescount++;
+  }
+  while(o1<count1)
+  {
+      arr[rescount]=l2[o1++];
+      rescount++;
+  }
+ 
+}
+int  mergesort(int *arr,int left,int right)
+{
+    if(left<right)
+    {
+        
+    
+    int mid=(left+right)/2;
+    mergesort(arr,left,mid);
+    mergesort(arr,mid+1,right);
+    merge(arr,left,right,mid);
+    }
+   
+}
+int main()
+{
+    int arr[]={78,5,67,34,9,45};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    mergesort(arr,0,n-1);
+    for(int i=0;i<n;i++)
+    {
+       printf("%d ",arr[i]);
+    }
+    
+}
