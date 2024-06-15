@@ -1,0 +1,53 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+int compare(const void *a,const void *b)
+{
+    const char **str=(const char**)a;
+    const char **str1=(const char **)b;
+    int n=strlen(*str);
+    int n1=strlen(*str1);
+    if(n<n1)
+    {
+        return -1;
+    }
+    else if(n>n1)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}char findlcs(char *str,char *str1)
+{
+    int n1=strlen(str);
+    int n2=strlen(str1);
+    int n=(n1<n2)?n1:n2;
+    for(int i=0;i<n;i++)
+    {
+        if(str[i]==str1[i])
+        {
+            printf("%c ",str[i]);
+        }
+        else
+        {
+            break;
+        }
+    }
+}
+char lcs(char *str[],int n)
+{
+    qsort(str,n,sizeof(char *),compare);
+    for(int i=0;i<n;i++)
+    {
+        printf("%s ",str[i]);
+    }
+    findlcs(str[0],str[n-1]);
+}
+int main()
+{
+    char *str[]={"geeksforgeeks", "geeks", "geek", "geezer"};
+    int n=sizeof(str)/sizeof(str[0]);
+    lcs(str,n);
+}

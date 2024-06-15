@@ -1,0 +1,51 @@
+#include<stdio.h>
+#include<string.h>
+int main()
+{
+    char str[]="abc";
+    int n=strlen(str);
+    int hash[n+1];
+    int i=0;
+    char encrupt[n+1];
+    int count=0;
+    int result=0;
+    while(i<n)
+    {
+        char ele =str[i];
+        int j=0;
+        while(str[i]==ele)
+        {
+            i++ ;
+            j++;
+        }
+        
+        
+        result=(j<10)?j:('A'+j-10);
+     
+        encrupt[count++]=(char)ele;
+        printf("%c ",encrupt[count-1]);
+        if(result<10)
+        {
+            encrupt[count++]=result+'0';
+        }
+        else
+        {
+            encrupt[count++]=(char )result;
+        }
+
+        
+    }
+    int left=0;
+    int right=count-1;
+    while(left<=right)
+    {
+        char temp=encrupt[left];
+        encrupt[left]=encrupt[right];
+        encrupt[right]=temp;
+        left++;
+        right--;
+    }
+  
+    encrupt[count]='\0';
+    printf("%s ",encrupt);
+}

@@ -1,0 +1,42 @@
+#include<stdio.h>
+#include<string.h>
+int stringmatches(char *str1,char *str)
+{
+    
+    int n=strlen(str);
+    
+    int count=0;
+    int i=0,j=0;
+    while(i<n && j<n)
+    {
+        
+        if(str1[i]==str[j])
+        {
+            count++;
+            i++;
+        }
+        j++;
+    }
+    return (strlen(str1)==count);
+}
+int largestwordmathches(char *word[],int n,char *str,int n1)
+{
+    int result=0;
+    for(int i=0;i<n;i++)
+    {
+        char *str1=word[i];
+        if(stringmatches(str1,str)==1)
+        {
+            result=(result>strlen(str1))?result:strlen(str1);
+        }
+    }
+    return result;
+}
+int main()
+{
+    char *word[]={"ale", "apple", "monkey", "plea"};
+    char str[]="abpcplea";
+    int n=strlen(str);
+    int n1=sizeof(word)/sizeof(word[0]);
+    printf("%d ",largestwordmathches(word,n1,str,n));
+}

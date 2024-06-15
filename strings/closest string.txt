@@ -1,0 +1,55 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+int  stringcomp(char *str,char *str1)
+{
+    int n=strlen(str);
+    int n1=strlen(str1);
+    if(n!=n1)
+    {
+        return 0;
+    }
+    int count=0;
+    for(int i=0;i<n;i++)
+    {
+        
+        if(str[i]==str1[i])
+        {
+         
+            count++;
+        }
+        
+    }
+    if(count==n)
+    {
+            return 1;
+    }
+    return 0;
+}
+int closeststring(char *word,char *word1,char *str[],int n)
+{
+    int k=-1,j=-1,diff;
+    for(int i=0;i<n;i++)
+    {
+        
+        if(stringcomp(str[i],word)==1)
+        {
+             k=i;
+        }
+        else if(stringcomp(str[i],word1)==1)
+        {
+            j=i;
+        }
+        
+        diff=(diff>(j-k))?diff:(j-k);
+    }
+    return diff;
+}
+int main()
+{
+    char *str[]={"the", "quick", "brown", "fox", "quick"};
+    char word[]="the";
+    char word1[]="fox";
+    int n=sizeof(str)/sizeof(str[0]);
+    printf("%d ",closeststring(word,word1,str,n));
+}

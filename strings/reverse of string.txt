@@ -1,0 +1,32 @@
+#include<stdio.h>
+#include<stdbool.h>
+#include<string.h>
+bool reverse(char *str,int left,int right)
+{
+    while(left<right)
+    {
+        if(str[left]==str[right])
+        {
+            left++;
+            right--;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    return true;
+}
+int main()
+{
+    char str[]="madam";
+    int n=strlen(str);
+    if(reverse(str,0,n-1))
+    {
+        printf("reverse found");
+    }
+    else
+    {
+        printf("no reverse found");
+    }
+}
