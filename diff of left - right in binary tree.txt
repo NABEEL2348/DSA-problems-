@@ -1,0 +1,45 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+    int num;
+    struct node *left , *right;
+};
+struct node *createnode(struct node **root,int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+int  inorder(struct node *root)
+{
+    if(root==NULL)
+    {
+        return 0;
+    }
+    int left=inorder(root->left);
+    int right=inorder(root->right);
+    return root->num+left+right;
+}
+int diff(struct node *root)
+{
+    if(root==NULL)
+    {
+        return 0;
+    }
+    int left=inorder(root->left);
+    int right=inorder(root->right);
+    return left-right;
+}
+int main()
+{
+    struct node *root=createnode(&root,5);
+    root->left=createnode(&root,10);
+    root->right=createnode(&root,20);
+    root->left->left=createnode(&root,30);
+    root->left->right=createnode(&root,40);
+    root->right=createnode(&root,50);
+    root->right->right=createnode(&root,60);
+    printf("%d",diff(root));
+}
