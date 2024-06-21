@@ -1,0 +1,79 @@
+#include<stdio.h>
+#include<string.h>
+char substring(char *str,int n)
+{
+    int hash[256];
+    int i=0;
+    int queue[100];
+    int top=-1;
+    int maxlen=0;
+    int prev=0,prev1=0,prev2=0,prev3=0;;
+    while(i<n)
+    {
+        int j=0,k=0;
+        int count=0;
+        int start=i;
+        int end=i;
+    
+        while(hash[str[end]]<1 && end<n)
+        {
+            
+            count++;
+            hash[str[end]]++;
+            //printf("%d ",count);
+            end++;
+            
+        }
+        
+        if(maxlen>count)
+        {
+            maxlen=maxlen;
+        }
+        else if(maxlen<count && top==-1)
+        {
+            maxlen=count;
+            queue[++top]=start;
+            prev=start;
+            prev1=end;
+            queue[++top]=end;
+        }
+        else if(maxlen<count)
+        {
+            top=-1;
+        }
+        else if(maxlen==count)
+        {
+             maxlen=count;
+             prev2=start;
+             prev3=end;
+            queue[++top]=start;
+            queue[++top]=end;
+        }
+        while(start<end)
+        {
+            
+            hash[str[start]]=0;
+            start++;
+        }
+        
+        
+        i++;
+    }
+    while(prev<prev1)
+    {
+        printf("%c ",str[prev]);
+        prev++;
+    }
+    printf("\n");
+    while(prev2<prev3)
+    {
+        printf("%c ",str[prev2]);
+        prev2++;
+    }
+}
+int main()
+{
+    char *str="Zohocorpation";
+    int n=strlen(str);
+    substring(str,n);
+}
