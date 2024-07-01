@@ -1,0 +1,45 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct interval{
+    int front;
+    int end;
+};
+int compare(const void *a,const void *b)
+{
+    struct interval *n1=(struct interval*)a;
+    struct interval *n2=(struct interval*)b;
+    return n1->front-n2->front;
+}
+struct interval *mergeoverlapping(struct interval *arr,int n,int *resultsize)
+{
+    qsort(arr,n,sizeof(arr),compare);
+    struct interval *result=(struct interval*)malloc(n*sizeof(struct interval));
+    int resultindex;
+    result[resultindex]=arr[0];
+    
+    for(int i=1;i<n;i++)
+    {
+        if(arr[i].front<=result[resultindex].end)
+        {
+            result[resultindex].end=(arr[i].end>result[i].end)?arr[i].end:result[i].end;
+        }
+        else{
+            resultindex++;
+            result[resultindex]=arr[i];
+        }
+    }
+    
+   *resultsize=resultindex+1;
+   return result;
+}
+int main()
+{
+    struct interval arr[]={{1, 3}, {2, 6}, {8, 10}, {15, 18}};
+    int size=sizeof(arr)/sizeof(arr[0]);
+    int resultsize;
+    struct interval *arr1=mergeoverlapping(arr,size,&resultsize);
+    for(int i=0;i<resultsize;i++)
+    {
+        printf("%d%d ",arr1[i].front,arr1[i].end);
+    }
+}
