@@ -1,0 +1,28 @@
+#include<stdio.h>
+#include<math.h>
+int validparenthesis(int *arr,int n,int k)
+{
+    int oddcount=1;
+    int evencount=1;
+    for(int i=1;i<n;i++)
+    {
+        if((arr[i]+arr[i-1])%k==0)
+        {
+            evencount++;
+        }
+        else
+        {
+            oddcount++;
+        }
+        printf("%d%d ",oddcount,evencount);
+    }
+    int result=fmax(oddcount,evencount);
+    printf("%d ",result);
+}
+int main()
+{
+    int arr[]={1,4,2,3,1,4};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    int k=3;
+    validparenthesis(arr,n,k);
+}
