@@ -1,0 +1,92 @@
+#include<stdio.h>
+int countsubarraywithfixedbounds(int *arr,int n,int mink,int maxk)
+{
+    int index=0;
+    int hash[100]={0};
+    int start=0;
+    int ans=0;
+    int min=0,max=0;
+    for(int i=0;i<n;i++)
+    {
+        if(arr[i]>maxk || arr[i]<mink)
+        {
+            start=i+1;;
+            min=max=-1;
+            while(index<i)
+            {
+                hash[index]=0;
+                index++;
+                
+            }
+        }
+        if(hash[mink]!=1 || hash[maxk]!=1)
+        {
+            hash[arr[i]]=1;
+            
+        }
+        if(arr[i]==mink)
+        {
+            min=i;
+        }
+        if(arr[i]==maxk)
+        {
+            max=i;
+            start=i;
+        }
+        if(hash[mink]==1 && hash[maxk]==1)
+        {
+            
+            ans+=((min>max)?min:max )- start+1;
+        }   
+        
+    }
+    printf("%d ",ans);
+    
+}
+int main()
+{
+    int arr[]={1,1,1,1};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    int mink=1;
+    int maxk=1;
+    countsubarraywithfixedbounds(arr,n,mink,maxk);
+}
+
+
+
+#include <stdio.h>
+
+int countSubarrays(int* nums, int numsSize, int minK, int maxK) {
+    int ans = 0;
+    int maxI = -1, minI = -1;
+    int start = 0;
+
+    for (int i = 0; i < numsSize; ++i) {
+        if (nums[i] < minK || nums[i] > maxK) {
+            maxI = minI = -1;
+            start = i + 1;
+        }
+        if (nums[i] == minK) {
+            minI = i;
+        }
+        if (nums[i] == maxK) {
+            maxI = i;
+        }
+        if (minI != -1 && maxI != -1) {
+            ans += (maxI < minI ? maxI : minI) - start + 1;
+        }
+    }
+
+    return ans;
+}
+
+int main() {
+    int nums[] = {1, 3, 5, 2, 7, 5};
+    int numsSize = sizeof(nums) / sizeof(nums[0]);
+    int minK = 1, maxK = 5;
+    
+    int result = countSubarrays(nums, numsSize, minK, maxK);
+    printf("The count of valid subarrays is: %d\n", result);
+
+    return 0;
+}
