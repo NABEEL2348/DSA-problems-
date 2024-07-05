@@ -1,0 +1,69 @@
+interface interface1
+{
+    default void show()
+    {
+        System.out.println("interface1");
+    }
+}
+interface interface2
+{
+    default void show()
+    {
+        System.out.println("interface2");
+    }
+}
+class abstractclass implements interface1,interface2
+{
+    public void show()
+    {
+        interface1.super.show();
+    }
+}
+public class Main
+{
+	public static void main(String[] args) {
+	   abstractclass m=new abstractclass();
+	   m.show();
+	
+	}
+}
+
+
+interface interface1
+{
+    static  public void method()
+    {
+        System.out.println("interface1");
+    }
+}
+interface interface2 extends interface1
+{
+    static public void method()
+    {
+        System.out.println("interface2");
+    }
+}
+
+interface interface3 extends interface1
+{
+    static public void method()
+    {
+        System.out.println("interface3");
+    }
+}
+class classc implements interface2,interface3
+{
+    public void method()
+    {
+        interface2.method();
+    }
+}
+public class Main
+{
+	public static void main(String[] args)
+	{
+	     classc classc = new classc();
+	     classc.method();
+	}
+}
+

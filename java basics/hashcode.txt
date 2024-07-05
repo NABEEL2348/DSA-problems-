@@ -1,0 +1,55 @@
+//hashcode means randon number for same object
+ import java.util.Objects;
+
+class Person {
+    private String name;
+    private int age;
+
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    // Override equals method
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return age == person.age && Objects.equals(name, person.name);
+    }
+
+    // Override hashCode method
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age);
+    }
+
+    @Override
+    public String toString() {
+        return "Person{name='" + name + "', age=" + age + "}";
+    }
+
+    public static void main(String[] args) {
+        Person p1 = new Person("Alice", 30);
+        Person p2 = new Person("Alice", 30);
+        Person p3 = new Person("Bob", 25);
+
+        // Check equality
+        System.out.println(p1.equals(p2)); // true
+        System.out.println(p1.equals(p3)); // false
+
+        // Check hash codes
+        System.out.println(p1.hashCode()); // hash code of p1
+        System.out.println(p2.hashCode()); // same hash code as p1
+        System.out.println(p3.hashCode()); // different hash code
+
+        // Using hash-based collections
+        java.util.HashSet<Person> set = new java.util.HashSet<>();
+        set.add(p1);
+        set.add(p2);
+        set.add(p3);
+
+        System.out.println(set); // prints the set of unique persons
+    }
+}

@@ -1,0 +1,33 @@
+class student implements Cloneable
+{
+    String str1;
+    int id1;
+    public student(String str,int id)
+    {
+        this.str1=str;
+        this.id1=id;
+    }
+    
+    public Object clone() throws CloneNotSupportedException
+    {
+        return super.clone();
+    }
+}    
+public class Main
+{
+    
+    public static void main(String args[])
+    {
+        try {
+            student stu=new student("hello",1);
+            student stu2=(student) stu.clone();
+            System.out.println(stu2.id1);
+        } 
+        catch(Exception e) {
+        }
+        finally{
+            System.out.println("finally yes");
+        }
+        
+    }
+}

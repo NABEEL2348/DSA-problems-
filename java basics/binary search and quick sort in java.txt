@@ -1,0 +1,78 @@
+class class1
+{
+    public void swap(int arr[],int i,int j)
+    {
+        int temp=arr[i];
+        arr[i]=arr[j];
+        arr[j]=temp;
+    }
+    public int quicksort(int[] arr,int left,int right)
+    {
+        int pi=arr[left];
+        int low=left+1;
+        int high=right;
+        while(low<=high)
+        {
+            while(arr[low]<=pi && low<=high)
+            {
+                low++;
+            }
+            while(arr[high]>=pi && high>=low)
+            {
+                high--;
+            }
+            if(low<=high)
+            {
+                swap(arr,low,high);
+            }
+        }
+        swap(arr,left,high);
+        return high;
+    }
+    public void method(int[] arr,int left,int right)
+    {
+        if(left<right)
+        {
+            int pi=quicksort(arr,left,right);
+            method(arr,left,pi-1);
+            method(arr,pi+1,right);
+        }
+    }
+}
+public class Main
+{
+	public static void main(String[] args) {
+		int arr[]={5,6,3,2,6,7,3,9};
+		int n=arr.length;
+		int left=0;
+		int right=n-1;
+		int target=7;
+		class1 clas=new class1();
+		clas.method(arr,left,right);
+		for(int i=0;i<n;i++)
+		{
+		    System.out.print(arr[i]+" ");
+		}
+		left=0;
+		right=n-1;
+		int ans=0;
+		while(left<=right)
+		{
+		    int mid=(left+right)/2;
+		    if(arr[mid]==target)
+		    {
+		        ans=mid;
+		        break;
+		    }
+		    else if(arr[mid]<target)
+		    {
+		        left=mid+1;
+		    }
+		    else
+		    {
+		        right=mid-1;
+		    }
+		}
+		System.out.print("answer is:" + ans);
+	}
+}
