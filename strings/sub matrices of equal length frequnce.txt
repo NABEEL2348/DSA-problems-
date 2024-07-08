@@ -1,0 +1,57 @@
+#include<stdio.h>
+int countsybmatricswithequalfreqofxandy(char *str[2][3],int n)
+{
+    int count=0;
+    for(int i=0;i<2;i++)
+    {
+        int count1=0;
+        for(int j=0;j<3;j++)
+        {
+            int count2=0;
+            if(str[i][j]=="X" || str[i][j]=="Y")
+            {
+                count1++;
+            }
+            else if(str[i][j]==".")
+            {
+                count2++;
+            }
+            if(str[i][j]=="." && count2>1)
+            {
+                count1=0;
+            }
+            
+        }
+        
+        if(count1==2)
+        {
+            count++;
+        }
+        else if(count1==3)
+        {
+            count++;
+        }
+       
+    }
+   int count1=0;
+    for(int i=0;i<n;i++)
+    {
+        
+        if(str[i][0]=="X" || str[i][0]=="Y")
+        {
+            count1++;
+        }
+        
+    }
+    if(count1==2)
+    {
+            count++;
+     }
+    return count;
+}
+int main()
+{
+    char *str[2][3]={{"X","Y","."},{"Y",".","."}};
+    int n=sizeof(str)/sizeof(str[0]);
+    printf("%d ",countsybmatricswithequalfreqofxandy(str,n));
+}
