@@ -1,0 +1,24 @@
+#include<stdio.h>
+int main()
+{
+    int n=4;
+    int arr[n][n];
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<n;j++)
+        {
+            scanf("%d",&arr[i][j]);
+        }
+    }
+    int count=n-1;
+    
+    for(int i=0;i<n;i++)
+    {
+        int count1=n-1;
+        for(int j=0;j<n;j++)
+        {
+            printf("%d",arr[count1-j][i]);
+        }
+        printf("\n");
+    }
+}
