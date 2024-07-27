@@ -1,0 +1,54 @@
+#include<stdio.h>
+int row(int arr1[4][4],int n,int row1)
+{
+    for(int i=0;i<n;i++)
+   {
+       for(int j=0;j<n;j++)
+       {
+           if(i==row1)
+           {
+               arr1[i][j]=0;
+           }
+       }
+   }
+}
+int col(int arr1[4][4],int n1,int col1)
+{
+    for(int i=0;i<n1;i++)
+   {
+       for(int j=0;j<n1;j++)
+       {
+           if(j==col1)
+           {
+               arr1[i][j]=0;
+           }
+       }
+   }
+}
+int main()
+{
+   int arr[4][4]={{0,5,3,0},{4,5,6,7},{4,5,6,7},{4,5,6,7}};
+   int n=sizeof(arr)/sizeof(arr[0]);
+   int arr1[4][4]={{0,5,3,0},{4,5,6,7},{4,5,6,7},{4,5,6,7}};
+   int n1=sizeof(arr)/sizeof(arr[0]);
+   for(int i=0;i<n;i++)
+   {
+       for(int j=0;j<n;j++)
+       {
+           if(arr[i][j]==0)
+           {
+               row(arr1,n1,i);
+               col(arr1,n1,j);
+           }
+       }
+   }
+   
+   for(int i=0;i<n;i++)
+   {
+       for(int j=0;j<n;j++)
+       {
+           printf("%d",arr1[i][j]);
+       }
+       printf("\n");
+   }
+}
