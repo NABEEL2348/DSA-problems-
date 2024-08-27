@@ -1,0 +1,24 @@
+public class Main
+{
+    class parent
+    {
+        String message="this is parent";
+        
+    }
+     class child extends parent
+    {
+        String childmessage="hi is child";
+        child()
+        {
+            System.out.println(childmessage);
+            System.out.print(super.message);
+        }
+    }
+	public static void main(String[] args) 
+	{
+	    Main main=new Main();
+	    
+	     child message=main.new child();
+		
+	}
+}
