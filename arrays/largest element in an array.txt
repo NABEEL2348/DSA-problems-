@@ -1,0 +1,15 @@
+#include<stdio.h>
+int main()
+{
+    int arr[]={1,3,44,5,6};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    int tar=0;
+    for(int i=0;i<n;i++)
+    {
+        if(arr[i]>tar)
+        {
+            tar=arr[i];
+        }
+    }
+    printf("%d ",tar);
+}
