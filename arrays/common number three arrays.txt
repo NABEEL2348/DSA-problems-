@@ -1,0 +1,46 @@
+#include<stdio.h>
+int nextstep(int sum,int *arr,int n)
+{
+    int i=0;
+    while(i<n)
+    {
+        if(arr[i]==sum)
+        {
+            printf("the number is %d ",sum);
+            break;
+        }
+        i++;
+    }
+}
+int threecommon(int *arr,int n,int *arr1,int n1,int *arr2,int n2)
+{
+    int i=0,j=0,k=0;
+    while(i<n && j<n1 && k<n2)
+    {
+        if(arr[i]==arr1[j])
+        {
+            nextstep(arr[i],arr2,n2);
+            i++;
+            j++;
+        }
+        else if(arr[i]<arr1[j])
+        {
+            i++;
+        }
+        else
+        {
+            j++;
+        }
+    }
+}
+int main()
+{
+    int arr[]={1, 5, 10, 20, 30};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    int arr1[]={5, 13, 15, 20};
+    int n1=sizeof(arr1)/sizeof(arr1[0]);
+    int arr2[]={5,20};
+    int n2=sizeof(arr2)/sizeof(arr2[0]);
+    threecommon(arr,n,arr1,n1,arr2,n2);
+    
+}
