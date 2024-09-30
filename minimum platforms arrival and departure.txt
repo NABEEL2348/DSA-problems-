@@ -1,0 +1,38 @@
+#include<stdio.h>
+#include<stdlib.h>
+int compare(const void  *a,const void *b)
+{
+    return (*(int*)a-*(int*)b);
+}
+int minimumplatform(int arr[],int n,int dept[],int n1)
+{
+    qsort(arr,n,sizeof(int),compare);
+    qsort(dept,n1,sizeof(int),compare);
+    
+    int count=0;
+    int i=0;
+    int j=0;
+    int platformcount=0;
+    while(i<n  && j<n1)
+    {
+        count=0;
+        while(arr[i]<=dept[j] && i<n && j<n1)
+        {
+           
+            count++;
+            i++;
+        }
+        j++;
+        
+        platformcount=(count>platformcount)?count:platformcount;
+    }
+    printf("%d",platformcount);
+}
+int main()
+{
+    int arr[]={900, 940};
+    int dept[]={910, 1200};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    int n1=sizeof(dept)/sizeof(dept[0]);
+    minimumplatform(arr,n,dept,n1);
+}
