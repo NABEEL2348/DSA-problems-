@@ -1,0 +1,64 @@
+import java.util.ArrayList;
+import java.util.*;
+public class Main{
+    class person{
+        int account_number;
+        int ifcs_code;
+        String name;
+        String branch;
+        public person(int account_number,int ifcs_code,String name,String branch)
+        {
+            this.account_number=account_number;
+            this.ifcs_code=ifcs_code;
+            this.name=name;
+            this.branch=branch;
+        }
+    }
+    class bank
+    {
+        person account_number;
+        int rupees;
+        public bank(person account_number,int rupees)
+        {
+           this.account_number=account_number;
+           this.rupees=rupees;
+        }
+        public  void displaydetails()
+        {
+            System.out.println(account_number.account_number);
+            System.out.println(account_number.ifcs_code);
+            System.out.println(account_number.name);
+            System.out.println(account_number.branch);
+        }
+    }
+    
+    public static void main(String args[])
+    {
+        ArrayList<bank> account=new ArrayList<bank>();
+        Scanner sc=new Scanner(System.in);
+        Main main=new Main();
+        int n=sc.nextInt();
+        
+        
+        for(int i=0;i<n;i++)
+        {
+            System.out.println("enter the bank account_number");
+            int account_number=sc.nextInt();
+            System.out.println("enter the bank ifcs_code");
+            int ifcs_code=sc.nextInt();
+            System.out.println("enter the bank account person name");
+            String name=sc.next();
+            System.out.println("enter the bank account branch");
+            String branch =sc.next();
+            person p=main.new person(account_number,ifcs_code,name,branch);
+            bank b=main.new bank(p,10000);
+            account.add(b);
+        }
+        for(bank bakklist:account)
+        {
+            System.out.println("------------------- bank account member details ----------");
+            bakklist.displaydetails();
+        }
+       
+    }
+}
