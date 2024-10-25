@@ -1,0 +1,35 @@
+import java.util.*;
+public class Main
+{
+    static class Student
+    {
+        int id;
+        String name;
+        long number;
+        String email;
+        public Student(int id,String name,long number,String email)
+        {
+            this.id=id;
+            this.name=name;
+            this.number=number;
+            this.email=email;
+        }
+        Student()
+        {
+           this (23,"mahesh",9049498339L,"etho@gmail.com");
+        }
+        void greet()
+        {
+            this.id=4;
+        }
+    }
+    
+    public static void main(String args[])
+    {
+       Student ravi=new Student(1,"ravi",9786748467L,"ravi@gmail.com");
+       Student mahesh=new Student();
+       Student mahesh1=ravi;
+       mahesh.greet();
+       System.out.print(mahesh.name);
+    }
+}
