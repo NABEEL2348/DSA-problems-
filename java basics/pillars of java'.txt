@@ -1,0 +1,159 @@
+inheritance
+public class Main
+{
+    static class Student
+    {
+        int id;
+        String name;
+        long num;
+        int marks;
+        Student(int id,String name,long num,int marks)
+        {
+            this.id=id;
+            this.name=name;
+            this.num=num;
+            this.marks=marks;
+        }
+        Student(int id)
+        {
+            this.id=id;
+        }
+        Student(int id,String name,long num)
+        {
+            this.id=id;
+            this.name=name;
+            this.num=num;
+        }
+        Student(Student stu)//so alter to below this method is follows
+        {
+            this.id=stu.id;
+            this.name=stu.name;
+            this.num=stu.num;
+        }
+    }
+    static class ravi extends Student
+    {
+        ravi(Student stu)
+        {
+            super(stu.id,stu.name,stu.num,stu.marks);//we can able to access in other class but not in same class
+        }
+    }
+	public static void main(String[] args) {
+	    Student stu=new Student(12,"ravi",28340934098L,99);
+	    Student stu1=new Student(13);
+	    Student stu2=new Student(14,"Stu2",454545L);
+	    Student stu3=new Student(stu2);
+	    ravi rav=new ravi(stu);
+	}
+}
+//polymorphism
+
+//overriding are method
+public class Main
+{
+    static class shapes
+    {
+        void area()
+        {
+            System.out.println("shapes in it");
+        }
+    }
+    static class square extends shapes
+    {
+        void area()
+        {
+            System.out.println("square in it");
+        }
+    }
+    static class triangle extends shapes
+    {
+        void area()
+        {
+            System.out.println("triangle in it");
+        }
+    }
+    static class rectanglr extends shapes
+    {
+        void area()
+        {
+            System.out.println("rectanglr in  it");
+        }
+    }
+	public static void main(String[] args) {
+	    shapes shap=new shapes();
+		square squ=new square();
+		triangle tri=new triangle();
+		rectanglr rect=new rectanglr();
+		shap.area();
+		squ.area();
+		tri.area();
+		rect.area();
+}
+}
+//final
+
+
+public class Main
+{
+    static class shapes
+    {
+        final void area()//final keyword caanot be changes or overridden
+        {
+            System.out.println("shapes in it");
+        }
+    }
+    static class square extends shapes
+    {
+        void area()
+        {
+            System.out.println("square in it");
+        }
+    }
+    static class triangle extends shapes
+    {
+        void area()
+        {
+            System.out.println("triangle in it");
+        }
+    }
+    static class rectanglr extends shapes
+    {
+        void area()
+        {
+            System.out.println("rectanglr in  it");
+        }
+    }
+	public static void main(String[] args) {
+	    shapes shap=new shapes();
+		square squ=new square();
+		triangle tri=new triangle();
+		rectanglr rect=new rectanglr();
+		shap.area();
+		squ.area();
+		tri.area();
+		rect.area();
+}
+}
+//upcasting
+public class Main
+{
+    static class  Student
+    {
+        void method()
+        {
+            System.out.println("hi this is Student");
+        }
+    }
+    static class teacher extends Student
+    {
+        void method()
+        {
+            System.out.println("hey i am your teacher");
+        }
+    }
+	public static void main(String[] args) {
+		Student stu=new teacher();
+	    stu.method();
+	}
+}
+
