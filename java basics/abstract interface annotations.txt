@@ -1,0 +1,103 @@
+
+public class Main
+{
+    static abstract class animal
+    {
+        abstract void sound();//method without a body and without present in parent class it cannot be override
+    }
+    static class dog extends animal
+    {
+        void sound()
+        {
+            System.out.println("bark");
+        }
+    }
+    static class cat extends animal
+    {
+        void sound()
+        {
+            System.out.print("meow");
+        }
+    }
+	public static void main(String[] args) {
+		animal dog = new dog();
+		animal cat = new cat();
+		dog.sound();
+		cat.sound();
+	}
+}
+//interface 
+
+
+public class Main
+{
+    static interface vehicle
+    {
+        void start();
+        void stop();
+    }
+    static interface brake
+    {
+        void brake();
+    }
+    static class sumo implements vehicle,brake
+    {
+        public void start()
+        {
+            System.out.println("sumo start the engine");
+        }
+        public void stop()
+        {
+            System.out.println("stop the engine");
+        }
+        public void brake()
+        {
+            System.out.println("put the brake");
+        }
+    }
+    
+	public static void main(String[] args) {
+	    sumo sumo=new sumo();
+		sumo.start();
+		sumo.stop();
+		sumo.brake();
+	}
+}
+extends in interface
+
+
+public class Main
+{
+    static interface engine
+    {
+        void start();
+        void stop();
+    }
+    static interface brake extends engine
+    {
+        void brake();
+    }
+    static class sumo implements brake
+    {
+        public void start()
+        {
+           System.out.println("start the sumo"); 
+        }
+        public void stop()
+        {
+           System.out.println("stop the sumo"); 
+        }
+        public void brake()//in java interface methods are implicitly public
+        {
+           System.out.println("brake the sumo"); 
+        }
+        
+    }
+	public static void main(String[] args)
+	{
+		sumo sumo= new sumo();
+		sumo.start();
+		sumo.stop();
+		sumo.brake();
+	}
+}
