@@ -1,0 +1,27 @@
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+	 String str=".like.this.program.very.much";
+     StringBuilder word1=new StringBuilder();
+	 int n=str.length();
+	 StringBuilder word=new StringBuilder();
+	 int count=0;
+	 for(int i=n-1;i>=0;i--)
+	 {
+	     if(str.charAt(i)=='.')
+	     {
+	         word.append(word1.reverse());
+	         word.append('.');
+	         word1.setLength(0);
+	     }
+	     else
+	     {
+	         word1.append(str.charAt(i));
+	     }
+	  }
+	  word.append(word1.reverse());
+	  System.out.println(word);
+	 }
+}
