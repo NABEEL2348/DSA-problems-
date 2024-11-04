@@ -1,0 +1,61 @@
+import java.util.*;
+public class Main
+{
+	public static void main(String[] args) 
+	{
+		Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		sc.nextLine();
+		inventory[] inv=new inventory[n];
+		for(int i=0;i<n;i++)
+		{
+		    String inventoryid=sc.nextLine();
+            int maximumquantity=sc.nextInt();
+            sc.nextLine();
+            int currentquantity=sc.nextInt();
+            sc.nextLine();
+            int threshold=sc.nextInt();
+            sc.nextLine();
+            inv[i]=new inventory(inventoryid,maximumquantity,currentquantity,threshold);
+		}
+		
+		int currentthreshold=sc.nextInt();
+		function(currentthreshold,inv);
+	}
+	static void function(int currentthreshold,inventory[] inv)
+	{
+	    for(inventory inventory:inv)
+	    {
+	        if(inventory.threshold<=currentthreshold)
+	        {
+	            if(inventory.threshold>=75)
+	            {
+	                System.out.println("Critical Filling");
+	            }
+	            else if(inventory.threshold>=50 && inventory.threshold<75)
+	            {
+	                System.out.println("Moderate Filling");
+	            }
+	            else
+	            {
+	                System.out.println(inventory.inventoryid+": Non-Critical Filling");
+	            }
+	        }
+	    }
+	}
+}
+class inventory
+{
+    String inventoryid;
+    int maximumquantity;
+    int currentquantity;
+    int threshold;
+    inventory(String inventoryid,int maximumquantity,int currentquantity,int threshold)
+    {
+        this.inventoryid=inventoryid;
+        this.maximumquantity=maximumquantity;
+        this.currentquantity=currentquantity;
+        this.threshold=threshold;
+    }
+    
+}
