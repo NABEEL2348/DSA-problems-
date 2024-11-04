@@ -1,0 +1,42 @@
+import java.util.HashMap;
+import java.util.Map;
+public class Main
+{
+    static int romantointeger(String str,int n)
+    {
+        int curr=0;
+        int prev=0;
+        int count=0;
+        int sum=0;
+        Map<Character,Integer> cha=new HashMap<>();
+        cha.put('I',1);
+        cha.put('V',5);
+        cha.put('X',10);
+        cha.put('L',50);
+        cha.put('C',100);
+        cha.put('D',500);
+        cha.put('M',1000);
+        for(int i=n-1;i>=0;i--)
+        {
+            curr=cha.get(str.charAt(i));
+            if(curr>prev)
+            {
+                sum+=curr;
+            }
+            else
+            {
+                sum-=curr;
+            }
+            prev=curr;
+        }
+        return sum;
+    }
+	public static void main(String[] args)
+	{
+		String str="XL";
+		int n=str.length();
+		System.out.print(romantointeger(str,n));
+		
+		
+	}
+}
