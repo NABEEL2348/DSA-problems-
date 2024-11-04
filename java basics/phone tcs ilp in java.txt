@@ -1,0 +1,60 @@
+import java.util.*;
+class phone
+{
+    int phoneid;
+    String os;
+    String brand;
+    int price;
+    phone(int phoneid,String os,String brand,int price)
+    {
+        this.phoneid=phoneid;
+        this.os=os;
+        this.brand=brand;
+        this.price=price;
+    }
+}
+public class Main
+{
+	public static void main(String[] args) 
+	{
+		Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		sc.nextLine();
+		phone[] ph=new phone[n];
+		for(int i=0;i<n;i++)
+		{
+		    int phoneid=sc.nextInt();
+		    sc.nextLine();
+            String os=sc.nextLine();
+            String brand=sc.nextLine();
+            int price=sc.nextInt();
+            sc.nextLine();
+            ph[i]=new phone(phoneid,os,brand,price);
+		}
+		String selectbrand=sc.nextLine();
+		String selectos=sc.nextLine();
+		for(phone phone:ph)
+		{
+		    if(phone.brand.equals(selectbrand))
+		    {
+		        System.out.print(phone.phoneid);
+		    }
+		    else
+		    {
+		        System.out.println("no phone found in given brand");
+		    }
+		}
+		for(phone phone:ph)
+		{
+		    if(phone.os.equalsIgnoreCase(selectos))
+		    {
+		        System.out.print(phone.phoneid);
+		    }
+		    else
+		    {
+		        System.out.println("no phone found in given os and given price");
+		    }
+		}
+		
+	}
+}
