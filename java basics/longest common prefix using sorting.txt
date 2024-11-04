@@ -1,0 +1,21 @@
+import java.util.Arrays;
+public class Main
+{
+	public static void main(String[] args) {
+		String[] str={"geeksforgeeks", "geeks", "geek", "geezer"};
+		int n=str.length;
+		Arrays.sort(str);
+		String first=str[0];
+		String last=str[n-1];
+		int i=0;
+		while(first.charAt(i)==last.charAt(i))
+		{
+		    i++;
+		}
+		char[] ch=first.toCharArray();
+		for(int j=0;j<i;j++)
+		{
+		    System.out.print(ch[j]);
+		}
+	}
+}
