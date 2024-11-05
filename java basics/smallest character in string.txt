@@ -1,0 +1,25 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+
+
+public class Solution {
+    public static void main(String args[] ) throws Exception {
+        Scanner sc=new Scanner(System.in);
+        String str=sc.nextLine();
+        int max=Integer.MAX_VALUE;
+        for(char ch:str.toCharArray())
+        {
+            int ch2=(int)ch;
+            if(ch2<max)
+            {
+                max=ch2;
+            }
+        }
+        char ch5=(char) max;
+        System.out.println(ch5);
+    }
+}
