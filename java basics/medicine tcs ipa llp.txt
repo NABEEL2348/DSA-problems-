@@ -1,0 +1,52 @@
+import java.util.*;
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		sc.nextLine();
+		Medicine[] med=new Medicine[n];
+		for(int i=0;i<n;i++)
+		{
+		    String MedicineName=sc.nextLine();
+            String batch=sc.nextLine();
+            String Disease=sc.nextLine();
+            int price=sc.nextInt();
+            sc.nextLine();
+            med[i]=new Medicine(MedicineName,batch,Disease,price);
+		}
+		String selectDisease=sc.nextLine();
+		finddiseaseprice(selectDisease,med,n);
+	}
+	static void finddiseaseprice(String selectDisease,Medicine[] medi,int n)
+	{
+	    int[] arr=new int[n];
+	    int count=0;
+	    for(Medicine Medicine:medi)
+	    {
+	        if(Medicine.Disease.equals(selectDisease))
+	        {
+	            arr[count++]=Medicine.price;
+	        }
+	    }
+	    for(int i=0;i<count;i++)
+	    {
+	        System.out.println(arr[i]);
+	    }
+	}
+}
+class Medicine
+{
+    String MedicineName;
+    String batch;
+    String Disease;
+    int price;
+    Medicine(String MedicineName,String batch,String Disease,int price)
+    {
+        this.MedicineName=MedicineName;
+        this.batch=batch;
+        this.Disease=Disease;
+        this.price=price;
+    }
+}
