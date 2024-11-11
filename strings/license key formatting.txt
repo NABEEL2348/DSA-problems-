@@ -1,0 +1,62 @@
+
+
+#include <stdio.h>
+#include<string.h>
+#include<stdbool.h>
+bool licenseformatting(char *str,int n,int k)
+{
+    int i=0;
+    int count=0;
+    int rescount=0;
+    char str1[n+1];
+    int count1=0;
+    while(i<=n)
+    {
+        while(str[i]!='-' &&rescount==0)
+        {
+            str1[count++]=str[i];
+            
+            i++;
+        }
+        
+        if(rescount==0)
+        {
+            str1[count++]='-';
+            rescount=1;
+        }
+        if(count1==k)
+        {
+            str1[count++]='-';
+            count1=0;
+            
+        }
+        while(str[i]!='-' && str[i]!='\0' && count1<k)
+        {
+            
+            if(str[i]>=97 && str[i]<123)
+            {
+                str[i]=str[i]-32;
+            }
+           
+            str1[count++]=str[i];
+            count1++;
+           // printf("%d ",i);
+            i++;
+        }
+        
+        i++;
+       
+    }
+    for(int i=0;i<n;i++)
+    {
+        printf("%c",str1[i]);
+    }
+}
+int main()
+{
+    char str[]="2-5g-3-J";
+    int n=strlen(str);
+    int k=2;
+    licenseformatting(str,n,k);
+    return 0;
+}
