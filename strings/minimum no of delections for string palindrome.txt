@@ -1,0 +1,51 @@
+
+
+#include <stdio.h>
+#include<string.h>
+int main()
+{
+    char *str="aebcbda";
+    int n=strlen(str);
+    int first=0;
+    int last=n-1;
+    int count=0;
+    printf("%c%c ",str[first],str[last]);
+    while(first<last)
+    {
+        if(str[first]!=str[last])
+        {
+            if(str[first]!=str[last-1])
+            {
+                first++;
+                count++;
+            }
+            else
+            {
+                last--;
+                count++;
+            }
+            
+        }
+        if(str[last]!=str[first])
+        {
+            if(str[last]!=str[first+1])
+            {
+                count++;
+                last--;
+            }
+            else
+            {
+                count++;
+                first++;
+            }
+        }
+        if(str[first]==str[last])
+        {
+            first++;
+            last--;
+        }
+        printf("%c%c ",str[first],str[last]);
+    }
+    printf("%d ",count);
+    return 0;
+}
