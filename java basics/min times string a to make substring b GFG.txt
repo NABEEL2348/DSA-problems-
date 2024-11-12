@@ -1,0 +1,61 @@
+import java.util.*;
+public class Main
+{
+    static int minreptitionsubstring(String str,String str2)
+    {
+        StringBuilder result=new StringBuilder(str);
+        int count=0;
+        int count1=0;
+        int n=result.length();
+        
+        while(result.length()<=str2.length())
+        {
+            result.append(str);
+            count1++;
+        }
+        while(result.indexOf(str2)==-1)
+        {
+            result.append(str);
+            count1++;
+        }
+        return count1+1;
+    }
+    static boolean evaluate(String str1,String str2)
+    {
+        Map<Character,Integer> map=new HashMap<>();
+        for(int i=0;i<str1.length();i++)
+        {
+            map.put(str1.charAt(i),1);
+        }
+        int i=0;
+        while(i<str2.length())
+        {
+            if(!map.containsKey(str2.charAt(i)))
+            {
+                break;
+            }
+            i++;
+        }
+        if(i==str2.length())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+        
+    }
+	public static void main(String[] args) {
+		String str1="abcd";
+		String str2="cdabcdab";
+		if(evaluate(str1,str2))
+		{
+		System.out.println(minreptitionsubstring(str1,str2));;
+		}
+		else
+		{
+		    System.out.print("-1");
+		}
+	}
+}
