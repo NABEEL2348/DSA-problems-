@@ -1,0 +1,21 @@
+import java.util.*;
+
+public class Main
+{
+    static String stringreplace(String str,String str1,String str2)
+    {
+        str=str.replace(str1,str2);
+        return str;
+    }
+    public static void main (String[] args)
+    {
+    String str="geeksforgeeks";
+    String str1="eek";
+    String str2="ok";
+    int n=str.length();
+    int n1=str1.length();
+    int n2=str2.length();
+    String str5=stringreplace(str,str1,str2);
+    System.out.println(str5);
+    }
+}
