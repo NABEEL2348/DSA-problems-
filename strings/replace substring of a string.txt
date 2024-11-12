@@ -1,0 +1,82 @@
+#include <stdio.h>
+#include<string.h>
+int stringmatch(char *str,int n,char *str1,int n1)
+{
+    int i=0,j=0;
+    int count=0;
+    while(i<n && j<n1)
+    {
+        if(str[i]==str1[j])
+        {
+            count++;
+        }
+        i++;
+        j++;
+    }
+    if(j==n1)
+    {
+       count=1; 
+    }
+    if(count)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+char replacesubstringtostring(char *str,char *str1,char *str2,int n,int n1,int n2)
+{
+    char ch[100];
+    int i=0;
+    int count=0;
+    int j=0;
+    int k=0;
+    while(i<n)
+    {
+        
+        if(str[i]==str1[count])
+        {
+            int l=stringmatch(str,n,str1,n1);
+            
+            if(l==1)
+            {
+                
+                while(k<n2)
+                {
+                    ch[j++]=str2[k];
+                    k++;
+                }
+                k=0;
+                count=0;
+                i=i+3;
+            }
+        }
+        if(str[i]!=str1[count])
+        {
+            ch[j++]=str[i];
+            i++;
+        }
+        
+    }
+    int o=0;
+while(o<j)
+{
+    printf("%c",ch[o]);
+    o++;
+}
+   
+}
+int main()
+{
+    char str[]="geeksforgeeks";
+    char str1[]="eek";
+    char str2[]="ok";
+    int n=strlen(str);
+    int n1=strlen(str1);
+    int n2=strlen(str2);
+    replacesubstringtostring(str,str1,str2,n,n1,n2);
+
+    return 0;
+}
