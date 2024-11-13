@@ -1,0 +1,30 @@
+#include<stdio.h>
+#include<string.h>
+int longpresuffix(char *str,int n)
+{
+    int i=0,j=1;
+    int count=0;
+    while(j<n)
+    {
+        if(str[i]==str[j])
+        {
+            count++;
+            i++;
+            j++;
+        }
+        else
+        {
+            i=0;
+            count=0;
+            j++;
+        }
+        
+    }
+    return count;
+}
+int main()
+{
+    char str[]="abcd";
+    int n=strlen(str);
+    printf("%d",longpresuffix(str,n));
+}
