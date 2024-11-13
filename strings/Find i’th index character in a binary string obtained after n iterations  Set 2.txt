@@ -1,0 +1,125 @@
+#include<stdio.h>
+#include<string.h>
+int swap(char *arr,int count)
+{
+    int i=0;
+    int j=count-1;
+    while(i<j)
+    {
+        char temp=arr[i];
+        arr[i]=arr[j];
+        arr[j]=temp;
+        i++;
+        j--;
+    }
+}
+int ithindexinginbinarystring(int m,int i,int n)
+{
+    char curr[1000];
+    char prev[1000];
+    int count=0;
+    while(m>0)
+    {
+        int rem=m%2;
+        curr[count++]=rem+'0';
+        m=m/2;
+    }
+    curr[count]='\0';
+    
+    swap(curr,count);
+
+    int l=n;
+    while(n>0)
+    {
+        if(n!=l)
+        {
+            strcpy(curr,prev);
+        }
+        int n1=strlen(curr);
+        int i=0;
+        int count1=0;
+        while(i<n1)
+        {
+            if(curr[i]=='0')
+            {
+                prev[count1++]='0';
+                prev[count1++]='1';
+                i++;
+            }
+            else
+            {
+                prev[count1++]='1';
+                prev[count1++]='0';
+                i++;
+            }
+            
+        }
+        prev[count1]='\0';
+        
+        n--;
+    }
+    printf("%c ",prev[i]);
+}
+int main()
+{
+    int m=5;
+    int i=5;
+    int n=3;
+    ithindexinginbinarystring(m,i,n);
+}
+
+another method
+
+#include <stdio.h>
+#include <math.h>
+
+// Function to find the k-th character after n iterations
+void KthCharacter(int m, int n, int k) {
+    // Calculate the distance between two consecutive elements after N iterations
+    int distance = (int)pow(2, n); 
+    int Block_number = k / distance;  // Which block does the k-th index fall into?
+    int remaining = k % distance;     // The position inside the block
+
+    // Store the binary representation of m
+    int s[32];
+    int x = 0;
+
+    // Convert m into binary and store the digits in array s
+    while (m > 0) {
+        s[x] = m % 2;
+        m = m / 2;
+        x++;
+    }
+
+    // Root is the value of the last digit of the initial binary number
+    int root = s[x - 1 - Block_number]; // root is at position (x - 1 - Block_number)
+
+    // If remaining is 0, no need to flip, just print the root
+    if (remaining == 0) {
+        printf("%d\n", root);
+        return;
+    }
+
+    // Flip logic based on the position inside the block
+    int flip = 1;  // We start with the assumption that the bit will flip
+    while (remaining > 1) {
+        if ((remaining & 1) > 0) {
+            flip = !flip;  // Flip the state when odd numbers are encountered
+        }
+        remaining = remaining >> 1;  // Shift to check the next bit
+    }
+
+    // Output the result, flipped or not
+    if (flip) {
+        printf("%d\n", (root == 0) ? 1 : 0);  // Flip the root bit
+    } else {
+        printf("%d\n", root);  // No flip
+    }
+}
+
+// Driver function
+int main() {
+    int m = 5, k = 5, n = 3;  // Example values: m = 5, k = 5, n = 3
+    KthCharacter(m, n, k);  // Find and print the k-th character
+    return 0;
+}
