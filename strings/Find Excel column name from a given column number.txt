@@ -1,0 +1,46 @@
+#include<stdio.h>
+void excel(int n)
+{
+    char str[100];
+    int count=0;
+    while(n>0)
+    {
+        n--;
+        int rem=n%26;
+        str[count++]=rem+'A';
+        n=n/26;
+    }
+    str[count]='\0';
+    for(int i=0;i<count;i++)
+    {
+        printf("%c",str[i]);
+    }
+}
+int main()
+{
+    int n=702;
+    excel(n);
+}
+
+//vice versa
+
+#include<stdio.h>
+#include<string.h>
+void excel(char *str)
+{
+   
+    int num=0;
+    int n=strlen(str);
+    int i=0;
+    while(i<n)
+    {
+        num=num*26+((str[i]-'A')+1);
+        i++;
+    }
+    printf("%d ",num);
+}
+int main()
+{
+    char n[]="AAA";
+    excel(n);
+}
