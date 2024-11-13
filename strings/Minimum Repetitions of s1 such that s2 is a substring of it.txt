@@ -1,0 +1,100 @@
+#include<stdio.h>
+#include<stdbool.h>
+#include<string.h>
+bool iscontain(char *str,char *str1,int n1)
+{
+    int n=strlen(str);
+    
+    int i=0,j=0;
+     
+    while(i<n && j<n1)
+    {
+        if(str[i]==str1[j])
+        {
+        i++;
+        j++;
+        }
+        else
+        {
+            i++;
+        }
+       
+    }
+    
+    return (j==n1);
+}
+
+int minimumreptition(char str[],char str1[])
+{
+    int count=1;
+    char result[1000];
+    int j=0;
+    char valid[100];
+    strcpy(valid,str);
+    
+   
+    int n=strlen(str);
+    int n1=strlen(str1);
+     
+     if(n<n1)
+     {
+         strcat(str,valid);
+         count++;
+     }
+    
+     n=strlen(str);
+     n1=strlen(str1);
+  
+     
+    if(iscontain(str,str1,n1))
+    {
+        
+        return count;
+    }
+    else
+    {
+        while(!iscontain(str,str1,n1))
+        {
+            strcat(str,valid);
+            count++;
+        }
+    }
+    return count;
+ 
+}
+bool evaluate(char *str,char str1[],int n,int n1)
+{
+    int i=0,j=0;
+    int hash[255]={0};
+    while(i<n)
+    {
+        hash[str[i]]++;
+        i++;
+    }
+    while(j<n1)
+    {
+        if(hash[str1[j]]<1)
+        {
+            break;
+        }
+        j++;
+    }
+    return (j==n1);
+}
+int main()
+{
+    char str[]="abcd";
+    char str1[]="cdabcda";
+    int n=strlen(str);
+    int n1=strlen(str1);
+    
+    if(evaluate(str,str1,n,n1))
+    {
+        int res=minimumreptition(str,str1);
+        printf("%d ",res);
+    }
+    else
+    {
+        printf("-1");
+    }
+}
