@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include<string.h>
+#include<math.h>
+#include<limits.h>
+#include<stdlib.h>
+char* smallestwindow(char *str,char *str1,int n,int n1)
+{
+    int hashp[256]={0};
+    int hashs[256]={0};
+    for(int i=0;i<n1;i++)
+    {
+        hashp[str1[i]]++;
+    }
+    int start=0,min=INT_MAX,count=0,minindex=-1;
+    for(int end=0;end<n;end++)
+    {
+        hashs[str[end]]++;
+        if(hashp[str[end]]!=0 && hashs[str[end]]<=hashp[str[end]])
+        {
+            count++;
+        }
+        while(count==n1)
+        {
+            int result=end-start+1;
+            if(result<min)
+            {
+                min=result;
+                minindex=start;
+            }
+            hashs[str[start]]--;
+            if(hashs[str[start]]==0 && hashp[str[start]]==1)
+            {
+                count--;
+            }
+            start++;
+        }
+    }
+
+    char *output=(char *)malloc(min*sizeof(char));
+    int count1=0;
+    for(int i=0;i<min;i++)
+    {
+        output[count1++]=str[minindex+i];
+    }
+    output[count1]='\0';
+    return output;
+   
+}
+int main()
+{
+    char str[] = "timetopractice";
+    char str1[] = "toc";
+    int n=strlen(str);
+    int n1=strlen(str1);
+    printf("%s",smallestwindow(str,str1,n,n1));
+    return 0;
+}
