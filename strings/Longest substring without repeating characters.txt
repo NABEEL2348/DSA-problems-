@@ -1,0 +1,41 @@
+#include<stdio.h>
+#include<string.h>
+int longestsubstring(char *str,int n)
+{
+    int i=0;
+    int hash[256]={0};
+    int max=0;
+    int count=0;
+    while(i<n)
+    {
+        hash[str[i]]++;
+        if(hash[str[i]]<=1)
+        {
+            count++;
+        }
+        if(hash[str[i]]>1)
+        {
+            int j=0;
+            if(count>max)
+            {
+                max=count;
+                count=0;
+            }
+            while(j<=i)
+            {
+                hash[str[j]]--;
+                j++;
+            }
+            
+        }
+      
+        i++;
+    }
+    printf("%d ",max);
+}
+int main()
+{
+    char str[]="GEEKSFORGEEKS";
+    int n=strlen(str);
+    longestsubstring(str,n);
+}
