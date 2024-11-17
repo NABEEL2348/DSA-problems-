@@ -1,0 +1,45 @@
+import java.util.*;
+public class Main
+{
+    static String sorting(String str)
+    {
+            char[] ch=str.toCharArray();
+            Arrays.sort(ch);
+        return new String(ch);
+    }
+	public static void main(String[] args) {
+		String[] str={"cat", "dog", "tac", "god", "act","tat"};
+		int n=str.length;
+		String[] str1=new String[n+1];
+		String[] str2=new String[n+1];
+		int count=0;
+		Map<String,Integer> mp=new HashMap<>();
+		List<String> list=new ArrayList<>(); 
+		for(int i=0;i<n;i++)
+		{
+		   str1[i]=sorting(str[i]);
+		   
+		}
+		for(int i=0;i<n;i++)
+		{
+		    String ch=str1[i];
+		   if(!mp.containsKey(ch))
+		   {
+		       list.add(str[i]);
+		       for(int j=i+1;j<n;j++)
+		       {
+		           if(ch.equals(str1[j]))
+		           {
+		               list.add(str[j]);
+		           }
+		       }
+		   }
+		   mp.put(ch,1);
+		 
+		}
+		for(String ls:list)
+		{
+		    System.out.println(ls);
+		}
+	}
+}
