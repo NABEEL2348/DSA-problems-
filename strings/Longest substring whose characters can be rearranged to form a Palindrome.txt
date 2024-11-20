@@ -1,0 +1,25 @@
+#include<stdio.h>
+#include<string.h>
+int longestsubstringpalindrome(char *str,int n)
+{
+    int hash[256]={0};
+    int oddcount=0;
+    for(int i=0;i<n;i++)
+    {
+        hash[str[i]-'a']++;
+    }
+    for(int i=0;i<26;i++)
+    {
+        if(hash[i]%2==1)
+        {
+            oddcount++;
+        }
+    }
+    return n-((oddcount>0)?oddcount-1:0);
+}
+int main()
+{
+    char str[]="madamef";
+    int n=strlen(str);
+    printf("%d",longestsubstringpalindrome(str,n));
+}
