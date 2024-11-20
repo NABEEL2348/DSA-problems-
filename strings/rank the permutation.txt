@@ -1,0 +1,51 @@
+#include<stdio.h>
+#include<string.h>
+#define MAXCHAR 256
+int factorial(int n)
+{
+    if(n<=1)
+    {
+        return 1;
+    }
+    return n*factorial(n-1);
+}
+int lexiography(char *str,int n)
+{
+    int fact=factorial(n);
+    int rank=1;
+    int hash[MAXCHAR]={0};
+    for(int i=0;i<n;i++)
+    {
+        hash[(int )str[i]]++;
+        
+    }
+    for(int i=0;i<MAXCHAR;i++)
+    {
+        if(hash[i]>1)
+        {
+            printf("there is duplicate in string");
+            return 0;
+        }
+    }
+    for(int i=1;i<MAXCHAR;i++)
+    {
+        hash[i]+=hash[i-1];
+    }
+    for(int i=0;i<n;i++)
+    {
+        fact/=(n-i);
+        rank+=hash[(int)str[i]-1]*fact;
+        
+        for(int j=str[i];j<MAXCHAR;j++)
+        {
+            hash[j]--;
+        }
+    }
+    printf("%d ",rank);
+}
+int main()
+{
+    char str[]="acb";
+    int n=strlen(str);
+    lexiography(str,n);
+}
