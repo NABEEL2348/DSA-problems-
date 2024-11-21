@@ -1,0 +1,42 @@
+#include<stdio.h>
+#include<string.h>
+int shortestcommonsubsequence(char *str,char *str1,int m,int n,int dp[m+1][n+1])
+{
+    if(n==0 ||  m==0)
+    {
+        return 0;
+    }
+    
+    if(dp[m][n]!=-1)
+    {
+        return dp[m][n];
+    }
+   
+    if(str[m-1]==str1[n-1])
+    {
+        dp[m][n]=shortestcommonsubsequence(str,str1,m-1,n-1,dp);
+    }
+    else
+    {
+        dp[m][n]=(((1+shortestcommonsubsequence(str,str1,m,n-1,dp)>(shortestcommonsubsequence(str,str1,m-1,n,dp)))?(1+shortestcommonsubsequence(str,str1,m,n-1,dp)):(shortestcommonsubsequence(str,str1,m-1,n,dp))));
+    }
+    return dp[m][n];
+}
+int main()
+{
+    char str[]="geek";
+    char str1[]="eke";
+    int m=strlen(str);
+    int n=strlen(str1);
+    
+    int dp[m+1][n+1];
+    for(int i=0;i<=m;i++)
+    {
+        for(int j=0;j<=n;j++)
+        {
+            dp[i][j]=-1;
+        }
+    }
+    int res=shortestcommonsubsequence(str,str1,m,n,dp);
+    printf("%d ",res+m);
+}
