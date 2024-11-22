@@ -1,0 +1,48 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    struct node *left,*right;
+    int num;
+};
+struct node *createnode(struct node **root,int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+int maxheight(struct node *root)
+{
+    if(root==NULL)
+    {
+        return 0;
+    }
+    int left=maxheight(root->left);
+    int right=maxheight(root->right);
+    return 1+(left>right?left:right);
+}
+int  maxdiameter(struct node *root,int *num)
+{
+    if(root==NULL)
+    {
+        return 0;
+    }
+    int leftheight=maxheight(root->left);
+    int rightheight=maxheight(root->right);
+    int result=leftheight+rightheight+1;
+    return result;
+
+}
+int main()
+{
+    struct node *root=createnode(&root,1);
+    root->left=createnode(&root,2);
+    root->right=createnode(&root,3);
+    root->left->left=createnode(&root,4);
+    root->left->right=createnode(&root,5);
+    root->right->right=createnode(&root,6);
+    int max=0;
+    printf("%d",maxdiameter(root,&max));
+}
