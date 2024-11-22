@@ -1,0 +1,76 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+void kmpmapping(char *str,int n,int *lps)
+{
+    int i=1;
+    lps[0]=0;
+    int length=0;
+    while(i<n)
+    {
+        if(str[i]==str[length])
+        {
+            length++;
+            lps[i]=length;
+        }
+        else
+        {
+            if(length!=0)
+            {
+                length=lps[length-1];
+                lps[i]=0;
+            }
+            else
+            {
+                lps[i]=0;
+            }
+        }
+        i++;
+    }
+}
+int kmpsearchpattern(char *str,char *str1,int m,int n)
+{
+    int *lps=(int *)malloc(n*sizeof(int ));
+    kmpmapping(str1,n,lps);
+    int j=0;
+    int length=0;
+    int i=0;
+    int *index=(int*)malloc(m*sizeof(int));
+    while(i<m)
+    {
+        if(str[i]==str1[j])
+        {
+            i++;
+            j++;
+        }
+        if(j==n)
+        {
+            index[length++]=i-j;
+            j=lps[j-1];
+        }
+        else if(str[i]!=str1[j])
+        {
+            if(j!=0)
+            {
+                j=lps[j-1];
+            }
+            else
+            {
+                i++;
+            }
+        }
+        
+    }
+    for(int i=0;i<length;i++)
+    {
+        printf("%d ",index[i]);
+    }
+}
+int main()
+{
+    char str[]="aabaacaadaabaaba";
+    char str1[]="aaba";
+    int n=strlen(str);
+    int n1=strlen(str1);
+    kmpsearchpattern(str,str1,n,n1);
+}
