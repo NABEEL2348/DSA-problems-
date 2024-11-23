@@ -1,0 +1,50 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node 
+{
+    int num;
+    struct node *left,*right;
+};
+struct node *createnode(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+void inorder(struct node *root)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    inorder(root->left);
+    printf("%d",root->num);
+    inorder(root->right);
+    
+}
+struct node *sortedarray(int *arr,int start,int end)
+{
+    if(start>end)
+    {
+        return NULL;
+    }
+    int mid=(start+end)/2;
+    struct node *root=createnode(arr[mid]);
+    root->left=sortedarray(arr,start,mid-1);
+    root->right=sortedarray(arr,mid+1,end);
+    
+    
+    return root;
+}
+int main()
+{
+    int arr[]={1,2,3,4,5,6,7};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    
+    struct node *root=sortedarray(arr,0,n-1);
+    
+    inorder(root);
+    
+}
