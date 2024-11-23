@@ -1,0 +1,78 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<limits.h>
+struct node
+{
+    int num;
+    struct node *left,*right;
+};
+struct node *createnode(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+
+int height(struct node *root)
+{
+    if(root==NULL)
+    {
+        return 0;
+    }
+    int left=height(root->left);
+    int right=height(root->right);
+    return 1+(left>right?left:right);
+}
+void util(struct node *root,int *max,int height)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    if(height==1)
+    {
+        int curr=root->num;
+        if(curr>*max)
+        {
+            *max=curr;
+        }
+        
+    }
+    else
+    {
+        util(root->left,max,height-1);
+        util(root->right,max,height-1);
+    }
+}
+
+int largestvalue(struct node *root,int height)
+{
+    if(root==NULL)
+    {
+        return 0;
+    }
+    
+    for(int i=1;i<=height;i++)
+    {
+        int max=INT_MIN;
+        util(root,&max,i);
+        printf("%d ",max);
+    }
+
+}
+int main()
+{
+   
+    struct node *root2=createnode(4);
+    root2->left = createnode(9);
+    root2->right = createnode(2);
+    root2->left->left = createnode(3);
+    root2->left->right = createnode(5);
+    root2->right->right = createnode(7);
+    
+    int hei=height(root2);
+    printf("%d ",hei);
+    largestvalue(root2,hei);
+}
