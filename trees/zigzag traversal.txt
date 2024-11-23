@@ -1,0 +1,74 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int num;
+    struct node *left,*right;
+};
+struct node *createnode(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+int zigzag(struct node *root)
+{
+    struct node *curr[100];
+    struct node *next[100];
+    int lefttoright=1;
+    
+    int currpoi=0;
+    int nextpoi=0;
+    curr[currpoi++]=root;
+    while(currpoi>0)
+    {
+        struct node *currnum=curr[--currpoi];
+       printf("%d ",currnum->num);
+        if(lefttoright)
+        {
+            if(currnum->left!=NULL)
+            {
+                next[nextpoi++]=currnum->left;
+            }
+            if(currnum->right!=NULL)
+            {
+                next[nextpoi++]=currnum->right;
+            }
+        }
+        else
+        {
+            if(currnum->right!=NULL)
+            {
+                next[nextpoi++]=currnum->right;
+            }
+            if(currnum->left!=NULL)
+            {
+                next[nextpoi++]=currnum->left;
+            }
+        }
+        if(currpoi==0)
+        {
+            for(int i=0;i<nextpoi;i++)
+            {
+                curr[i]=next[i];
+            }
+            currpoi=nextpoi;
+            nextpoi=0;
+            lefttoright=!lefttoright;
+        }
+       
+    }
+}
+int main()
+{
+    struct node *root=createnode(1);
+    root->left=createnode(2);
+    root->right=createnode(3);
+    root->left->left=createnode(4);
+    root->left->right=createnode(5);
+    root->right->left=createnode(6);
+    root->right->right=createnode(7);
+    zigzag(root);
+}
