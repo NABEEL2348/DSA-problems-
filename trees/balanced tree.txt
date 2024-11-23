@@ -1,0 +1,58 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+    struct node *left,*right;
+    int num;
+};
+struct node *createnode(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+    
+}
+int height(struct node *root)
+{
+    if(root==NULL)
+    {
+        return 0;
+    }
+    int left=1+height(root->left);
+    int right=1+height(root->right);
+    return (left>right?left:right);
+}
+int isbalced(struct node *root)
+{
+    if(root==NULL)
+    {
+        return 1;
+    }
+    int left=height(root->left);
+    int right=height(root->right);
+    if(abs(left-right)<=1 && isbalced(root->left) && isbalced(root->right))
+    {
+        return 1;
+    }
+    return 0;
+    
+}
+int main()
+{
+    struct node *root=createnode(1);
+    root->left=createnode(2);
+    root->left->left=createnode(3);
+    root->right->right=createnode(4);
+    root->right->right->right=createnode(4);
+    root->right->right->right->right=createnode(4);
+   
+    if(isbalced(root))
+    {
+        printf("true");
+    }
+    else
+    {
+        printf("false");
+    }
+}
