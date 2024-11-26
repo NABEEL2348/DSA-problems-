@@ -1,0 +1,68 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+    int num;
+    struct node *left,*right;
+};
+struct node *createnode(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+struct node *insert(struct node *root,int num)
+{
+    if(root==NULL)
+    {
+        root=createnode(num);
+    }
+    else
+    {
+        if(num>root->num)
+        {
+            root->right=insert(root->right,num);
+        }
+        else
+        {
+            root->left=insert(root->left,num);
+        }
+    }
+    return root;
+}
+void find(struct node *root,int k,int *count,int *result)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    
+    find(root->right,k,count,result);
+    (*count)++;
+    if(*count==k)
+    {
+        *result=root->num;
+    }
+    find(root->left,k,count,result);
+}
+int kthlargest(struct node *root,int k)
+{
+    int count =0;
+    int result=-1;
+    find(root,k,&count,&result);
+    return result;
+}
+int main()
+{
+    struct node *root=NULL;
+    root=insert(root,20);
+    root=insert(root,8);
+    root=insert(root,22);
+    root=insert(root,4);
+    root=insert(root,12);
+    root=insert(root,10);
+    root=insert(root,14);
+    printf("%d",kthlargest(root,3));
+}
+
