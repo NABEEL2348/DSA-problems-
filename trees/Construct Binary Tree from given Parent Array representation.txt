@@ -1,0 +1,70 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int num;
+    struct node *firstchild,*nextsibing;
+};
+struct node *create(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->firstchild=NULL;
+    newnode->nextsibing=NULL;
+    return newnode;
+}
+struct node *treeconstruction(int *arr,int n)
+{
+    struct node *nodes[n];
+    struct node *root=NULL;
+    for(int i=0;i<n;i++)
+    {
+        nodes[i]=create(i);
+    }
+    for(int i=0;i<n;i++)
+    {
+        if(arr[i]==-1)
+        {
+            root=nodes[i];
+        }
+        else
+        {
+            struct node *parent=nodes[arr[i]];
+            if(!parent->firstchild)
+            {
+                parent->firstchild=nodes[i];
+            }
+            else
+            {
+                struct node *sibing=parent->firstchild;
+                while(sibing->nextsibing)
+                {
+                    sibing=sibing->nextsibing;
+                }
+                sibing->nextsibing=nodes[i];
+            }
+        }
+    }
+    return root;
+}
+void printtree(struct node *root,int level)
+{
+    if(root==NULL)
+    {
+        return;
+        }
+        for(int i=0;i<level;i++)
+        {
+            printf(" ");
+        }
+        printf("%d\n",root->num);
+        printtree(root->firstchild,level+1);
+        printtree(root->nextsibing,level);
+}
+int main()
+{
+    int arr[]={1,5,5,2,2,-1,3};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    struct node *root=treeconstruction(arr,n);
+        printtree(root,0);
+}
