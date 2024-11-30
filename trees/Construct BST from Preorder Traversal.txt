@@ -1,0 +1,58 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int num;
+    struct node *left,*right;
+};
+struct node *createnode(struct node *root,int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+struct node *insert(struct node *root,int num)
+{
+    if(root==NULL)
+    {
+        root=createnode(root,num);
+    }
+    
+    if(num<root->num && root!=NULL)
+    {
+        root->left=insert(root->left,num);
+    }
+    else if(num>root->num && root!=NULL)
+    {
+        root->right=insert(root->right,num);
+    }
+    return root;
+}
+struct node *constructbstfrompreorder(int *preorder,int n)
+{
+    struct node *root=NULL;
+    for(int i=0;i<n;i++)
+    {
+        root=insert(root,preorder[i]);
+    }
+    return root;
+}
+void preorde1r(struct node *root)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    printf("%d ",root->num);
+    preorde1r(root->left);
+    preorde1r(root->right);
+}
+int main()
+{
+    int preorder[]={10, 5, 1, 7, 40, 50};
+    int n=sizeof(preorder)/sizeof(preorder[0]);
+    struct node *root=constructbstfrompreorder(preorder,n);
+    preorde1r(root);
+}
