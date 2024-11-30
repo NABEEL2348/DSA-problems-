@@ -1,0 +1,70 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int num;
+    struct node *left,*right;
+
+};
+struct node *createnode(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+int search(int num,int start,int end,int *inorder)
+{
+    for(int i=start;i<=end;i++)
+    {
+        if(inorder[i]==num)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+struct node *comstruct(int *inorder,int *preorder,int inorderstart,int inorderend,int *precount)
+{
+   
+    if(inorderstart>inorderend)
+    {
+        return NULL;
+    }
+    struct node *root=createnode(preorder[*precount]);
+    
+    (*precount)++;
+   
+        
+    
+    if(inorderstart==inorderend)
+    {
+        return root;
+    }
+    int index=search(root->num,inorderstart,inorderend,inorder);
+   
+    root->left=comstruct(inorder,preorder,inorderstart,index-1,precount);
+    root->right=comstruct(inorder,preorder,index+1,inorderend,precount);
+    return root;
+}
+void postorders(struct node *root)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    postorders(root->left);
+    postorders(root->right);
+    printf("%d ",root->num);
+}
+int main()
+{
+    int inorder[] = {3 ,1, 4, 0, 5, 2};
+    int  preorder[] = {0 ,1 ,3 ,4 ,2 ,5};
+    int n=sizeof(inorder)/sizeof(inorder[0]);
+    int precount=0;
+    struct node *root=comstruct(inorder,preorder,0,n-1,&precount);
+    
+    postorders(root);
+}
