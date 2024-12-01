@@ -1,0 +1,44 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int num;
+    struct node *left,*right;
+};
+struct node *createnode(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+int lca(struct node *root,int num)
+{
+     if(root==NULL)
+     {
+         return 0;// not this path back goes to another path like first root->left so 1-2-4-7 reach null so return 0 means not this path chose another return to 4 then also no right so return and then 2 and then root->right matches then return the original path
+     }
+     if(root->num==num)
+     {
+         return root->num;
+     }
+      
+     if(lca(root->left,num)||
+     lca(root->right,num))//if one true comes in if another won't work
+     {
+         printf("%d ",root->num);
+     }
+    
+}
+int main()
+{
+    struct node *root=createnode(1);
+    root->left=createnode(2);
+    root->right=createnode(3);
+    root->left->left=createnode(4);
+    root->left->right=createnode(5);
+    root->left->left->left=createnode(7);
+    int num=5;
+    lca(root,num);
+}
