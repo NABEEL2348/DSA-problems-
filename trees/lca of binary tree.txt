@@ -1,0 +1,57 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int num;
+    struct node *left,*right;
+};
+struct node *createnode(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+struct node *findlca(struct node *root,int a,int b)
+{
+    if(root==NULL)
+    {
+        return NULL;
+    }
+    if(root->num==a || root->num==b)
+    {
+        return root;
+    }
+    struct node *left=findlca(root->left,a,b);
+    struct node *right=findlca(root->right,a,b);
+    if(left&&right)
+    {
+        return root;
+    }
+    if(left!=NULL)
+    {
+        return left;
+    }
+    else
+    {
+        return right;
+    }
+}
+int lca(struct node *root,int a,int b)
+{
+    struct node *lcanode=findlca(root,a,b);
+    return lcanode->num;
+}
+int main()
+{
+    struct node *root=createnode(1);
+    root->left=createnode(2);
+    root->right=createnode(3);
+    root->left->left=createnode(4);
+    root->left->right=createnode(5);
+    root->right->left=createnode(6);
+    root->right->right=createnode(7);
+    int a=4,b=6;
+    printf("%d",lca(root,a,b));
+}
