@@ -1,0 +1,73 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
+struct node
+{
+    int num;
+    struct node *left,*right;
+};
+struct node *createnode(struct node *root,int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+struct node *insert(struct node *root,int num)
+{
+    if(root==NULL)
+    {
+        root=createnode(root,num);
+    }
+    if(root->num<num)
+    {
+        root->left=insert(root->left,num);
+    }
+    else if(root->num>num)
+    {
+        root->right=insert(root->right,num);
+    }
+    return root;
+}
+int find(struct node *root,int target,int *hash,int *res1)
+{
+    if(root==NULL)
+    {
+        return 1;
+    }
+     hash[root->num]=1;
+     int res=target-root->num;
+     if(hash[res]==1)
+     {
+         *res1=1;
+         return 1;
+     }
+   printf("%d ",hash[res]);
+    find(root->left,target,hash,res1);
+    find(root->right,target,hash,res1);
+    
+}
+int main()
+{
+    struct node *root=insert(root,15);
+    root=insert(root,10);
+    root=insert(root,20);
+    root=insert(root,8);
+    root=insert(root,12);
+    root=insert(root,16);
+    root=insert(root,25);
+    int hash[10000]={0};
+    int target=90;
+    int res1=0;
+    int res=find(root,target,hash,&res1);
+    printf("%d ",res1);
+    if(res1)
+    {
+        printf("yes");
+    }
+    else
+    {
+        printf("no");
+    }
+}
