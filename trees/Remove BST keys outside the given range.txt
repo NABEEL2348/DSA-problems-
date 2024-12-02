@@ -1,0 +1,85 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int num;
+    struct node *left,*right;
+};
+struct node *createnode(struct node *node,int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+struct node *insert(struct node *root,int num)
+{
+    if(root==NULL)
+    {
+        root=createnode(root,num);
+    }
+    if(num<root->num)
+    {
+        root->left=insert(root->left,num);
+    }
+    else if(num>root->num)
+    {
+        root->right=insert(root->right,num);
+    }
+    return root;
+}
+struct node *removerange(struct node *root,int min,int max)
+{
+    if(root==NULL)
+    {
+        return NULL;
+    }
+    root->left=removerange(root->left,min,max);
+    root->right=removerange(root->right,min,max);
+    
+    if(root->num<min)
+    {
+        struct node *leftmin=root->right;//because if less than min that left should be min tham root->num so no use so leftmin->root->right
+        free(root);
+        return leftmin;
+        
+        
+        
+    }
+    if(root->num>max)
+    {
+        struct node *rightmax=root->left;
+        free(root);
+        return rightmax;
+        
+    }
+    return root;
+    
+}
+void inorder(struct node *root)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    inorder(root->left);
+    printf("%d ",root->num);
+    inorder(root->right);
+}
+int main()
+{
+    struct node *root=NULL;
+    root=insert(root,6);
+    root=insert(root,-13);
+    root=insert(root,-8);
+    root=insert(root,14);
+    root=insert(root,13);
+    root=insert(root,15);
+    root=insert(root,7);
+    int min=-10,max=13;
+    //inorder(root);
+    printf("\n");
+    root=removerange(root,min,max);
+    inorder(root);
+}
