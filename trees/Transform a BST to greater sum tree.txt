@@ -1,0 +1,163 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int num;
+    struct node *left,*right;
+};
+struct node *createnode(struct node *root,int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+struct node *insert(struct node *root,int num)
+{
+    if(root==NULL)
+    {
+        return createnode(root,num);
+    }
+    if(num<root->num)
+    {
+        
+        root->left=insert(root->left,num);
+    }
+    else if(num>root->num)
+    {
+        root->right=insert(root->right,num);
+    }
+    return root;
+}
+void transformbst(struct node *root,int *sum)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+   
+    transformbst(root->right,sum);
+    transformbst(root->left,sum);
+    *sum+=root->num;
+     
+}
+struct node *find(struct node *root,int *sum)
+{
+    if(root==NULL)
+    {
+        return NULL;
+    }
+    find(root->left,sum);
+    *sum-=root->num;
+    root->num=*sum;
+    
+    find(root->right,sum);
+    return root;
+    
+}
+void inorder(struct node *root)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    inorder(root->left);
+    printf("%d ",root->num);
+    inorder(root->right);
+}
+int main()
+{
+    struct node *root=NULL;
+    root=insert(root,11);
+    root=insert(root,2);
+    root=insert(root,29);
+    root=insert(root,1);
+    root=insert(root,7);
+    root=insert(root,15);
+    root=insert(root,40);
+    root=insert(root,35);
+    inorder(root);
+    printf("\n");
+    int sum=0;
+    transformbst(root,&sum);
+    find(root,&sum);
+    inorder(root);
+    
+}
+
+
+//optimal solution
+
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int num;
+    struct node *left,*right;
+};
+struct node *createnode(struct node *root,int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+struct node *insert(struct node *root,int num)
+{
+    if(root==NULL)
+    {
+        return createnode(root,num);
+    }
+    if(num<root->num)
+    {
+        
+        root->left=insert(root->left,num);
+    }
+    else if(num>root->num)
+    {
+        root->right=insert(root->right,num);
+    }
+    return root;
+}
+void inorder(struct node *root)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    inorder(root->left);
+    printf("%d ",root->num);
+    inorder(root->right);
+}
+struct node *transformbst(struct node *root,int *sum)
+{
+    if(root==NULL)
+    {
+        return NULL;
+    }
+    transformbst(root->right,sum);
+    *sum+=root->num;
+    root->num=*sum-root->num;
+    transformbst(root->left,sum);
+    
+    return root;
+}
+int main()
+{
+    struct node *root=NULL;
+    root=insert(root,11);
+    root=insert(root,2);
+    root=insert(root,29);
+    root=insert(root,1);
+    root=insert(root,7);
+    root=insert(root,15);
+    root=insert(root,40);
+    root=insert(root,35);
+    inorder(root);
+    printf("\n");
+    int sum=0;
+    transformbst(root,&sum);
+    inorder(root);
+}
