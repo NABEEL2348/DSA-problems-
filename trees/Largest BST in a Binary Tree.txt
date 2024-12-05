@@ -141,7 +141,7 @@ int main()
 
     largestbst(root);
 }
-
+//chatgpt approach below above my approach
 
 #include<stdio.h>
 #include<stdlib.h>
@@ -160,17 +160,7 @@ struct node *createnode(int num)
     newnode->right=NULL;
     return newnode;
 }
-void inorder(struct node *root,int *count)
-{
-    if(root==NULL)
-    {
-        return;
-    }
-    (*count)++;
-      
-    inorder(root->left,count);
-    inorder(root->right,count);
-}
+
 bool isbst(struct node *root,int min,int max)
 {
     if(root==NULL)
