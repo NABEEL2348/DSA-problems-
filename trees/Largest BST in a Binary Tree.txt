@@ -1,0 +1,220 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
+struct node
+{
+    int num;
+    struct node *left,*right;
+};
+struct node *createnode(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+bool lca(struct node *root)
+{
+    if(root==NULL)
+    {
+        return false;
+    }
+    if(root->left!=NULL && root->right!=NULL)
+    {
+        if(root->num>root->left->num && root->num<root->right->num)
+        {
+            return true;
+        }
+    }
+    
+    lca(root->left);
+    lca(root->right);
+}
+void inorder(struct node *root,int *count)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    (*count)++;
+    inorder(root->left,count);
+    inorder(root->right,count);
+}
+int largestbst(struct node *root)
+{
+     int count=0;
+    if(root->num>root->left->num && root->num<root->right->num)
+    {
+        
+    }
+    else
+    {
+        bool root2=lca(root->left);
+        bool root3=lca(root->right);
+        if(root2!=0)
+        {
+           
+            inorder(root->left,&count);
+        
+            return count;
+        }
+        else if(root3!=0)
+        {
+            
+            inorder(root->right,&count);
+
+            return count;
+        }
+    }
+}
+int main()
+{
+     struct node *root=createnode(6);
+    root->left=createnode(7);
+    root->right=createnode(3);
+    root->left->right=createnode(2);
+    root->right->left=createnode(2);
+    root->right->right=createnode(4);
+    int ans=largestbst(root);
+    printf("%d ",ans);
+    
+}
+
+
+
+
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int num;
+    struct node *left,*right;
+};
+struct node *createnode(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+void inorder(struct node *root,int *count)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    (*count)++;
+      
+    inorder(root->left,count);
+    inorder(root->right,count);
+}
+void largestbst(struct node *root)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    if(root->left!=NULL &&root->right!=NULL)
+    {
+        if(root->num>root->left->num && root->num<root->right->num)
+        {
+            int count=0;
+            
+            inorder(root,&count);
+            printf("%d ",count);
+            return;
+        }
+    }
+    largestbst(root->left);
+    largestbst(root->right);
+}
+int main()
+{
+    struct node *root=createnode(5);
+    root->left=createnode(2);
+    root->right=createnode(4);
+
+    root->left->left=createnode(1);
+    root->left->right=createnode(3);
+
+    largestbst(root);
+}
+
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
+#include<limits.h>
+struct node
+{
+    int num;
+    struct node *left,*right;
+};
+struct node *createnode(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+void inorder(struct node *root,int *count)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    (*count)++;
+      
+    inorder(root->left,count);
+    inorder(root->right,count);
+}
+bool isbst(struct node *root,int min,int max)
+{
+    if(root==NULL)
+    {
+        return true;
+    }
+    if(root->num<=min || root->num>=max)
+    {
+        return false;
+    }
+    return isbst(root->left,min,root->num)&&isbst(root->right,root->num,max);
+}
+int size(struct node *root)
+{
+    if(root==NULL)
+    {
+        return 0;
+    }
+    return 1+size(root->left)+size(root->right);
+}
+int largestbst(struct node *root)
+{
+    if(root==NULL)
+    {
+        return 0;
+    }
+    int min=INT_MIN;
+    int max=INT_MAX;
+    
+    if(isbst(root,min,max))
+    {
+      
+        return size(root);
+    }
+    return (largestbst(root->left)>largestbst(root->right))?largestbst(root->left):largestbst(root->right);
+}
+int main()
+{
+    struct node *root=createnode(5);
+    root->left=createnode(2);
+    root->right=createnode(4);
+
+    root->left->left=createnode(1);
+    root->left->right=createnode(3);
+
+    printf("%d",largestbst(root));
+}
