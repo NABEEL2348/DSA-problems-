@@ -47,3 +47,64 @@ int main()
     root->right->right=createnode(6);
     printf("%d",sumofnonadjacent(root));
 }
+
+my solution 
+
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int num;
+    struct node *left,*right;
+};
+struct node *createnode(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+int max(int a,int b)
+{
+    return (a>b)?a:b;
+}
+int find(struct node *root,int level,int *odd,int *even)
+
+{
+    if(root==NULL)
+    {
+        return 0;
+    }
+    
+    if(level%2==0)
+    {
+        *even+=root->num;
+    }
+    else
+    {
+        *odd+=root->num;
+    }
+   
+    find(root->left,level+1,odd,even);
+    find(root->right,level+1,odd,even);
+    
+}
+int sumofnonadjacent(struct node *root)
+{
+
+    int odd=0,even=0;
+    find(root,0,&odd,&even);
+    
+    return max(odd,even);
+}
+int main()
+{
+    struct node *root=createnode(1);
+    root->left=createnode(2);
+    root->left->left=createnode(4);
+    root->right=createnode(3);
+    root->right->left=createnode(5);
+    root->right->right=createnode(6);
+    printf("%d",sumofnonadjacent(root));
+}
