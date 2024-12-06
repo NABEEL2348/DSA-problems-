@@ -1,0 +1,77 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int num;
+    struct node *left,*right;
+};
+struct node *createnode(int num)
+{
+    struct node *newnode=(struct node *)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+void printalteer(struct node *root)
+{
+    struct node *root1=root;
+    int count=0;
+    while(root!=NULL && root1!=NULL)
+    {
+        if(count==0)
+        {
+        printf("%d ",root->num);
+        
+        }
+        else if(count%2==0)
+        {
+            printf("%d ",root->num);
+        }
+        else
+        {
+            printf("%d ",root1->num);
+        }
+        root=root->left;
+        root1=root1->right;
+        count++;
+    }
+}
+int main()
+{
+    struct node *root=createnode(1);
+    root->left=createnode(2);
+    root->left->left=createnode(4);
+    root->left->right=createnode(5);
+    root->left->left->left=createnode(8);
+    root->left->left->right=createnode(9);
+    root->left->right->left=createnode(10);
+    root->left->right->right=createnode(11);
+    root->left->left->left->left=createnode(16);
+    root->left->left->left->right=createnode(17);
+    root->left->left->right->left=createnode(18);
+    root->left->left->right->right=createnode(19);
+    root->left->right->left->left=createnode(20);
+    root->left->right->left->right=createnode(21);
+    root->left->right->right->left=createnode(22);
+    root->left->right->right->right=createnode(23);
+    
+    
+    root->right=createnode(3);
+    root->right->left=createnode(6);
+    root->right->right=createnode(7);
+    root->right->left->left=createnode(12);
+    root->right->left->right=createnode(13);
+    root->right->right->left=createnode(14);
+    root->right->right->right=createnode(15);
+    root->right->left->left->left=createnode(24);
+    root->right->left->left->right=createnode(25);
+    root->right->left->right->left=createnode(26);
+    root->right->left->right->right=createnode(27);
+    root->right->right->left->left=createnode(28);
+    root->right->right->left->right=createnode(29);
+    root->right->right->right->left=createnode(30);
+    root->right->right->right->right=createnode(31);
+    
+    printalteer(root);
+}
