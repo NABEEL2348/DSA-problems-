@@ -1,0 +1,49 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int num;
+    struct node *left,*right;
+};
+struct node *createnode(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+int max(int a,int b)
+{
+    return (a>b)?a:b;
+}
+int find(struct node *root,int *included,int *excluded)
+{
+    if(root==NULL)
+    {
+        return 0;
+    }
+    int leftincl=0,rightinc=0;
+    int rightexcl=0,leftexcl=0;
+    find(root->left,&leftincl,&leftexcl);
+    find(root->right,&rightinc,&rightexcl);
+    *included=root->num+leftexcl+rightexcl;
+    *excluded=max(leftexcl,leftincl)+max(rightexcl,rightinc);
+    //return max(*included,*excluded);
+    printf("%d %d %d %d %d %d %d \n",root->num,*included,*excluded,leftincl,leftexcl,rightinc,rightexcl);
+}
+int sumofnonadjacent(struct node *root)
+{
+    int included=0,excluded=0;
+    return find(root,&included,&excluded);
+}
+int main()
+{
+    struct node *root=createnode(1);
+    root->left=createnode(2);
+    root->left->left=createnode(4);
+    root->right=createnode(3);
+    root->right->left=createnode(5);
+    root->right->right=createnode(6);
+    printf("%d",sumofnonadjacent(root));
+}
