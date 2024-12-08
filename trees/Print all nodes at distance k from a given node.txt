@@ -1,0 +1,107 @@
+optimized my solution o(n)
+
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int num;
+    struct node *left,*right;
+};
+struct node *createnode(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    return newnode;
+}
+int levelorder(struct node *root,int level,int target)
+{
+    if(root==NULL)
+    {
+        return 0;
+    }
+    if(root->num==target)
+    {
+        return level;
+    }
+    levelorder(root->left,level+1,target);
+    levelorder(root->right,level+1,target);
+}
+void levelordertraverse(struct node *root,int target,int level)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    if(level==target)
+    {
+        printf("%d ",root->num);
+    }
+    levelordertraverse(root->left,target,level+1);
+    levelordertraverse(root->right,target,level+1);
+}
+int printnodes(struct node *root,int target,int k)
+{
+    int level=0;
+    int leftfind=0;
+    int rightfind=0;
+    if(root->num==target)
+    {
+        level=root->num;
+    }
+    else 
+    {
+        leftfind=levelorder(root->left,1,target);
+        if(leftfind==0)
+        {
+            rightfind=levelorder(root->right,1,target);
+        }
+    }
+    if(level)
+    {
+        levelordertraverse(root,k,0);
+    }
+    else if(leftfind)
+    {
+        int level=0;
+        if(leftfind-k==0)
+        {
+            printf("%d ",root->num);
+        }
+        else
+        {
+            level=k-leftfind;
+            levelordertraverse(root->right,level,1);
+        }
+        level=leftfind+k;
+        levelordertraverse(root->left,level,1);
+        
+    }
+    else if(rightfind)
+    {
+        int level=0;
+        if(rightfind-k==0)
+        {
+            printf("%d ",root->num);
+        }
+        else
+        {
+            level=k-rightfind;
+            levelordertraverse(root->left,level,1);
+        }
+        level=rightfind+k;
+        levelordertraverse(root->right,level,1);
+    }
+}
+int main()
+{
+    struct node *root=createnode(1);
+    root->left=createnode(2);
+    root->right=createnode(3);
+    root->left->left=createnode(4);
+    root->left->right=createnode(5);
+    
+    int target=2,k=2;
+    printnodes(root,target,k);
+}
