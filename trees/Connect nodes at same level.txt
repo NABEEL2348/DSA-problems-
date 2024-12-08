@@ -1,0 +1,165 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node 
+{
+    int num;
+    struct node *left,*right;
+    int levelright;
+};
+
+struct node *createnode(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    newnode->levelright=0;
+    return newnode;
+}
+
+struct levelnode *levelorder(struct node *root)
+{
+    struct node *queuenode[10];
+    int count=0;
+    int count1=0;
+    struct node *root1=root;
+    while(root1)
+    {
+        root1->levelright=1;
+        root1=root1->right;
+    }
+    queuenode[count++]=root;
+    int queue[10];
+    int l=0;
+    while(count>0 && count1<count)
+    {
+        struct node *pi=queuenode[count1];
+        count1++;
+        
+        
+      
+       if(pi->levelright!=0)
+       {
+           queue[l++]=pi->num;
+          
+           queue[l++]=0;
+       }
+       else
+       {
+           queue[l++]=pi->num;
+       }
+        if(pi->left)
+        {
+            queuenode[count++]=pi->left;
+        }
+        if(pi->right)
+        {
+            queuenode[count++]=pi->right;
+           
+        }
+    }
+    for(int i=0;i<l;i++)
+    {
+        if(queue[i]==0)
+        {
+            printf("# ");
+        }
+        else
+        {
+        printf("%d ",queue[i]);
+        }
+    }
+}
+int main()
+{
+    struct node *root=createnode(1);
+    root->left=createnode(2);
+    root->right=createnode(3);
+    root->left->left=createnode(4);
+    root->left->right=createnode(5);
+    root->right->right=createnode(6);
+   
+    int count=0;
+    levelorder(root);
+    
+}
+
+
+optimized
+
+#include<stdio.h>
+#include<stdlib.h>
+struct node 
+{
+    int num;
+    struct node *left,*right;
+    int levelright;
+};
+
+struct node *createnode(int num)
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->num=num;
+    newnode->left=NULL;
+    newnode->right=NULL;
+    newnode->levelright=0;
+    return newnode;
+}
+
+struct levelnode *levelorder(struct node *root)
+{
+    struct node *queuenode[10];
+    int count=0;
+    int count1=0;
+    struct node *root1=root;
+    while(root1)
+    {
+        root1->levelright=1;
+        root1=root1->right;
+    }
+    queuenode[count++]=root;
+    int queue[10];
+    int l=0;
+    while(count>0 && count1<count)
+    {
+        struct node *pi=queuenode[count1];
+        count1++;
+        
+        
+      
+       if(pi->levelright!=0)
+       {
+           
+          printf("%d ",pi->num);
+          printf("# ");
+          
+       }
+       else
+       {
+           printf("%d ",pi->num);
+       }
+        if(pi->left)
+        {
+            queuenode[count++]=pi->left;
+        }
+        if(pi->right)
+        {
+            queuenode[count++]=pi->right;
+           
+        }
+    }
+    
+}
+int main()
+{
+    struct node *root=createnode(1);
+    root->left=createnode(2);
+    root->right=createnode(3);
+    root->left->left=createnode(4);
+    root->left->right=createnode(5);
+    root->right->right=createnode(6);
+   
+    int count=0;
+    levelorder(root);
+    
+}
