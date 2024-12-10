@@ -1,0 +1,42 @@
+#include<stdio.h>
+int coinchange(int *coins,int n,int sum)
+{
+    
+    int i=0;
+    int sum1=0;
+    int sumcoin=0;
+    while(i<n)
+    {
+       
+        if(sum-coins[i]>=0)
+        {
+        while(sum-coins[i]>=0)
+        {
+            sum=sum-coins[i];
+            
+            sumcoin++;
+            
+            
+        }
+        }
+        i++;
+    }
+    if(sum==0)
+    {
+        return sumcoin;
+    }
+    else
+    {
+        return -1;
+    }
+}
+int main()
+{
+    int coins[]={4, 6, 2};
+    int n=sizeof(coins)/sizeof(coins[0]);
+    int sum=5;
+    printf("%d",coinchange(coins,n,sum));
+}
+
+
+
