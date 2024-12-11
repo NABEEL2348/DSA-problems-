@@ -1,0 +1,63 @@
+#include<stdio.h>
+int lemonadechange(int *arr,int n,int count5,int count10,int count20)
+{
+    int res=0;
+    for(int i=0;i<n;i++)
+    {
+        if(arr[i]==5)
+        {
+            count5++;
+        }
+        else
+        {
+            if(arr[i]==10)
+            {
+                count10++;
+            }
+            else
+            {
+                count20++;
+            }
+            int sum=arr[i]-5;
+            while(sum!=0)
+            {
+                if(count5==0 && count10==0 &&count20==0)
+                {
+                    res=1;
+                    break;
+                }
+                else if(sum%20==0 &&count20>0)
+                {
+                    sum=sum-20;
+                    count20--;
+                }
+                else if(sum%10==0 && count10>0)
+                {
+                    sum=sum-10;
+                    count10--;
+                }
+                else if(sum%5==0 && count5>0)
+                {
+                    sum=sum-5;
+                    count5--;
+                }
+                else
+                {
+                    res=1;
+                    break;
+                }
+            }
+        }
+        printf("%d %d %d %d\n",count5,count10,count20,res);
+    }
+    
+}
+int main()
+{
+    int count5=0;
+    int count10=0;
+    int count20=0;
+    int arr[]={5,5,10,10,20};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    lemonadechange(arr,n,count5,count10,count20);
+}
