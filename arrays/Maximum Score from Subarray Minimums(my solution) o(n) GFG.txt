@@ -1,0 +1,21 @@
+#include<stdio.h>
+int main()
+{
+    int arr[]={10, 1, 9, 7, 3};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    int max=arr[0];
+    int sum=0;
+    int max1=arr[1];
+    int maxsum=arr[0]+arr[1];
+    for(int i=2;i<n;i++)
+    {
+        max=arr[i-1];
+        max=arr[i];
+        max=arr[i-1]+arr[i];
+        if(max>maxsum)
+        {
+            maxsum=max;
+        }
+    }
+    printf("%d ",maxsum);
+}
