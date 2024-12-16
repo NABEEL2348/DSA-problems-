@@ -1,0 +1,127 @@
+//optimzed code#include<stdio.h>
+#include<stdio.h>
+#include<stdlib.h>
+struct job
+{
+    int start;
+    int end;
+};
+struct job *insertinterval(struct job *jobs,int n,struct job newinterval,int *count)
+{
+    struct job *result= (struct job*)malloc((n + 1) * sizeof(struct job));
+
+    for(int i=0;i<n;i++)
+    {
+        if(jobs[i].end<newinterval.start)
+        {
+            result[(*count)++]=jobs[i];
+        }
+        else if(jobs[i].start>newinterval.end)
+        {
+            result[(*count)++]=newinterval;
+            for(int j=i;j<n;j++)
+            {
+                result[(*count)++]=jobs[j];
+            }
+            return result;
+        }
+        else
+        {
+            newinterval.start=(jobs[i].start<newinterval.start)?jobs[i].start:newinterval.start;
+            newinterval.end=(jobs[i].end>newinterval.end)?jobs[i].end:newinterval.end;
+        }
+    }
+    result[(*count)++]=newinterval;
+    return result;
+}
+int main()
+{
+    struct job jobs[]={
+      {1,3}, {5,7}, {9,11}
+  };
+  int n=sizeof(jobs)/sizeof(jobs[0]);
+  struct job newinterval={4,10};
+  int count=0;
+  struct job *result=insertinterval(jobs,n,newinterval,&count);
+  for(int i=0;i<count;i++)
+  {
+      printf("%d %d\n",result[i].start,result[i].end);
+  }
+}
+
+
+
+
+//my code
+#include<stdlib.h>
+struct job
+{
+    int start;
+    int end;
+};
+int compare(const void *a,const void *b)
+{
+    struct job *job1=(struct job*)a;
+    struct job *job2=(struct job*)b;
+    return job1->start-job2->start;
+}
+void insertinterval(struct job *jobs,int n,struct job newinterval)
+{
+    for(int i=0;i<n;i++)
+    {
+        if(jobs[i].end>newinterval.start)
+        {
+            if(jobs[i].end<newinterval.end)
+            {
+                jobs[i].end=newinterval.end;
+            }
+        }
+    }
+    struct job jobs1[n+1];
+    int count=0;
+    int i=0;
+    while(i<n)
+    {
+        jobs1[count].start=jobs[i].start;
+        int end=jobs[i].end;
+        if(i<n && end>=jobs[i+1].start)
+        {
+            while(i<n && end>=jobs[i+1].start)
+            {
+                if(end<jobs[i+1].end)
+                {
+                    end=jobs[i+1].end;
+                }
+                i++;
+            }
+            if(i==n)
+            {
+                i=i-1;
+            }
+            jobs1[count++].end=jobs[i].end;
+        }
+        else
+        {
+             jobs1[count++].end=jobs[i].end;
+        }
+        if(i<n)
+        {
+        i++;
+        }
+        
+    }
+    for(int i=0;i<count;i++)
+    {
+        printf("%d%d\n",jobs1[i].start,jobs1[i].end);
+    }
+}
+int main()
+{
+  struct job jobs[]={
+      {1,3}, {5,7}, {9,11}
+  };
+  int n=sizeof(jobs)/sizeof(jobs[0]);
+  struct job newinterval={4,10};
+  insertinterval(jobs,n,newinterval);
+}
+
