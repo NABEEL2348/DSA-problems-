@@ -1,0 +1,80 @@
+#include<stdio.h>
+int main()
+{
+    int a=3;
+    int b=2;
+    int c=1;
+    int x=4;
+    int y=3;
+    int total=0;
+    int temp1=a*x;
+    int temp2=b*y;
+    int temp=temp1+temp2;
+   
+    while(c<temp && x>0 && y>0)
+    {
+        temp=temp-x;
+        temp=temp-y;
+        total++;
+        x--;
+        y--;
+        
+    }
+    temp=a*x;
+    temp1=b*y;
+    
+    if(temp>c && x>0)
+    {
+        total++;
+        
+        x--;
+        
+    }
+    else if(x>0)
+    {
+        total=total+a;
+        
+        x--;
+    }
+    if(temp1>c && y>0)
+    {
+        total++;
+        y--;
+    }
+    else if(y>0)
+    {
+        total=total+b;
+        y--;
+    }
+   printf("%d  ",total);
+}
+
+int compare(int *a,int *b)
+{
+    return (*(int *)a-*(int *)b);
+}
+int countPairs(int projectCosts_count, int* projectCosts, int target) {
+    int count=0;
+    qsort(projectCosts,projectCosts_count,sizeof(int),compare);
+    int i=0,j=0;
+    while(i<projectCosts_count && j<projectCosts_count)
+    {
+        if(abs(projectCosts[i]-projectCosts[j])==target)
+        {
+            count++;
+            i++;
+            j++;
+        }
+        else if((abs(projectCosts[i]-projectCosts[j])<target))
+        {
+            j++;
+        }
+        else
+        {
+            i++;
+        }
+        
+    }
+
+return count;
+}
