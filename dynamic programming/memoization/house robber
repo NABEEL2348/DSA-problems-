@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <string.h>
+//memo
+#include<math.h>
+int houserobberusingmemo(int *arr,int n,int *dp)
+{
+    if(n<0)
+    {
+        return 0;
+    }
+    if(dp[n]!=-1)
+    {
+        return dp[n];
+    }
+    int take1=arr[0];
+    int take=arr[n] + ( n>1 ? houserobberusingmemo(arr,n-2,dp):0);
+    
+    int nottake=0+houserobberusingmemo(arr,n-1,dp);
+    
+    dp[n]=fmax(take,nottake);
+    return dp[n];
+}
+int main() {
+    int arr[] = {1, 2, 3, 1};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    int dp[100];
+    memset(dp, -1, sizeof(dp));
+    printf("%d\n", houserobberusingmemo(arr, n, dp));  
+    return 0;
+}
