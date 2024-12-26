@@ -1,0 +1,34 @@
+int minPathSum(int** grid, int gridSize, int* gridColSize) {
+    int dp[gridSize][*gridColSize];
+    
+    
+    for(int i=0;i<gridSize;i++)
+    {
+        for(int j=0;j<* gridColSize;j++)
+        {
+            if(i==0 && j==0)
+            {
+                dp[i][j]=grid[0][0];
+            }
+            else
+            {
+                int up=INT_MAX;
+                int left=INT_MAX;
+                if(i>0)
+                {
+                    up=grid[i][j]+dp[i-1][j];
+                }
+                if(j>0)
+                {
+                    left=grid[i][j]+dp[i][j-1];
+                }
+                
+                dp[i][j]=fmin(up,left);
+                //printf("%d %d %d\n",dp[i][j],i,j);
+
+            }
+        }
+    }
+    int result=dp[gridSize-1][*gridColSize-1];
+    return result;
+}
