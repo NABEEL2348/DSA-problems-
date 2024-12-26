@@ -1,0 +1,84 @@
+int min(int a,int b)
+{
+    return (a<b)?a:b;
+}
+int minimumTotal(int** triangle, int triangleSize, int* triangleColSize) {
+    int dp[triangleSize][triangleSize];
+   // printf("%d %d ",triangleSize,*triangleColSize);
+   for(int i=0;i<triangleSize;i++)
+   {
+    for(int j=0;j<triangleSize;j++)
+    {
+        dp[i][j]=INT_MAX;
+    }
+   }
+    for(int i=0;i<triangleSize;i++)
+    {
+        for(int j=0;j<i+1;j++)
+        {
+            if(i==0 && j==0)
+            {
+                dp[i][j]=triangle[i][j];
+            }
+            else
+            {
+                int temp=0;
+                int temp1=0;
+                    if(j>=0 && j<triangleSize)
+                    {
+                        if(dp[i-1][j]!=INT_MAX)
+                        {
+                            temp=dp[i-1][j];
+                        }
+                        else
+                        {
+                            temp=INT_MAX;
+                        }
+                    }
+                    if(j-1>=0 && j<triangleSize)
+                    {
+                         if(dp[i-1][j-1]!=INT_MAX)
+                        {
+                            temp1=dp[i-1][j-1];
+                        }
+                        else
+                        {
+                            temp1=INT_MAX;
+                        }
+                    }
+                     else
+                        {
+                            temp1=INT_MAX;
+                        }
+                        int result=0;
+                        if(temp==INT_MAX || temp1==INT_MAX)
+                        {
+                            if(temp!=INT_MAX)
+                            {
+                                dp[i][j]=triangle[i][j]+temp;
+                                //printf("%d ",dp[i][j]);
+                            }
+                            else
+                            {
+                                dp[i][j]=triangle[i][j]+temp1;
+                            }
+                        }
+                        else
+                        {
+                            result=min(temp,temp1);
+                            dp[i][j]=triangle[i][j]+result;
+                        }
+                   // printf("%d %d %d %d %d %d\n",temp,temp1,dp[i][j],result,i,j);
+            }
+            
+           
+        }
+      //  printf("\n");
+    }
+    int result=INT_MAX;
+    for(int i=0;i<triangleSize;i++)
+    {
+        result=min(result,dp[triangleSize-1][i]);
+    }
+    return result;
+}
