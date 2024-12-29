@@ -1,0 +1,53 @@
+//there is no memization for this 
+
+example:
+
+28,4,3,27,0,24,26
+
+here if intiate recursion in 24 nums as (5,24) after substract from target in  make (4,0) return 0 so it will not go to (3,0) so the output is 1 but in problem output is 2 we can achieve this by tabulation method
+
+//down code is not work for these test case
+
+#include<stdio.h>
+#include<string.h>
+// Function to solve the Perfect Sum Problem
+int perfectsumproblem(int *arr, int n, int target,int dp[n+1][target+1])
+{
+    if(target==0)
+    {
+        return 1;
+    }
+    if(n<=0)
+    {
+        return 0;
+    }
+    
+    
+    if(dp[n][target]!=-1)
+    {
+        return dp[n][target];
+    }
+    printf("%d %d %d\n",n,target,dp[n][target]);
+    
+    int take=0;
+    if(arr[n-1]<=target)
+    {
+        take=perfectsumproblem(arr,n-1,target-arr[n-1],dp);
+    }
+    dp[n][target]=take+perfectsumproblem(arr,n-1,target,dp);;
+    
+    return dp[n][target];
+}
+
+int main()
+{
+    int arr[] = {28,4 ,3 ,27, 0 ,24, 26};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int target = 24;
+    int dp[n+1][target+1];
+    memset(dp,-1,sizeof(dp));
+    int result = perfectsumproblem(arr, n, target,dp);
+    printf("Number of subsets with sum %d: %d\n", target, result);
+
+    return 0;
+}
