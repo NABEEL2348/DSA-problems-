@@ -1,0 +1,52 @@
+
+ 
+
+class Solution {
+    static int f(int[] arr,int n,int target)
+    {
+        int[][] dp=new int[n+1][target+1];
+        for(int i=0;i<=n;i++)
+        {
+            dp[i][0]=1;
+        }
+        for(int j=1;j<=target;j++)
+        {
+            dp[0][j]=0;
+        }
+        for(int i=1;i<=n;i++)
+        {
+           // System.out.print(arr[i-1]+" ");
+            for(int j=0;j<=target;j++)
+            {
+                int nottake=dp[i-1][j];
+                int take=0;
+                if(arr[i-1]<=j)
+                {
+                    take=dp[i-1][j-arr[i-1]];
+                }
+                dp[i][j] = (take +nottake);
+                //System.out.print(dp[i][j]+" ");
+            }
+            //System.out.println();
+        }
+        
+        return dp[n][target];
+    }
+    int countPartitions(int[] arr, int d) {
+        int n=arr.length;
+        int target=0;
+        for(int i=0;i<n;i++)
+        {
+            target+=arr[i];
+        }
+        if(target-d<0 || (target-d)%2==1)
+        {
+            return 0;
+        }
+        else
+        {
+            return f(arr,n,(target-d)/2);
+        }
+        
+    }
+}
