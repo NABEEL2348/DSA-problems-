@@ -1,0 +1,49 @@
+#include<stdio.h>
+#include<string.h>
+#include<limits.h>
+
+int f(int *arr, int n, int amount, int dp[][amount+1]) {
+    if (n == 0) {
+        return (amount % arr[0] == 0) ? amount / arr[0] : INT_MAX;
+    }
+    if(amount==0)
+    {
+        return 0;
+    }
+   
+    if(dp[n][amount]!=-1)
+    {
+        return dp[n][amount];
+    }
+    printf("%d %d %d\n",n,amount,dp[n][amount]);
+    int nottake=f(arr,n-1,amount,dp);
+    int take=INT_MAX;
+    if(arr[n]<=amount)
+    {
+        take=1+f(arr,n,amount-arr[n],dp);
+        
+    }
+    
+    dp[n][amount]=(take<nottake)?take:nottake;
+   
+    return dp[n][amount];
+}
+
+int main() {
+    int arr[] = {3,7,405,436};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int amount = 8839;
+
+
+    int dp[n][amount+1];
+    memset(dp, -1, sizeof(dp));
+
+    int result = f(arr, n - 1, amount, dp);
+    if (result == INT_MAX) {
+        printf("No solution possible\n");
+    } else {
+        printf("Minimum coins needed: %d\n", result);
+    }
+
+    return 0;
+}
