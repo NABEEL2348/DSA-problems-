@@ -1,0 +1,36 @@
+int max(int a, int b) {
+    return (a > b) ? a : b;
+}
+
+int f(char* text1, char* text2, int m, int n, int dp[1000][1000]) {
+    if (m < 0 || n < 0) {
+        return 0;
+    }
+
+    if (dp[m][n] != -1) {
+        return dp[m][n];
+    }
+
+    if (text1[m] == text2[n]) {
+        dp[m][n] = 1 + f(text1, text2, m - 1, n - 1, dp);
+    } else {
+        dp[m][n] = max(f(text1, text2, m - 1, n, dp), f(text1, text2, m, n - 1, dp));
+    }
+
+    return dp[m][n];
+}
+
+int longestCommonSubsequence(char* text1, char* text2) {
+    int n = strlen(text1);
+    int m = strlen(text2);
+
+
+   
+    int dp[1000][1000];
+    memset(dp,-1,sizeof(dp));
+
+    int result = f(text1, text2, n - 1, m - 1, dp);
+
+
+    return result;
+}
