@@ -1,0 +1,72 @@
+my solution
+int max(int a,int b)
+{
+    return (a>b)?a:b;
+}
+int f(char* s, char* t,int m,int n,int dp[][1000])
+{
+   if(n<0)
+   {
+    return 1;
+   }
+   if(m<0)
+   {
+    return 0;
+   }
+   if(dp[m][n]!=-1)
+   {
+    return dp[m][n];
+   }
+   
+   int nottake=f(s,t,m-1,n,dp);
+   int take=0;
+   if(s[m]==t[n])
+   {
+    take=f(s,t,m-1,n-1,dp)+f(s,t,m-1,n,dp);
+   }
+   dp[m][n]=max(take,nottake);
+   return dp[m][n];
+}
+int numDistinct(char* s, char* t) {
+    int m=strlen(s);
+    int n=strlen(t);
+    int dp[1000][1000];
+    memset(dp,-1,sizeof(dp));
+    return f(s,t,m-1,n-1,dp);
+}
+or striver solution
+
+int max(int a,int b)
+{
+    return (a>b)?a:b;
+}
+int f(char* s, char* t,int m,int n,int dp[][1000])
+{
+   if(n<0)
+   {
+    return 1;
+   }
+   if(m<0)
+   {
+    return 0;
+   }
+   if(dp[m][n]!=-1)
+   {
+    return dp[m][n];
+   }
+   int nottake=f(s,t,m-1,n,dp);
+   int take=0;
+   if(s[m]==t[n])
+   {
+    take=f(s,t,m-1,n-1,dp);
+   }
+   dp[m][n]=take+nottake;
+   return dp[m][n];
+}
+int numDistinct(char* s, char* t) {
+    int m=strlen(s);
+    int n=strlen(t);
+    int dp[1000][1000];
+    memset(dp,-1,sizeof(dp));
+    return f(s,t,m-1,n-1,dp);
+}
