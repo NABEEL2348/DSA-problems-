@@ -1,0 +1,14 @@
+int maxProfit(int* arr, int p) {
+    int dp[p+1];
+    int max=0;
+    int min=arr[0];
+
+    for(int i=1;i<p;i++)
+    {
+        dp[i]=arr[i]-min;
+        max=fmax(max,dp[i]);
+        min=fmin(min,arr[i]);
+        printf("%d %d %d\n",max,min,dp[i]);
+    }
+    return max;
+}
